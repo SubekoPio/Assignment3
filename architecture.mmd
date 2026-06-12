@@ -1,0 +1,32 @@
+classDiagram
+    class Person {
+        -String person_id
+        -String name
+        -String email
+        +to_dict()
+    }
+    class Student {
+        -Dict enrolled_courses
+        +enroll(course_id)
+        +assign_grade(course_id, grade)
+        +to_dict()
+    }
+    class Course {
+        +String course_id
+        +String name
+        +int credits
+        +to_dict()
+    }
+    class EducationSystem {
+        -Dict students
+        -Dict courses
+        +add_student()
+        +add_course()
+        +enroll_student()
+        +assign_grade()
+        +save_data()
+        +load_data()
+    }
+    Person <|-- Student
+    EducationSystem o-- Student
+    EducationSystem o-- Course
