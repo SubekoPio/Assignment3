@@ -1,6 +1,6 @@
 # Coursework Report: EduManage Education Management System
 
-**Author:** Manus AI  
+**Author:** Group A  
 **Date:** June 11, 2026  
 **Course:** Systems Programming with Python
 
