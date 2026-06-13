@@ -9,21 +9,22 @@ class EducationSystem:
         if data_file:
             base_dir = os.path.dirname(os.path.abspath(data_file))
         else:
-            base_dir = os.getcwd()
-            if None in (students_file, courses_file, teachers_file, enrollments_file):
-                base_dir = os.getcwd()
+            # Use the folder where this script file actually lives
+            base_dir = os.path.dirname(os.path.abspath(__file__))
 
-        self.students_file = students_file or os.path.join(base_dir, "students_data.csv")
-        self.courses_file = courses_file or os.path.join(base_dir, "courses_data.csv")
-        self.teachers_file = teachers_file or os.path.join(base_dir, "teachers_data.csv")
-        self.enrollments_file = enrollments_file or os.path.join(base_dir, "enrollments_data.csv")
+        # Add base_dir here so Python always knows exactly where to look
+        self.students_file = students_file or os.path.join(base_dir, "Data_Storage(CSV)", "students_data.csv")
+        self.courses_file = courses_file or os.path.join(base_dir, "Data_Storage(CSV)", "courses_data.csv")
+        self.teachers_file = teachers_file or os.path.join(base_dir, "Data_Storage(CSV)", "teachers_data.csv")
+        self.enrollments_file = enrollments_file or os.path.join(base_dir, "Data_Storage(CSV)", "enrollments_data.csv")
         
         self.students = {}  # student_id: Student object
         self.courses = {}   # course_id: Course object
         self.teachers = {}  # teacher_id: Teacher object
         self.enrollments = []  # list of (student_id, course_id, grade) tuples
-        
+    
         self.load_data()
+
 
     def add_student(self, student_id, name, email):
         if student_id in self.students:
