@@ -3,7 +3,7 @@
 ## Overview
 EduManage is an advanced education management system built with Python and Tkinter. It provides comprehensive management of students, courses, teachers, enrollments, grades, and detailed analytics with visualizations.
 
-## New Features (Advanced Version)
+## System Features
 
 ### 1. **CSV-Based Data Storage**
 - Replaced JSON with CSV format for better data management and scalability
