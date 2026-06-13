@@ -383,13 +383,22 @@ class EducationSystem:
             for student in self.students.values():
                 writer.writerow([student.person_id, student.name, student.email])
         
-        # Save courses (including units as JSON in a column)
+       # Save courses (Extracting only the unit names)
         with open(self.courses_file, 'w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(['CourseID', 'Name', 'Credits', 'TeacherID', 'Units'])
             for course in self.courses.values():
-                units_json = json.dumps(course.units)
-                writer.writerow([course.course_id, course.name, course.credits, course.teacher_id or '', units_json])
+                # Create a list of just the names from the unit dictionaries
+                unit_names = [u.get('name') for u in course.units if isinstance(u, dict) and u.get('name')]
+                
+                # Option A: Save as a comma-separated string (e.g., "Math 101, Math 102")
+                units_formatted = ", ".join(unit_names)
+                
+                # Option B: If you still want it as a JSON array of strings (e.g., '["Math 101", "Math 102"]') 
+                # uncomment the line below and delete Option A:
+                # units_formatted = json.dumps(unit_names)
+
+                writer.writerow([course.course_id, course.name, course.credits, course.teacher_id or '', units_formatted])
         
         # Save teachers
         with open(self.teachers_file, 'w', newline='') as f:
