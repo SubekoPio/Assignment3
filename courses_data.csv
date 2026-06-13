@@ -1,5 +1,5 @@
 CourseID,Name,Credits,TeacherID,Units
-1,BIT,150,,[]
+1,BIT,150,,"[{""unit_id"": ""1"", ""name"": ""Intro to ICT"", ""credits"": 10.0, ""teacher_id"": null}, {""unit_id"": ""2"", ""name"": ""Math1"", ""credits"": 10.0, ""teacher_id"": null}, {""unit_id"": ""3"", ""name"": ""Web Dev"", ""credits"": 10.0, ""teacher_id"": null}]"
 2,BCS,200,,[]
 3,Software Eng,250,,[]
 4,Accounting&Finance,150,,[]
