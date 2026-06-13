@@ -20,7 +20,8 @@ EduManage is an advanced education management system built with Python and Tkint
 - Department assignment for organizational purposes
 - View teacher details including all assigned courses
 
-![Project Screenshot](../images/teachers_tab.png)
+<img src="../images/teachers_tab.png" alt="Project Screenshot" width="500">
+
 
 
 ### 3. **Teacher-Course Assignment**
