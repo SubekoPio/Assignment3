@@ -374,6 +374,32 @@ class EducationSystem:
             return 1.0
         return 0.0
 
+
+    def export_courses_summary(self, filepath="courses_summary_report.csv"):
+        """
+        Exports a human-readable CSV with the exact same columns as the main course file,
+        but with the 'Units' column containing only unit names.
+        """
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        export_path = os.path.join(base_dir, "Data_Storage(CSV)", filepath)
+
+        with open(export_path, 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(['CourseID', 'Name', 'Credits', 'TeacherID', 'Units'])
+            
+            for course in self.courses.values():
+                unit_names = [u.get('name') for u in course.units if isinstance(u, dict) and u.get('name')]
+                clean_unit_names = ", ".join(unit_names)
+                
+                writer.writerow([
+                    course.course_id, 
+                    course.name, 
+                    course.credits, 
+                    course.teacher_id or '', 
+                    clean_unit_names
+                ])
+        
+
     def save_data(self):
         """Save all data to CSV files."""
         # Save students
@@ -383,22 +409,13 @@ class EducationSystem:
             for student in self.students.values():
                 writer.writerow([student.person_id, student.name, student.email])
         
-       # Save courses (Extracting only the unit names)
+        # Save courses (including units as JSON in a column)
         with open(self.courses_file, 'w', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(['CourseID', 'Name', 'Credits', 'TeacherID', 'Units'])
             for course in self.courses.values():
-                # Create a list of just the names from the unit dictionaries
-                unit_names = [u.get('name') for u in course.units if isinstance(u, dict) and u.get('name')]
-                
-                # Option A: Save as a comma-separated string (e.g., "Math 101, Math 102")
-                units_formatted = ", ".join(unit_names)
-                
-                # Option B: If you still want it as a JSON array of strings (e.g., '["Math 101", "Math 102"]') 
-                # uncomment the line below and delete Option A:
-                # units_formatted = json.dumps(unit_names)
-
-                writer.writerow([course.course_id, course.name, course.credits, course.teacher_id or '', units_formatted])
+                units_json = json.dumps(course.units)
+                writer.writerow([course.course_id, course.name, course.credits, course.teacher_id or '', units_json])
         
         # Save teachers
         with open(self.teachers_file, 'w', newline='') as f:

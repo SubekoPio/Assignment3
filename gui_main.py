@@ -1,8 +1,9 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk, messagebox, filedialog
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from system import EducationSystem
+from fpdf import FPDF
 
 class EduManageGUI:
     def __init__(self, root):
@@ -125,6 +126,7 @@ class EduManageGUI:
         tk.Button(input_frame, text="Update Course", command=self.update_course, bg="#F39C12", fg="white").grid(row=1, column=1, padx=10, pady=5)
         tk.Button(input_frame, text="Delete Course", command=self.delete_course, bg=self.accent_color, fg="white").grid(row=1, column=2, padx=10, pady=5)
         tk.Button(input_frame, text="Clear", command=self.clear_course_form, bg="#7F8C8D", fg="white").grid(row=1, column=3, padx=10, pady=5)
+        tk.Button(input_frame, text="Export CSV", command=self.export_summary, bg="#27AE60", fg="white").grid(row=1, column=4, padx=10, pady=5)
 
         self.tree_courses = ttk.Treeview(self.tab_courses, columns=("ID", "Name", "Credits", "Teacher"), show="headings", selectmode="browse")
         self.tree_courses.heading("ID", text="Course ID")
@@ -261,6 +263,7 @@ class EduManageGUI:
         self.cb_report_student = ttk.Combobox(frame)
         self.cb_report_student.pack(side="left", padx=5)
         tk.Button(frame, text="Generate Report", command=self.generate_report, bg=self.secondary_color, fg="white").pack(side="left", padx=10)
+        tk.Button(frame, text="Export to PDF", command=self.export_report_pdf, bg="#8E44AD", fg="white").pack(side="left", padx=10)
 
         self.txt_report = tk.Text(self.tab_reports, height=15, font=("Courier", 10))
         self.txt_report.pack(fill="both", expand=True, padx=10, pady=10)
@@ -400,23 +403,48 @@ Average Grade: {analytics['avg_grade']:.2f}
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
+    def is_unit_id_taken(self, cid, uid, current_editing_id=None):
+        """
+        Returns True if the ID is taken by a different unit.
+        current_editing_id: The ID of the unit being edited (pass None if adding a new one).
+        """
+        course = self.system.courses.get(cid)
+        if not course:
+            return False
+        
+        for u in course.units:
+            # Check if this ID is in use by ANY unit that isn't the one we are editing
+            if u['unit_id'] == uid and u['unit_id'] != current_editing_id:
+                return True
+        return False
+
     def add_unit_to_course(self):
         if not self.selected_course_id:
             messagebox.showwarning("Warning", "Select a course first (or update form and select)")
             return
-        uid = self.ent_unit_id.get()
-        uname = self.ent_unit_name.get()
+        
+        uid = self.ent_unit_id.get().strip()
+        uname = self.ent_unit_name.get().strip()
+        
+        # 1. Check for duplicate ID
+        if self.is_unit_id_taken(self.selected_course_id, uid):
+            messagebox.showerror("Error", f"Unit ID '{uid}' already exists in this course!")
+            return # Stop execution here so the duplicate is not added
+            
         try:
             ucredits = float(self.ent_unit_credits.get())
         except Exception:
             messagebox.showerror("Error", "Unit credits must be a number")
             return
+            
         try:
             self.system.add_course_unit(self.selected_course_id, uid, uname, ucredits)
             self.system.save_data()
             self.refresh_course_list()
             self.update_comboboxes()
             messagebox.showinfo("Success", f"Unit {uid} added to course {self.selected_course_id}")
+            
+            # Clear fields only after success
             self.ent_unit_id.delete(0, tk.END)
             self.ent_unit_name.delete(0, tk.END)
             self.ent_unit_credits.delete(0, tk.END)
@@ -554,23 +582,70 @@ Average Grade: {analytics['avg_grade']:.2f}
 
             sid = self._get_student_id_by_name(student_str)
             report = self.system.get_student_report(sid)
+            
             self.txt_report.delete(1.0, tk.END)
-            self.txt_report.insert(tk.END, f"REPORT CARD\n{'='*50}\n")
+            self.txt_report.insert(tk.END, f"REPORT CARD\n{'='*110}\n")
             self.txt_report.insert(tk.END, f"Name: {report['student_name']}\nID: {report['student_id']}\n\n")
-            self.txt_report.insert(tk.END, f"{'Course':<20} {'Credits':<8} {'Unit':<18} {'Grade':<8} {'Letter':<8} {'Points':<8} {'Teacher':<16}\n")
+            
+            # UPDATED HEADER: Included 'C.Cred' (Course) and 'U.Cred' (Unit)
+            header = f"{'Course':<20} {'C.Cred':<7} {'Unit':<18} {'U.Cred':<7} {'Grade':<8} {'Letter':<8} {'Points':<8} {'Teacher':<16}\n"
+            self.txt_report.insert(tk.END, header)
             self.txt_report.insert(tk.END, f"{'-'*110}\n")
+            
             for c in report['courses']:
+                # The total course credits are stored in c['credits']
+                course_total_credits = c.get('credits', 0)
+                
+                # GPA header line for the course
                 self.txt_report.insert(tk.END, f"{c['course_name']} (GPA: {c['course_gpa']:.2f})\n")
+                
                 for u in c['units']:
+                    # Extract values for the row
                     grade = u.get('grade') if u.get('grade') is not None else 'N/A'
                     letter = u.get('letter', 'N/A')
                     point = f"{u.get('point'):.1f}" if isinstance(u.get('point'), (int, float)) else 'N/A'
                     teacher = u.get('teacher', 'Unassigned')
-                    self.txt_report.insert(tk.END, f"{c['course_name'][:18]:<20} {str(c['credits']):<8} {u['unit_name'][:16]:<18} {str(grade):<8} {letter:<8} {point:<8} {teacher[:16]:<16}\n")
+                    unit_credits = u.get('credits', 'N/A') # Grabbing unit credits
+                    
+                    # UPDATED ROW: Added unit_credits variable and adjusted alignment
+                    row = f"{c['course_name'][:18]:<20} {str(course_total_credits):<7} {u['unit_name'][:16]:<18} {str(unit_credits):<7} {str(grade):<8} {letter:<8} {point:<8} {teacher[:16]:<16}\n"
+                    self.txt_report.insert(tk.END, row)
+                
                 self.txt_report.insert(tk.END, "\n")
+            
             self.txt_report.insert(tk.END, f"OVERALL CGPA: {report['cgpa']:.2f}\n")
+            
         except Exception as e:
             messagebox.showerror("Error", str(e))
+
+    def export_report_pdf(self):
+            report_text = self.txt_report.get("1.0", tk.END).strip()
+            if not report_text:
+                messagebox.showwarning("Warning", "Please generate a report first.")
+                return
+            filepath = filedialog.asksaveasfilename(
+                defaultextension=".pdf",
+                filetypes=[("PDF files", "*.pdf")],
+                title="Save Report as PDF"
+            )
+            if not filepath:
+                return
+            try:
+                pdf = FPDF()
+                pdf.add_page()
+                
+                # Use a standard built-in font
+                pdf.set_font("Courier", size=10)
+                for line in report_text.split('\n'):
+                    # Providing width, height, and text
+                    pdf.cell(w=0, h=5, txt=line, ln=True)
+                    
+                pdf.output(filepath)
+                messagebox.showinfo("Success", "PDF exported successfully!")
+                
+            except Exception as e:
+                # This will show the specific error details to help us debug
+                messagebox.showerror("Error", f"Failed to export PDF: {str(e)}")
 
     def refresh_student_list(self):
         for i in self.tree_students.get_children():
@@ -586,6 +661,15 @@ Average Grade: {analytics['avg_grade']:.2f}
             if c.teacher_id and c.teacher_id in self.system.teachers:
                 teacher_name = self.system.teachers[c.teacher_id].name
             self.tree_courses.insert("", "end", values=(c.course_id, c.name, c.credits, teacher_name))
+
+    def export_summary(self):
+        try:
+            # Calls the method we added to system.py
+            self.system.export_courses_summary("courses_summary_report.csv")
+            # Shows a popup confirming it worked
+            messagebox.showinfo("Success", "Course summary exported successfully")
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to export summary: {str(e)}")
 
     def refresh_teacher_list(self):
         for i in self.tree_teachers.get_children():
@@ -866,6 +950,8 @@ Average Grade: {analytics['avg_grade']:.2f}
             if s.name == name:
                 return s.person_id
         raise ValueError(f"Student with name '{name}' not found")
+    
+   
 
     def open_manage_units_dialog(self):
         cid = self.selected_course_id
@@ -927,6 +1013,10 @@ Average Grade: {analytics['avg_grade']:.2f}
         def add_new_unit():
             uid = ent_uid.get().strip()
             name = ent_uname.get().strip()
+            if self.is_unit_id_taken(cid, uid, current_editing_id=None):
+                messagebox.showerror('Error', f"Unit ID '{uid}' already exists!")
+                return
+            
             try:
                 credits = float(ent_ucredits.get())
             except Exception:

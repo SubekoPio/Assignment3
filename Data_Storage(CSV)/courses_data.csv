@@ -1,7 +1,9 @@
 CourseID,Name,Credits,TeacherID,Units
-1,BIT,150,,"Intro to ICT, Math1, Web Dev"
-2,BCS,200,,Computer Repair
-3,Software Eng,250,,"english, physics"
-4,Accounting&Finance,150,,
-5,Data Analytics,150,,
-6,Business Admin,150,,
+1,BIT,150,1,"[{""unit_id"": ""1"", ""name"": ""ICT"", ""credits"": 10.0, ""teacher_id"": ""1""}, {""unit_id"": ""1"", ""name"": ""phy"", ""credits"": 10.0, ""teacher_id"": null}]"
+2,BCS,200,,"[{""unit_id"": ""1"", ""name"": ""Physics1"", ""credits"": 10.0, ""teacher_id"": null}]"
+3,Software Eng,250,,[]
+4,Accounting&Finance,150,,"[{""unit_id"": ""1"", ""name"": ""algebras"", ""credits"": 10.0, ""teacher_id"": null}]"
+5,Data Analytics,150,,"[{""unit_id"": ""2"", ""name"": ""Statistics"", ""credits"": 10.0, ""teacher_id"": null}]"
+6,Business Admin,150,,[]
+7,Public Health,200,,"[{""unit_id"": ""1"", ""name"": ""Epidimiology"", ""credits"": 10.0, ""teacher_id"": ""2""}]"
+8,Procurement&Logistics,150,,[]
