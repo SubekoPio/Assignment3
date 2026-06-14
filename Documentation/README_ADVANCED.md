@@ -46,6 +46,18 @@ The new Analysis tab provides:
   - Total number of teachers
   - System-wide average grade
 
+## 6. **Exporting Data**
+
+## 📄*Export Report to PDF**
+  Functionality: Allows users to convert a generated student report card into a standard PDF document.
+
+  Technical Detail: Uses the fpdf library. The system forces the use of the Courier (monospaced) font to ensure that your tabular data, GPA, and credit columns remain perfectly aligned in the final document, preventing the formatting issues typically seen with variable-width fonts.
+
+## 📊 Export Course Summary to CSV
+  Functionality: Generates a structured CSV file containing the full course overview and unit breakdown for easy analysis in spreadsheet software.
+
+  Workflow: This function is optimized for maintenance. It operates in write mode ('w'), meaning it automatically overwrites the previous summary file each time it is used. This ensures you always maintain a single, "source-of-truth" file, preventing your project directory from being cluttered with outdated report versions.
+
 ## File Structure
 
 ```
@@ -89,7 +101,7 @@ python gui_main.py
 - **View Assignments**: See which teacher is assigned to each course
 - **Teacher Assignment**: Manage teacher assignments (via Teachers tab)
 
-### Teachers Tab (NEW)
+### Teachers Tab
 - **Add Teacher**: Register teachers with ID, name, email, and department
 - **Assign to Course**: Select a teacher and course to create teaching assignments
 - **View Workload**: See all courses taught by each teacher
@@ -105,7 +117,7 @@ python gui_main.py
   - Assigned grades
   - **Assigned teacher for each course** (NEW)
 
-### Analysis Tab (NEW)
+### Analysis Tab 
 - **Refresh Charts**: Update all visualizations with current data
 - **View Charts**:
   - Students per course distribution
@@ -205,7 +217,7 @@ Returns dictionary with:
 
 The system includes comprehensive error handling:
 - Duplicate ID prevention
-- Data validation for emails and grades
+- Data validation for grades
 - Exception handling for file I/O operations
 - User-friendly error messages via message boxes
 
@@ -224,7 +236,6 @@ Potential features for future versions:
 - Attendance tracking
 - Assignment and test management
 - More advanced analytics (GPA calculations, trend analysis)
-- Export reports to PDF/Excel
 - Email notifications
 - Multi-user concurrent access
 - Backup and recovery system
