@@ -97,6 +97,14 @@ class EduManageGUI:
         tk.Button(input_frame, text="Delete Student", command=self.delete_student, bg=self.accent_color, fg="white").grid(row=1, column=2, padx=10, pady=5)
         tk.Button(input_frame, text="Clear", command=self.clear_student_form, bg="#7F8C8D", fg="white").grid(row=1, column=3, padx=10, pady=5)
 
+        # --- NEW SEARCH FRAME ---
+        search_frame = tk.Frame(self.tab_students, bg=self.bg_color)
+        search_frame.pack(fill="x", padx=10, pady=(10, 0))
+        tk.Label(search_frame, text="🔍 Search Students:", bg=self.bg_color, font=("Helvetica", 10, "bold")).pack(side="left", padx=5)
+        self.ent_search_student = tk.Entry(search_frame, width=40)
+        self.ent_search_student.pack(side="left", padx=5)
+        self.ent_search_student.bind("<KeyRelease>", lambda e: self.refresh_student_list(self.ent_search_student.get()))
+
         # Table Frame
         self.tree_students = ttk.Treeview(self.tab_students, columns=("ID", "Name", "Email"), show="headings", selectmode="browse")
         self.tree_students.heading("ID", text="Student ID")
@@ -127,6 +135,14 @@ class EduManageGUI:
         tk.Button(input_frame, text="Delete Course", command=self.delete_course, bg=self.accent_color, fg="white").grid(row=1, column=2, padx=10, pady=5)
         tk.Button(input_frame, text="Clear", command=self.clear_course_form, bg="#7F8C8D", fg="white").grid(row=1, column=3, padx=10, pady=5)
         tk.Button(input_frame, text="Export CSV", command=self.export_summary, bg="#27AE60", fg="white").grid(row=1, column=4, padx=10, pady=5)
+
+        # --- NEW SEARCH FRAME ---
+        search_frame_c = tk.Frame(self.tab_courses, bg=self.bg_color)
+        search_frame_c.pack(fill="x", padx=10, pady=(10, 0))
+        tk.Label(search_frame_c, text="🔍 Search Courses:", bg=self.bg_color, font=("Helvetica", 10, "bold")).pack(side="left", padx=5)
+        self.ent_search_course = tk.Entry(search_frame_c, width=40)
+        self.ent_search_course.pack(side="left", padx=5)
+        self.ent_search_course.bind("<KeyRelease>", lambda e: self.refresh_course_list(self.ent_search_course.get()))
 
         self.tree_courses = ttk.Treeview(self.tab_courses, columns=("ID", "Name", "Credits", "Teacher"), show="headings", selectmode="browse")
         self.tree_courses.heading("ID", text="Course ID")
@@ -196,6 +212,15 @@ class EduManageGUI:
         self.cb_assign_unit.grid(row=0, column=5, padx=5, pady=5)
 
         tk.Button(assign_frame, text="Assign to Unit", command=self.assign_teacher_to_course, bg="#27AE60", fg="white").grid(row=0, column=6, padx=10, pady=5)
+
+        # --- NEW SEARCH FRAME ---
+        search_frame_t = tk.Frame(self.tab_teachers, bg=self.bg_color)
+        search_frame_t.pack(fill="x", padx=10, pady=(10, 0))
+        tk.Label(search_frame_t, text="🔍 Search Teachers:", bg=self.bg_color, font=("Helvetica", 10, "bold")).pack(side="left", padx=5)
+        self.ent_search_teacher = tk.Entry(search_frame_t, width=40)
+        self.ent_search_teacher.pack(side="left", padx=5)
+        self.ent_search_teacher.bind("<KeyRelease>", lambda e: self.refresh_teacher_list(self.ent_search_teacher.get()))
+
 
         # Table Frame
         self.tree_teachers = ttk.Treeview(self.tab_teachers, columns=("ID", "Name", "Email", "Department", "Courses"), show="headings", selectmode="browse")
@@ -647,20 +672,54 @@ Average Grade: {analytics['avg_grade']:.2f}
                 # This will show the specific error details to help us debug
                 messagebox.showerror("Error", f"Failed to export PDF: {str(e)}")
 
-    def refresh_student_list(self):
+    def refresh_student_list(self, search_query=""):
         for i in self.tree_students.get_children():
             self.tree_students.delete(i)
+            
+        query = search_query.lower()
         for s in self.system.students.values():
-            self.tree_students.insert("", "end", values=(s.person_id, s.name, s.email))
+            # Check if query matches ID, Name, or Email
+            if query in s.person_id.lower() or query in s.name.lower() or query in s.email.lower():
+                self.tree_students.insert("", "end", values=(s.person_id, s.name, s.email))
 
-    def refresh_course_list(self):
+    def refresh_course_list(self, search_query=""):
         for i in self.tree_courses.get_children():
             self.tree_courses.delete(i)
+            
+        query = search_query.lower()
         for c in self.system.courses.values():
             teacher_name = "Unassigned"
             if c.teacher_id and c.teacher_id in self.system.teachers:
                 teacher_name = self.system.teachers[c.teacher_id].name
-            self.tree_courses.insert("", "end", values=(c.course_id, c.name, c.credits, teacher_name))
+                
+            # Check if query matches Course ID, Name, Credits, or Teacher Name
+            if (query in c.course_id.lower() or 
+                query in c.name.lower() or 
+                query in str(c.credits) or 
+                query in teacher_name.lower()):
+                self.tree_courses.insert("", "end", values=(c.course_id, c.name, c.credits, teacher_name))
+
+    def refresh_teacher_list(self, search_query=""):
+        for i in self.tree_teachers.get_children():
+            self.tree_teachers.delete(i)
+            
+        query = search_query.lower()
+        for t in self.system.teachers.values():
+            if getattr(t, 'taught_units', None):
+                parts = []
+                for cid, units in t.taught_units.items():
+                    parts.append(f"{cid}({len(units)})")
+                courses_str = ", ".join(parts)
+            else:
+                courses_str = "None"
+                
+            # Check if query matches ID, Name, Email, Department, or Assigned Courses
+            if (query in t.person_id.lower() or 
+                query in t.name.lower() or 
+                query in t.email.lower() or 
+                query in t.department.lower() or
+                query in courses_str.lower()):
+                self.tree_teachers.insert("", "end", values=(t.person_id, t.name, t.email, t.department, courses_str))
 
     def export_summary(self):
         try:
@@ -670,20 +729,6 @@ Average Grade: {analytics['avg_grade']:.2f}
             messagebox.showinfo("Success", "Course summary exported successfully")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to export summary: {str(e)}")
-
-    def refresh_teacher_list(self):
-        for i in self.tree_teachers.get_children():
-            self.tree_teachers.delete(i)
-        for t in self.system.teachers.values():
-            # taught_units is a dict: course_id -> [unit_ids]
-            if getattr(t, 'taught_units', None):
-                parts = []
-                for cid, units in t.taught_units.items():
-                    parts.append(f"{cid}({len(units)})")
-                courses_str = ", ".join(parts)
-            else:
-                courses_str = "None"
-            self.tree_teachers.insert("", "end", values=(t.person_id, t.name, t.email, t.department, courses_str))
 
     def on_student_select(self, event):
         selected = self.tree_students.selection()

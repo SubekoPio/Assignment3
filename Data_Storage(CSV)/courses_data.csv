@@ -1,5 +1,5 @@
 CourseID,Name,Credits,TeacherID,Units
-1,BIT,150,1,"[{""unit_id"": ""1"", ""name"": ""ICT"", ""credits"": 10.0, ""teacher_id"": ""1""}, {""unit_id"": ""1"", ""name"": ""phy"", ""credits"": 10.0, ""teacher_id"": null}]"
+1,BIT,150,3,[]
 2,BCS,200,,"[{""unit_id"": ""1"", ""name"": ""Physics1"", ""credits"": 10.0, ""teacher_id"": null}]"
 3,Software Eng,250,,[]
 4,Accounting&Finance,150,,"[{""unit_id"": ""1"", ""name"": ""algebras"", ""credits"": 10.0, ""teacher_id"": null}]"
