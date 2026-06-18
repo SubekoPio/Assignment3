@@ -211,7 +211,9 @@ class EduManageGUI:
         self.cb_assign_unit = ttk.Combobox(assign_frame, width=24)
         self.cb_assign_unit.grid(row=0, column=5, padx=5, pady=5)
 
-        tk.Button(assign_frame, text="Assign to Unit", command=self.assign_teacher_to_course, bg="#27AE60", fg="white").grid(row=0, column=6, padx=10, pady=5)
+       
+        tk.Button(assign_frame, text="Assign Course", command=self.assign_course_only, bg="#2980B9", fg="white").grid(row=0, column=6, padx=5, pady=5)
+        tk.Button(assign_frame, text="Assign Unit", command=self.assign_unit_only, bg="#27AE60", fg="white").grid(row=0, column=7, padx=5, pady=5)
 
         # --- NEW SEARCH FRAME ---
         search_frame_t = tk.Frame(self.tab_teachers, bg=self.bg_color)
@@ -494,26 +496,41 @@ Average Grade: {analytics['avg_grade']:.2f}
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
-    def assign_teacher_to_course(self):
+    def assign_course_only(self):
+        try:
+            teacher_str = self.cb_assign_teacher.get()
+            course_str = self.cb_assign_course.get()
+
+            if not teacher_str or not course_str:
+                messagebox.showwarning("Warning", "Please select a teacher and a course.")
+                return
+            
+            teacher_id = teacher_str.split(" - ")[0]
+            course_id = course_str.split(" - ")[0]
+
+            self.system.assign_teacher_to_course(teacher_id, course_id)
+            self.system.save_data()
+            self.refresh_course_list()
+            self.refresh_teacher_list()
+            messagebox.showinfo("Success", f"Teacher {teacher_id} assigned to entire course {course_id}")
+        except Exception as e:
+            messagebox.showerror("Error", str(e))
+
+    def assign_unit_only(self):
         try:
             teacher_str = self.cb_assign_teacher.get()
             course_str = self.cb_assign_course.get()
             unit_str = self.cb_assign_unit.get()
 
-            if not teacher_str or not course_str:
-                messagebox.showwarning("Warning", "Please select teacher and course")
+            if not teacher_str or not course_str or not unit_str:
+                messagebox.showwarning("Warning", "Please select a teacher, a course, AND a specific unit.")
                 return
 
             teacher_id = teacher_str.split(" - ")[0]
             course_id = course_str.split(" - ")[0]
+            unit_id = unit_str.split(" - ")[0]
 
-            if unit_str:
-                unit_id = unit_str.split(" - ")[0]
-                self.system.assign_teacher_to_unit(teacher_id, course_id, unit_id)
-            else:
-                # fallback: assign course-level (legacy)
-                self.system.assign_teacher_to_course(teacher_id, course_id)
-
+            self.system.assign_teacher_to_unit(teacher_id, course_id, unit_id)
             self.system.save_data()
             self.refresh_course_list()
             self.refresh_teacher_list()

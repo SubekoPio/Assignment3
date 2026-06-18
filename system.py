@@ -70,6 +70,15 @@ class EducationSystem:
         if len(course.units) == original_count:
             raise ValueError(f"Unit {unit_id} not found in course {course_id}.")
 
+        # --- NEW: Remove unit from any teacher teaching it ---
+        for teacher in self.teachers.values():
+            if hasattr(teacher, 'taught_units') and course_id in teacher.taught_units:
+                if unit_id in teacher.taught_units[course_id]:
+                    teacher.taught_units[course_id].remove(unit_id)
+                    # Clean up empty courses
+                    if not teacher.taught_units[course_id]:
+                        del teacher.taught_units[course_id]
+
         # remove unit enrollments from students
         for student in self.students.values():
             if course_id in student.enrolled_courses:
@@ -175,6 +184,8 @@ class EducationSystem:
             if course.teacher_id == teacher_id:
                 course.teacher_id = None
         del self.teachers[teacher_id]
+
+        
 
     def remove_enrollment(self, student_id, course_id):
         if student_id not in self.students:
@@ -481,6 +492,22 @@ class EducationSystem:
         for course in self.courses.values():
             if course.teacher_id and course.teacher_id in self.teachers:
                 self.teachers[course.teacher_id].assign_course(course.course_id)
+
+            # Re-link individual course units to teachers on system startup
+            for unit in course.units:
+                t_id = unit.get('teacher_id')
+                if t_id and t_id in self.teachers:
+                    teacher = self.teachers[t_id]
+                    
+                    if not hasattr(teacher, 'taught_units'):
+                        teacher.taught_units = {}
+                        
+                   
+                    if course.course_id not in teacher.taught_units:
+                        teacher.taught_units[course.course_id] = []
+                        
+                    if unit.get('unit_id') not in teacher.taught_units[course.course_id]:
+                        teacher.taught_units[course.course_id].append(unit.get('unit_id'))
         
         # Load enrollments
         if os.path.exists(self.enrollments_file):
