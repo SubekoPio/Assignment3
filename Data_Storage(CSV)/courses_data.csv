@@ -3,7 +3,7 @@ CourseID,Name,Credits,TeacherID,Units
 2,BCS,200,2,"[{""unit_id"": ""1"", ""name"": ""Physics1"", ""credits"": 10.0, ""teacher_id"": ""4""}]"
 3,Software Eng,250,,[]
 4,Accounting&Finance,150,,"[{""unit_id"": ""1"", ""name"": ""algebras"", ""credits"": 10.0, ""teacher_id"": null}]"
-5,Data Analytics,150,,"[{""unit_id"": ""2"", ""name"": ""Statistics"", ""credits"": 10.0, ""teacher_id"": ""1""}]"
+5,Data Analytics,150,5,"[{""unit_id"": ""2"", ""name"": ""Statistics"", ""credits"": 10.0, ""teacher_id"": ""1""}]"
 6,Business Admin,150,4,"[{""unit_id"": ""1"", ""name"": ""Test unit"", ""credits"": 10.0, ""teacher_id"": ""4""}]"
 7,Public Health,200,2,"[{""unit_id"": ""1"", ""name"": ""Epidimiology"", ""credits"": 10.0, ""teacher_id"": ""2""}]"
 8,Procurement&Logistics,150,,[]
