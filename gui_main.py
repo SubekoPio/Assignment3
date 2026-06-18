@@ -705,7 +705,7 @@ Average Grade: {analytics['avg_grade']:.2f}
             
         query = search_query.lower()
         for c in self.system.courses.values():
-            teacher_name = "Unassigned"
+            teacher_name = "N/A"
             if c.teacher_id and c.teacher_id in self.system.teachers:
                 teacher_name = self.system.teachers[c.teacher_id].name
                 
