@@ -31,7 +31,7 @@ class EduManageGUI:
         style = ttk.Style()
         style.theme_use('clam')
         
-        # Configure Notebook
+        # Configure Notebooks
         style.configure("TNotebook", background=self.bg_color)
         style.configure("TNotebook.Tab", background="#BDC3C7", padding=[10, 5])
         style.map("TNotebook.Tab", background=[("selected", self.secondary_color)])
