@@ -36,13 +36,13 @@ class EduManageGUI:
         style.configure("TNotebook.Tab", background="#BDC3C7", padding=[10, 5])
         style.map("TNotebook.Tab", background=[("selected", self.secondary_color)])
 
-        # Configure Treeview
+        # Configuration of Treeview
         style.configure("Treeview", background="white", fieldbackground="white", rowheight=25)
         style.map("Treeview", background=[("selected", self.secondary_color)])
         style.configure("Treeview.Heading", background="#BDC3C7", font=('Helvetica', 10, 'bold'))
 
     def create_widgets(self):
-        # Header
+        # Headers
         header = tk.Frame(self.root, bg=self.primary_color, height=60)
         header.pack(fill="x")
         tk.Label(header, text="EduManage Advanced System", fg="white", bg=self.primary_color, 
