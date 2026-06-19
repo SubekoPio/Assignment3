@@ -50,9 +50,10 @@ class EducationSystem:
         """Update unit metadata (name/credits) for a given course."""
         if course_id not in self.courses:
             raise ValueError(f"Course {course_id} not found.")
+        unit_id = str(unit_id)  # Ensure unit_id is string
         course = self.courses[course_id]
         for u in course.units:
-            if u.get('unit_id') == unit_id:
+            if str(u.get('unit_id')) == unit_id:
                 if name is not None:
                     u['name'] = name
                 if credits is not None:
@@ -64,9 +65,10 @@ class EducationSystem:
         """Delete a unit from a course and remove related unit enrollments."""
         if course_id not in self.courses:
             raise ValueError(f"Course {course_id} not found.")
+        unit_id = str(unit_id)  # Ensure unit_id is string
         course = self.courses[course_id]
         original_count = len(course.units)
-        course.units = [u for u in course.units if u.get('unit_id') != unit_id]
+        course.units = [u for u in course.units if str(u.get('unit_id')) != unit_id]
         if len(course.units) == original_count:
             raise ValueError(f"Unit {unit_id} not found in course {course_id}.")
 
@@ -149,10 +151,15 @@ class EducationSystem:
             raise ValueError(f"Teacher {teacher_id} not found.")
         if course_id not in self.courses:
             raise ValueError(f"Course {course_id} not found.")
+        
+        # Ensure unit_id is a string for consistent comparison
+        unit_id = str(unit_id)
+        
         course = self.courses[course_id]
         prev_tid = None
         for u in course.units:
-            if u.get('unit_id') == unit_id:
+            # Convert unit_id in data to string for consistent comparison
+            if str(u.get('unit_id')) == unit_id:
                 prev_tid = u.get('teacher_id')
                 u['teacher_id'] = teacher_id
                 break
@@ -230,7 +237,7 @@ class EducationSystem:
             raise ValueError(f"Course {course_id} not found.")
         # ensure unit exists in course
         course = self.courses[course_id]
-        if not any(u['unit_id'] == unit_id for u in course.units):
+        if not any(str(u['unit_id']) == str(unit_id) for u in course.units):
             raise ValueError(f"Unit {unit_id} not found in course {course_id}.")
         self.students[student_id].enroll_unit(course_id, unit_id)
 
@@ -506,8 +513,9 @@ class EducationSystem:
                     if course.course_id not in teacher.taught_units:
                         teacher.taught_units[course.course_id] = []
                         
-                    if unit.get('unit_id') not in teacher.taught_units[course.course_id]:
-                        teacher.taught_units[course.course_id].append(unit.get('unit_id'))
+                    uid = str(unit.get('unit_id'))
+                    if uid not in teacher.taught_units[course.course_id]:
+                        teacher.taught_units[course.course_id].append(uid)
         
         # Load enrollments
         if os.path.exists(self.enrollments_file):

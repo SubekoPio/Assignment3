@@ -25,8 +25,11 @@ class Person:
 
     @email.setter
     def email(self, value):
-        if "@" not in value:
-            raise ValueError("Invalid email format")
+        # Validate email format using regex
+        import re
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(email_pattern, value):
+            raise ValueError("Invalid email format. Please enter a valid email address.")
         self._email = value
 
     def to_dict(self):

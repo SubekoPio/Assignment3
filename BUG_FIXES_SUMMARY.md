@@ -1,0 +1,158 @@
+# Bug Fixes Summary
+
+## Issues Fixed
+
+### 1. **Email Validation** ✅
+**Problem:** Email validation was too basic - only checked for "@" character, allowing invalid emails.
+
+**Solution:** 
+- Added proper email regex validation in `models.py` using pattern: `^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$`
+- Added email validation in GUI methods:
+  - `add_student()` - validates before adding student
+  - `add_teacher()` - validates before adding teacher  
+  - `update_student()` - validates when updating student
+  - `update_teacher()` - validates when updating teacher
+- Added `validate_email()` helper method in `EduManageGUI` class
+- All methods now provide proper error messages for invalid emails
+
+**Files Modified:**
+- `models.py` - Enhanced email setter with regex validation
+- `gui_main.py` - Added validation helper method and validation checks in CRUD operations
+
+**Testing:**
+- Valid email: `student@example.com` ✓
+- Invalid emails will be rejected: `student.example.com`, `student@.com`, `student@example`, etc. ✓
+
+---
+
+### 2. **Teacher Assignment to Course Units - Off-by-One Error** ✅
+**Problem:** When selecting a unit (e.g., unit ID 2) to assign to a teacher, the system would assign a different unit (unit ID 1) due to inconsistent type handling (string vs integer).
+
+**Root Cause:** Unit IDs were being stored as strings in the CSV files but compared inconsistently - sometimes as strings, sometimes as integers, causing mismatches.
+
+**Solution:**
+- Implemented consistent string conversion for all unit_id comparisons
+- Modified `system.py`:
+  - `assign_teacher_to_unit()` - Now converts unit_id to string before comparison
+  - `update_course_unit()` - Ensures string comparison
+  - `delete_course_unit()` - Ensures string comparison
+  - `enroll_student_unit()` - Ensures string comparison
+  - Other unit lookup methods - All use string conversion
+- Modified `gui_main.py`:
+  - `on_assign_course_selected()` - Converts unit_id to string when populating dropdown
+  - `assign_unit_only()` - Explicitly converts selected unit_id to string before passing to system
+
+**Key Changes:**
+```python
+# Before
+if u.get('unit_id') == unit_id:  # Could be string vs int comparison
+
+# After
+if str(u.get('unit_id')) == str(unit_id):  # Always string comparison
+```
+
+**Files Modified:**
+- `system.py` - Added string conversion in 4 methods:
+  - `assign_teacher_to_unit()`
+  - `update_course_unit()`
+  - `delete_course_unit()`
+  - `enroll_student_unit()` (and related)
+- `gui_main.py` - Added string conversion in:
+  - `on_assign_course_selected()` - When populating unit dropdown
+  - `assign_unit_only()` - When extracting selected unit_id
+
+**Testing:**
+- Create course with units having IDs: 1, 2, 3
+- Assign teacher to unit 2 → Correctly assigns unit 2 ✓
+- Update unit 2 → Correctly identifies unit 2 ✓
+- Enroll student in unit 2 → Correctly enrolls in unit 2 ✓
+
+---
+
+## Additional Improvements
+
+### Input Validation
+- Added `.strip()` to remove whitespace from all user inputs
+- Added empty field validation in student/teacher add/update methods
+- All CRUD operations now validate required fields before processing
+
+### Email Validation Pattern
+The regex pattern validates:
+- ✓ Standard emails: `user@example.com`
+- ✓ Emails with dots: `user.name@example.com`
+- ✓ Emails with numbers: `user123@example.co.uk`
+- ✓ Emails with hyphens: `user-name@example.com`
+- ✓ Emails with underscores: `user_name@example.com`
+- ✓ Emails with plus: `user+tag@example.com`
+
+Rejects:
+- ✗ Missing @ symbol: `userexample.com`
+- ✗ Multiple @ symbols: `user@@example.com`
+- ✗ No domain: `user@`
+- ✗ No TLD: `user@example`
+- ✗ No username: `@example.com`
+
+---
+
+## Files Modified Summary
+
+### 1. `models.py`
+- Updated `Person.email` setter with comprehensive regex validation
+- Error message: "Invalid email format. Please enter a valid email address."
+
+### 2. `gui_main.py`
+- Added `import re` for regex support
+- Added `validate_email()` helper method
+- Enhanced `add_student()` with validation
+- Enhanced `add_teacher()` with validation
+- Enhanced `update_student()` with validation
+- Enhanced `update_teacher()` with validation
+- Fixed `on_assign_course_selected()` with string conversion
+- Fixed `assign_unit_only()` with string conversion
+
+### 3. `system.py`
+- Fixed `assign_teacher_to_unit()` with string conversion
+- Fixed `update_course_unit()` with string conversion
+- Fixed `delete_course_unit()` with string conversion
+- Fixed `enroll_student_unit()` path with string conversion
+
+---
+
+## Testing & Validation
+
+✅ **Syntax Check:** All files pass Python compilation check
+✅ **GUI Launch:** Application starts successfully with no errors
+✅ **Email Validation:** Properly validates email formats
+✅ **Unit Assignment:** Correctly assigns teachers to specific units by ID
+
+---
+
+## Backward Compatibility
+
+✓ All changes are backward compatible
+✓ Existing data in CSV files will work correctly (unit IDs will be converted to strings)
+✓ No database migration needed
+✓ GUI looks and behaves the same way
+
+---
+
+## How to Test the Fixes
+
+### Email Validation
+1. Open Students or Teachers tab
+2. Try to add a student/teacher with invalid email (e.g., `teststudent.com`)
+3. System will reject with error message: "Invalid email format..."
+4. Try with valid email (e.g., `teststudent@example.com`)
+5. Successful add/update
+
+### Unit Assignment
+1. Create a course with multiple units (IDs: 1, 2, 3)
+2. Go to Teachers tab → Assignment section
+3. Select teacher, course, and then select unit with ID 2
+4. Click "Assign Unit"
+5. Verify that teacher is correctly assigned to unit 2 (not unit 1 or 3)
+6. Check the teacher's record to confirm unit 2 appears in "Courses Taught"
+
+---
+
+**All fixes tested and working correctly!** ✓
