@@ -76,7 +76,7 @@ class EduManageGUI:
         self.update_comboboxes()
 
     def setup_student_tab(self):
-        # Input Frame
+        # Input of Frame
         input_frame = tk.LabelFrame(self.tab_students, text="Student Details", bg=self.bg_color, font=("Helvetica", 10, "bold"))
         input_frame.pack(fill="x", padx=10, pady=10)
 
