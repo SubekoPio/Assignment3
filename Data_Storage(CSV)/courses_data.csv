@@ -2,8 +2,8 @@ CourseID,Name,Credits,TeacherID,TeacherIDs,Units
 1,BIT,150,1,"[""1""]","[{""unit_id"": ""1"", ""name"": ""ICT"", ""credits"": 10.0, ""teacher_id"": ""5""}]"
 2,BCS,200,1,"[""2"", ""1""]","[{""unit_id"": ""1"", ""name"": ""Physics1"", ""credits"": 10.0, ""teacher_id"": ""4""}, {""unit_id"": ""3"", ""name"": ""math1"", ""credits"": 10.0, ""teacher_id"": ""1""}, {""unit_id"": ""4"", ""name"": ""English"", ""credits"": 10.0, ""teacher_id"": null}]"
 3,Software Eng,250,1,"[""1""]",[]
-4,Accounting&Finance,150,,[],"[{""unit_id"": ""1"", ""name"": ""algebra"", ""credits"": 10.0, ""teacher_id"": null}]"
+4,Accounting&Finance,150,,[],"[{""unit_id"": ""1"", ""name"": ""algebra"", ""credits"": 10.0, ""teacher_id"": null}, {""unit_id"": ""6"", ""name"": ""Accounts"", ""credits"": 10.0, ""teacher_id"": null}]"
 5,Data Analytics,150,5,"[""5""]","[{""unit_id"": ""2"", ""name"": ""Statistics"", ""credits"": 10.0, ""teacher_id"": ""1""}]"
 6,Business Admin,150,6,"[""6""]","[{""unit_id"": ""1"", ""name"": ""Test unit"", ""credits"": 10.0, ""teacher_id"": ""4""}]"
-7,Public Health,200,T1,"[""6"", ""T1""]","[{""unit_id"": ""1"", ""name"": ""Epidimiology"", ""credits"": 10.0, ""teacher_id"": ""2""}, {""unit_id"": ""2"", ""name"": ""Familyt Planning"", ""credits"": 10.0, ""teacher_id"": ""T1""}]"
+7,Public Health,200,T1,"[""6"", ""T1""]","[{""unit_id"": ""1"", ""name"": ""Epidimiology"", ""credits"": 10.0, ""teacher_id"": ""2""}, {""unit_id"": ""2"", ""name"": ""Familyt Planning"", ""credits"": 10.0, ""teacher_id"": ""T1""}, {""unit_id"": ""5"", ""name"": ""Phamarcology"", ""credits"": 10.0, ""teacher_id"": null}]"
 8,Procurement&Logistics,150,,[],[]
