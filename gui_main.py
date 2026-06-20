@@ -129,7 +129,7 @@ class EduManageGUI:
 
         ctk.CTkLabel(
             self._header,
-            text="🎓 EduManage — Advanced Education Management System",
+            text="\t\t\t\t🎓 EduManage — Advanced Education Management System",
             font=("Segoe UI", 17, "bold"),
             text_color="white"
         ).pack(side="left", padx=16)
