@@ -1,4 +1,4 @@
-# EduManage Advanced Education Management System
+﻿# EduManage Advanced Education Management System
 
 ## Overview
 EduManage is an advanced education management system built with Python and Tkinter. It provides comprehensive management of students, courses, teachers, enrollments, grades, and detailed analytics with visualizations.
@@ -15,10 +15,10 @@ EduManage is an advanced education management system built with Python and Tkint
 
 ### 2. **Teacher Management**
 - Add, manage, and track teacher information
-- Assign teachers to multiple courses
-- Track teacher workload (number of courses taught)
+- Assign teachers to courses and specific course units
+- Track teacher workload (number of units taught)
 - Department assignment for organizational purposes
-- View teacher details including all assigned courses
+- View teacher details including assigned courses/units
 
 <img src="../images/teachers_tab.png" alt="Project Screenshot" width="500">
 
@@ -26,16 +26,22 @@ EduManage is an advanced education management system built with Python and Tkint
 
 ### 3. **Teacher-Course Assignment**
 - Assign teachers to courses directly from the GUI
-- Automatic removal of previous teacher assignments when reassigning
-- Automatic tracking of taught courses per teacher
-- Display assigned teacher in course details
+- Assign teachers to individual course units via unit dropdown
+- Automatic tracking of taught units per teacher
+- Display assigned teacher at both course and unit levels
 
-### 4. **Enhanced Reporting**
+### 4. **Course Unit Management**
+- Add, update, and delete units per course
+- Dedicated themed unit management dialog with full CRUD actions
+- Inline units panel on Courses tab with selected-course context
+- Unit IDs validated for uniqueness and consistency
+
+### 5. **Enhanced Reporting**
 - Student reports now include assigned teacher information
-- Comprehensive course details with teacher names
-- Grade tracking and history
+- Comprehensive unit-level details with teacher names
+- Grade tracking at unit level with GPA/CGPA output
 
-### 5. **Analytics & Visualization Dashboard**
+### 6. **Analytics & Visualization Dashboard**
 The new Analysis tab provides:
 - **Students per Course**: Bar chart showing enrollment distribution
 - **Grade Distribution**: Histogram of grades across all students
@@ -46,14 +52,20 @@ The new Analysis tab provides:
   - Total number of teachers
   - System-wide average grade
 
+### 7. **UI/Theming Improvements**
+- Theme switching now rebuilds tabs cleanly for consistent dark/light styling
+- Table header and row typography increased for readability
+- Analysis chart label, title, and tick fonts enlarged
+- Better spacing and compact header for improved data/table area
+
 ## 6. **Exporting Data**
 
-## 📄*Export Report to PDF**
+## ðŸ“„*Export Report to PDF**
   Functionality: Allows users to convert a generated student report card into a standard PDF document.
 
   Technical Detail: Uses the fpdf library. The system forces the use of the Courier (monospaced) font to ensure that your tabular data, GPA, and credit columns remain perfectly aligned in the final document, preventing the formatting issues typically seen with variable-width fonts.
 
-## 📊 Export Course Summary to CSV
+## ðŸ“Š Export Course Summary to CSV
   Functionality: Generates a structured CSV file containing the full course overview and unit breakdown for easy analysis in spreadsheet software.
 
   Workflow: This function is optimized for maintenance. It operates in write mode ('w'), meaning it automatically overwrites the previous summary file each time it is used. This ensures you always maintain a single, "source-of-truth" file, preventing your project directory from being cluttered with outdated report versions.
@@ -62,14 +74,14 @@ The new Analysis tab provides:
 
 ```
 Intermediate Education System in Python Based on PDF Guidelines/
-├── gui_main.py                 # Main GUI application
-├── system.py                   # Core system logic (CSV storage)
-├── models.py                   # Data models (Student, Course, Teacher)
-├── students_data.csv           # Student records
-├── courses_data.csv            # Course records with teacher assignments
-├── teachers_data.csv           # Teacher records
-├── enrollments_data.csv        # Student enrollments and grades
-└── README_ADVANCED.md          # This file
+â”œâ”€â”€ gui_main.py                 # Main GUI application
+â”œâ”€â”€ system.py                   # Core system logic (CSV storage)
+â”œâ”€â”€ models.py                   # Data models (Student, Course, Teacher)
+â”œâ”€â”€ students_data.csv           # Student records
+â”œâ”€â”€ courses_data.csv            # Course records with teacher assignments
+â”œâ”€â”€ teachers_data.csv           # Teacher records
+â”œâ”€â”€ enrollments_data.csv        # Student enrollments and grades
+â””â”€â”€ README_ADVANCED.md          # This file
 ```
 
 ## Installation
@@ -138,9 +150,9 @@ S002,Jane Smith,jane@example.com
 
 **courses_data.csv**
 ```
-CourseID,Name,Credits,TeacherID
-C001,Mathematics,3,T001
-C002,English,3,T002
+CourseID,Name,Credits,TeacherID,TeacherIDs,Units
+C001,Mathematics,3,T001,"[\"T001\"]","[{\"unit_id\":\"U1\",\"name\":\"Algebra\",\"credits\":1}]"
+C002,English,3,T002,"[\"T002\"]","[{\"unit_id\":\"U1\",\"name\":\"Grammar\",\"credits\":1}]"
 ```
 
 **teachers_data.csv**
@@ -152,10 +164,10 @@ T002,Prof. Johnson,johnson@example.com,Literature
 
 **enrollments_data.csv**
 ```
-StudentID,CourseID,Grade
-S001,C001,85
-S001,C002,90
-S002,C001,75
+StudentID,CourseID,UnitID,Grade
+S001,C001,U1,85
+S001,C002,U1,90
+S002,C001,U1,75
 ```
 
 ## Key Classes
@@ -167,19 +179,22 @@ S002,C001,75
 - Properties: `person_id`, `name`, `email`
 
 ### Student (extends Person)
-- `enrolled_courses`: Dictionary of course_id -> grade
-- Methods: `enroll()`, `assign_grade()`
+- `enrolled_courses`: Dictionary of course_id -> {units}
+- Methods: `enroll()`, `enroll_unit()`, `assign_unit_grade()`
 
 ### Teacher (extends Person)
 - `department`: Department name
-- `taught_courses`: List of course IDs
-- Methods: `assign_course()`, `remove_course()`
+- `assigned_courses`: List of course IDs
+- `taught_units`: Dictionary of course_id -> [unit_ids]
+- Methods: `assign_course()`, `assign_unit()`, `remove_unit()`
 
 ### Course
 - `course_id`: Unique course identifier
 - `name`: Course name
 - `credits`: Credit hours
-- `teacher_id`: Assigned teacher (can be None)
+- `teacher_id`: Primary assigned teacher (can be None)
+- `teacher_ids`: All linked teachers
+- `units`: List of unit dictionaries
 
 ### EducationSystem (Main Controller)
 - Manages all students, courses, and teachers
@@ -203,15 +218,15 @@ Returns dictionary with:
 
 | Feature | Basic | Advanced |
 |---------|-------|----------|
-| Student Management | ✓ | ✓ |
-| Course Management | ✓ | ✓ |
-| Enrollment & Grades | ✓ | ✓ |
-| Reports | ✓ | ✓ + Teacher Info |
-| Teacher Management | ✗ | ✓ |
-| Teacher-Course Assignment | ✗ | ✓ |
-| CSV Storage | ✗ | ✓ |
-| Analytics Dashboard | ✗ | ✓ |
-| Data Visualization | ✗ | ✓ |
+| Student Management | âœ“ | âœ“ |
+| Course Management | âœ“ | âœ“ |
+| Enrollment & Grades | âœ“ | âœ“ |
+| Reports | âœ“ | âœ“ + Teacher Info |
+| Teacher Management | âœ— | âœ“ |
+| Teacher-Course Assignment | âœ— | âœ“ |
+| CSV Storage | âœ— | âœ“ |
+| Analytics Dashboard | âœ— | âœ“ |
+| Data Visualization | âœ— | âœ“ |
 
 ## Error Handling
 
@@ -265,3 +280,18 @@ For issues or questions, refer to the code comments and docstrings in:
 - `system.py` - Core system logic
 - `models.py` - Data model definitions
 - `gui_main.py` - User interface implementation
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+

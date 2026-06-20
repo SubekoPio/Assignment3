@@ -1,13 +1,13 @@
-# EduManage Advanced System - Complete Implementation Report
+﻿# EduManage Advanced System - Complete Implementation Report
 
 ## Executive Summary
 Successfully upgraded EduManage from a basic education management system to an **Advanced Edition** with:
-- ✅ CSV-based data storage (replaced JSON)
-- ✅ Complete teacher management system
-- ✅ Teacher-to-course assignment functionality
-- ✅ Comprehensive analytics dashboard with charts and graphs
-- ✅ Enhanced reporting with teacher information
-- ✅ Full data persistence across sessions
+- âœ… CSV-based data storage (replaced JSON)
+- âœ… Complete teacher management system
+- âœ… Teacher-to-course assignment functionality
+- âœ… Comprehensive analytics dashboard with charts and graphs
+- âœ… Enhanced reporting with teacher information
+- âœ… Full data persistence across sessions
 
 ## Implementation Details
 
@@ -83,37 +83,37 @@ Files:
 #### Visualizations (NEW)
 ```
 Analysis Tab Layout:
-┌─────────────────────────────────────────┐
-│  Students per Course     Grade Distrib.  │
-│  (Bar Chart)            (Bar Chart)      │
-├─────────────────────────────────────────┤
-│  Teacher Workload      System Statistics │
-│  (Horizontal Bar)      (Text Panel)      │
-└─────────────────────────────────────────┘
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  Students per Course     Grade Distrib.  â”‚
+â”‚  (Bar Chart)            (Bar Chart)      â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚  Teacher Workload      System Statistics â”‚
+â”‚  (Horizontal Bar)      (Text Panel)      â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ### 3. Data Flow Architecture
 
 #### Creation Workflow
 ```
-Students → Courses → Teachers → Assignments → Enrollments → Grades → Reports
-                          ↓
+Students â†’ Courses â†’ Teachers â†’ Assignments â†’ Enrollments â†’ Grades â†’ Reports
+                          â†“
                       Analytics
 ```
 
 #### Teacher Assignment Flow
 ```
 Teacher (Add)
-     ↓
+     â†“
 Select Teacher + Course
-     ↓
+     â†“
 Assign (Updates both entities)
-     ↓
+     â†“
 Teacher.taught_courses += course_id
 Course.teacher_id = teacher_id
-     ↓
+     â†“
 Save to CSV
-     ↓
+     â†“
 Visible in all reports
 ```
 
@@ -129,13 +129,13 @@ Visible in all reports
 #### Data Processing Pipeline
 ```
 Raw Data (CSV)
-     ↓
+     â†“
 Load into Memory (Dictionaries)
-     ↓
+     â†“
 Process for Analytics
-     ↓
+     â†“
 Generate Visualizations (Matplotlib)
-     ↓
+     â†“
 Display in GUI
 ```
 
@@ -185,16 +185,16 @@ Display in GUI
 
 ### Test Case 1: Basic Workflow
 ```
-1. Add 3 teachers ✓
-2. Add 3 courses ✓
-3. Assign teachers to courses ✓
-4. Add 5 students ✓
-5. Enroll students (10 enrollments) ✓
-6. Assign grades (0-100) ✓
-7. Generate reports ✓
-8. View analytics ✓
-9. Restart application ✓
-10. Verify data persistence ✓
+1. Add 3 teachers âœ“
+2. Add 3 courses âœ“
+3. Assign teachers to courses âœ“
+4. Add 5 students âœ“
+5. Enroll students (10 enrollments) âœ“
+6. Assign grades (0-100) âœ“
+7. Generate reports âœ“
+8. View analytics âœ“
+9. Restart application âœ“
+10. Verify data persistence âœ“
 ```
 
 ### Test Case 2: Analytics Accuracy
@@ -206,35 +206,35 @@ Sample Data:
 - Grades: 75, 85, 92, 68, 78, 88, 95, 72, 81, 87, 76, 79
 
 Analytics Check:
-✓ Avg Grade: 81.25 (calculated correctly)
-✓ Enrollment distribution: [4, 4, 4]
-✓ Grade ranges: 0-60(1), 60-70(1), 70-80(5), 80-90(4), 90-100(1)
-✓ Teacher workload: [1, 1, 1]
+âœ“ Avg Grade: 81.25 (calculated correctly)
+âœ“ Enrollment distribution: [4, 4, 4]
+âœ“ Grade ranges: 0-60(1), 60-70(1), 70-80(5), 80-90(4), 90-100(1)
+âœ“ Teacher workload: [1, 1, 1]
 ```
 
 ### Test Case 3: Teacher Management
 ```
-1. Add Teacher A → Display in Teachers tab ✓
-2. Assign to Course 1 → Course shows Teacher A ✓
-3. Assign Teacher B to Course 1 → Teacher A auto-removed ✓
-4. Teacher A.taught_courses updated → Course removed ✓
-5. Reports show Teacher B ✓
-6. CSV reflects changes ✓
+1. Add Teacher A â†’ Display in Teachers tab âœ“
+2. Assign to Course 1 â†’ Course shows Teacher A âœ“
+3. Assign Teacher B to Course 1 â†’ Teacher A auto-removed âœ“
+4. Teacher A.taught_courses updated â†’ Course removed âœ“
+5. Reports show Teacher B âœ“
+6. CSV reflects changes âœ“
 ```
 
 ## Files Created/Modified
 
 ### Modified Files
-1. **models.py** (118 lines → 148 lines)
+1. **models.py** (118 lines â†’ 148 lines)
    - Added Teacher class (+30 lines)
    - Updated Course class (teacher_id added)
 
-2. **system.py** (84 lines → 274 lines)
+2. **system.py** (84 lines â†’ 274 lines)
    - Replaced JSON with CSV (+90 lines)
    - Added teacher methods (+40 lines)
    - Added analytics methods (+60 lines)
 
-3. **gui_main.py** (213 lines → 480 lines)
+3. **gui_main.py** (213 lines â†’ 480 lines)
    - Added Teachers tab (+50 lines)
    - Added Analysis tab (+80 lines)
    - Enhanced existing features (+137 lines)
@@ -249,18 +249,18 @@ Analytics Check:
 
 | Feature | Basic | Advanced | Status |
 |---------|-------|----------|--------|
-| Student Management | ✓ | ✓ | Maintained |
-| Course Management | ✓ | ✓ | Maintained |
-| Enrollment | ✓ | ✓ | Maintained |
-| Grading | ✓ | ✓ | Maintained |
-| Reports | ✓ | ✓+ | Enhanced |
-| JSON Storage | ✓ | ✗ | Removed |
-| CSV Storage | ✗ | ✓ | Added |
-| Teacher Management | ✗ | ✓ | Added |
-| Teacher Assignments | ✗ | ✓ | Added |
-| Analytics Engine | ✗ | ✓ | Added |
-| Data Visualization | ✗ | ✓ | Added |
-| Multi-chart Dashboard | ✗ | ✓ | Added |
+| Student Management | âœ“ | âœ“ | Maintained |
+| Course Management | âœ“ | âœ“ | Maintained |
+| Enrollment | âœ“ | âœ“ | Maintained |
+| Grading | âœ“ | âœ“ | Maintained |
+| Reports | âœ“ | âœ“+ | Enhanced |
+| JSON Storage | âœ“ | âœ— | Removed |
+| CSV Storage | âœ— | âœ“ | Added |
+| Teacher Management | âœ— | âœ“ | Added |
+| Teacher Assignments | âœ— | âœ“ | Added |
+| Analytics Engine | âœ— | âœ“ | Added |
+| Data Visualization | âœ— | âœ“ | Added |
+| Multi-chart Dashboard | âœ— | âœ“ | Added |
 
 ## Performance Metrics
 
@@ -339,29 +339,29 @@ python gui_main.py
 
 ```
 Documentation/
-├── README_ADVANCED.md          # Feature overview & usage guide
-├── QUICK_START.md              # Step-by-step tutorial
-├── UPGRADE_SUMMARY.md          # Technical changes summary
-└── IMPLEMENTATION_REPORT.md    # This comprehensive report
+â”œâ”€â”€ README_ADVANCED.md          # Feature overview & usage guide
+â”œâ”€â”€ QUICK_START.md              # Step-by-step tutorial
+â”œâ”€â”€ UPGRADE_SUMMARY.md          # Technical changes summary
+â””â”€â”€ IMPLEMENTATION_REPORT.md    # This comprehensive report
 
 Code Comments/
-├── models.py                   # Class documentation
-├── system.py                   # Method documentation
-└── gui_main.py                 # UI element documentation
+â”œâ”€â”€ models.py                   # Class documentation
+â”œâ”€â”€ system.py                   # Method documentation
+â””â”€â”€ gui_main.py                 # UI element documentation
 ```
 
 ## Quality Assurance Checklist
 
-- ✅ All original features maintained
-- ✅ CSV storage implemented correctly
-- ✅ Teacher management functional
-- ✅ Analytics dashboard working
-- ✅ Charts display correctly
-- ✅ Data persists across sessions
-- ✅ Error handling comprehensive
-- ✅ UI responsive and intuitive
-- ✅ Code well-documented
-- ✅ No breaking changes
+- âœ… All original features maintained
+- âœ… CSV storage implemented correctly
+- âœ… Teacher management functional
+- âœ… Analytics dashboard working
+- âœ… Charts display correctly
+- âœ… Data persists across sessions
+- âœ… Error handling comprehensive
+- âœ… UI responsive and intuitive
+- âœ… Code well-documented
+- âœ… No breaking changes
 
 ## Conclusion
 
@@ -395,3 +395,18 @@ The system is ready for deployment and can be easily extended with additional fe
 **Version**: 2.0 (Advanced Edition)
 **Status**: Production Ready
 **Last Updated**: 2026-06-11
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+

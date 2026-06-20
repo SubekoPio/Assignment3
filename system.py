@@ -40,9 +40,21 @@ class EducationSystem:
         self.courses[course_id] = new_course
         return new_course
 
+    def _unit_id_exists(self, unit_id):
+        """Return True if unit_id exists in any course (global uniqueness)."""
+        unit_id = str(unit_id)
+        for course in self.courses.values():
+            for unit in course.units:
+                if str(unit.get('unit_id')) == unit_id:
+                    return True
+        return False
+
     def add_course_unit(self, course_id, unit_id, name, credits):
         if course_id not in self.courses:
             raise ValueError(f"Course {course_id} not found.")
+        unit_id = str(unit_id)
+        if self._unit_id_exists(unit_id):
+            raise ValueError(f"Unit ID {unit_id} already exists")
         self.courses[course_id].add_unit(unit_id, name, credits)
         return True
 
@@ -120,8 +132,16 @@ class EducationSystem:
         for student in self.students.values():
             if course_id in student.enrolled_courses:
                 del student.enrolled_courses[course_id]
-        if course.teacher_id and course.teacher_id in self.teachers:
-            self.teachers[course.teacher_id].remove_course(course_id)
+        linked_teacher_ids = set(course.teacher_ids)
+        if course.teacher_id:
+            linked_teacher_ids.add(course.teacher_id)
+        for unit in course.units:
+            tid = unit.get('teacher_id')
+            if tid:
+                linked_teacher_ids.add(tid)
+        for tid in linked_teacher_ids:
+            if tid in self.teachers:
+                self.teachers[tid].remove_course(course_id)
 
     def add_teacher(self, teacher_id, name, email, department=""):
         if teacher_id in self.teachers:
@@ -135,14 +155,10 @@ class EducationSystem:
             raise ValueError(f"Teacher {teacher_id} not found.")
         if course_id not in self.courses:
             raise ValueError(f"Course {course_id} not found.")
-        
-        # Remove previous teacher if exists
-        # legacy behavior: set course-level teacher (kept for backward compatibility)
-        prev = self.courses[course_id].teacher_id
-        if prev and prev in self.teachers:
-            # remove course-level assignment
-            self.teachers[prev].remove_course(course_id) if hasattr(self.teachers[prev], 'remove_course') else None
+
+        # Keep latest selected teacher in teacher_id for backward compatibility.
         self.courses[course_id].teacher_id = teacher_id
+        self.courses[course_id].add_teacher(teacher_id)
         self.teachers[teacher_id].assign_course(course_id)
 
     def assign_teacher_to_unit(self, teacher_id, course_id, unit_id):
@@ -173,6 +189,8 @@ class EducationSystem:
                 self.teachers[prev_tid].remove_unit(course_id, unit_id)
             except Exception:
                 pass
+        self.courses[course_id].add_teacher(teacher_id)
+        self.teachers[teacher_id].assign_course(course_id)
         self.teachers[teacher_id].assign_unit(course_id, unit_id)
 
     def update_teacher(self, teacher_id, name, email, department=""):
@@ -190,6 +208,10 @@ class EducationSystem:
         for course in self.courses.values():
             if course.teacher_id == teacher_id:
                 course.teacher_id = None
+            course.remove_teacher(teacher_id)
+            for unit in course.units:
+                if unit.get('teacher_id') == teacher_id:
+                    unit['teacher_id'] = None
         del self.teachers[teacher_id]
 
         
@@ -210,6 +232,7 @@ class EducationSystem:
         if course_id not in student.enrolled_courses:
             raise ValueError(f"Course enrollment not found for student {student_id} and course {course_id}.")
         units = student.enrolled_courses[course_id].get('units', {})
+        unit_id = str(unit_id)
         if unit_id not in units:
             raise ValueError(f"Unit {unit_id} enrollment not found for student {student_id} in course {course_id}.")
         del units[unit_id]
@@ -239,12 +262,12 @@ class EducationSystem:
         course = self.courses[course_id]
         if not any(str(u['unit_id']) == str(unit_id) for u in course.units):
             raise ValueError(f"Unit {unit_id} not found in course {course_id}.")
-        self.students[student_id].enroll_unit(course_id, unit_id)
+        self.students[student_id].enroll_unit(course_id, str(unit_id))
 
     def assign_unit_grade(self, student_id, course_id, unit_id, grade):
         if student_id not in self.students:
             raise ValueError(f"Student {student_id} not found.")
-        self.students[student_id].assign_unit_grade(course_id, unit_id, grade)
+        self.students[student_id].assign_unit_grade(course_id, str(unit_id), grade)
 
     def get_student_report(self, student_id):
         if student_id not in self.students:
@@ -263,9 +286,9 @@ class EducationSystem:
             course = self.courses.get(cid)
             if not course:
                 continue
-            teacher_name = "Unassigned"
+            course_teacher_name = "Unassigned"
             if course.teacher_id and course.teacher_id in self.teachers:
-                teacher_name = self.teachers[course.teacher_id].name
+                course_teacher_name = self.teachers[course.teacher_id].name
 
             # units list
             units_info = []
@@ -286,18 +309,18 @@ class EducationSystem:
                         course_points += point * ucredits
                         course_credits += ucredits
                 # determine teacher for this unit if present
-                teacher_name = 'Unassigned'
+                unit_teacher_name = 'Unassigned'
                 tid = u.get('teacher_id') or None
                 if tid and tid in self.teachers:
-                    teacher_name = self.teachers[tid].name
-                units_info.append({ 'unit_id': uid, 'unit_name': uname, 'credits': ucredits, 'grade': ugrade, 'letter': letter, 'point': point, 'teacher': teacher_name })
+                    unit_teacher_name = self.teachers[tid].name
+                units_info.append({ 'unit_id': uid, 'unit_name': uname, 'credits': ucredits, 'grade': ugrade, 'letter': letter, 'point': point, 'teacher': unit_teacher_name })
 
             course_gpa = (course_points / course_credits) if course_credits else 0.0
             # accumulate for cgpa
             total_points += course_points
             total_credits += course_credits
 
-            report['courses'].append({ 'course_id': cid, 'course_name': course.name, 'credits': course.credits, 'teacher': teacher_name, 'units': units_info, 'course_gpa': course_gpa })
+            report['courses'].append({ 'course_id': cid, 'course_name': course.name, 'credits': course.credits, 'teacher': course_teacher_name, 'units': units_info, 'course_gpa': course_gpa })
 
         report['cgpa'] = (total_points / total_credits) if total_credits else 0.0
         return report
@@ -430,10 +453,11 @@ class EducationSystem:
         # Save courses (including units as JSON in a column)
         with open(self.courses_file, 'w', newline='') as f:
             writer = csv.writer(f)
-            writer.writerow(['CourseID', 'Name', 'Credits', 'TeacherID', 'Units'])
+            writer.writerow(['CourseID', 'Name', 'Credits', 'TeacherID', 'TeacherIDs', 'Units'])
             for course in self.courses.values():
+                teacher_ids_json = json.dumps(course.teacher_ids)
                 units_json = json.dumps(course.units)
-                writer.writerow([course.course_id, course.name, course.credits, course.teacher_id or '', units_json])
+                writer.writerow([course.course_id, course.name, course.credits, course.teacher_id or '', teacher_ids_json, units_json])
         
         # Save teachers
         with open(self.teachers_file, 'w', newline='') as f:
@@ -473,11 +497,19 @@ class EducationSystem:
                     for row in reader:
                         if row['CourseID']:
                             units = []
+                            teacher_ids = []
                             try:
                                 units = json.loads(row.get('Units', '[]') or '[]')
                             except Exception:
                                 units = []
+                            try:
+                                teacher_ids = json.loads(row.get('TeacherIDs', '[]') or '[]')
+                            except Exception:
+                                teacher_ids = []
                             course = Course(row['CourseID'], row['Name'], int(row['Credits']), row.get('TeacherID') or None, units)
+                            course.teacher_ids = [str(tid) for tid in teacher_ids if tid]
+                            if course.teacher_id and course.teacher_id not in course.teacher_ids:
+                                course.teacher_ids.append(course.teacher_id)
                             self.courses[row['CourseID']] = course
             except Exception as e:
                 print(f"Error loading courses: {e}")
@@ -499,6 +531,10 @@ class EducationSystem:
         for course in self.courses.values():
             if course.teacher_id and course.teacher_id in self.teachers:
                 self.teachers[course.teacher_id].assign_course(course.course_id)
+
+            for teacher_id in course.teacher_ids:
+                if teacher_id in self.teachers:
+                    self.teachers[teacher_id].assign_course(course.course_id)
 
             # Re-link individual course units to teachers on system startup
             for unit in course.units:

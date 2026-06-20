@@ -1,12 +1,12 @@
-# 🎊 FINAL PRESENTATION STATUS
+﻿# ðŸŽŠ FINAL PRESENTATION STATUS
 
-## ✅ Presentation Complete & Enhanced
+## âœ… Presentation Complete & Enhanced
 
 Your team now has a **professional, comprehensive 54-slide presentation** that's perfect for a 5-member team delivery.
 
 ---
 
-## 📊 By The Numbers
+## ðŸ“Š By The Numbers
 
 | Metric | Value |
 |--------|-------|
@@ -21,44 +21,44 @@ Your team now has a **professional, comprehensive 54-slide presentation** that's
 
 ---
 
-## 📁 Files in c:\Assignment3\
+## ðŸ“ Files in c:\Assignment3\
 
 ```
 TEAM_PRESENTATION.html
-├─ 54 professional slides
-├─ Easy navigation (click or arrow keys)
-├─ Modern design with gradients
-├─ Progress tracking
-└─ Ready for screenshots
+â”œâ”€ 54 professional slides
+â”œâ”€ Easy navigation (click or arrow keys)
+â”œâ”€ Modern design with gradients
+â”œâ”€ Progress tracking
+â””â”€ Ready for screenshots
 
 PRESENTER_NOTES.md
-├─ 15+ pages of detailed notes
-├─ One for each presenter
-├─ What to say, when to say it
-└─ Q&A guidance
+â”œâ”€ 15+ pages of detailed notes
+â”œâ”€ One for each presenter
+â”œâ”€ What to say, when to say it
+â””â”€ Q&A guidance
 
 PRESENTER_QUICK_REFERENCE.md
-├─ Quick cheat sheets
-├─ Timing breakdowns
-├─ Key statistics
-└─ Common Q&A with answers
+â”œâ”€ Quick cheat sheets
+â”œâ”€ Timing breakdowns
+â”œâ”€ Key statistics
+â””â”€ Common Q&A with answers
 
 PRESENTATION_GUIDE.md
-├─ Implementation instructions
-├─ Pre-presentation checklist
-├─ Transition scripts
-└─ Success tips
+â”œâ”€ Implementation instructions
+â”œâ”€ Pre-presentation checklist
+â”œâ”€ Transition scripts
+â””â”€ Success tips
 
 ENHANCED_PRESENTATION_GUIDE.md
-├─ What's new in enhanced version
-├─ How to add screenshots
-├─ Visual improvements list
-└─ Next steps guide
+â”œâ”€ What's new in enhanced version
+â”œâ”€ How to add screenshots
+â”œâ”€ Visual improvements list
+â””â”€ Next steps guide
 ```
 
 ---
 
-## 🎯 Slide Breakdown
+## ðŸŽ¯ Slide Breakdown
 
 ### PART 1: Project Overview (11 slides)
 What you built, why it matters, and how it's designed
@@ -102,28 +102,28 @@ What makes it special and where it goes
 
 ---
 
-## 🎨 Visual Improvements
+## ðŸŽ¨ Visual Improvements
 
-✅ **Modern Color Scheme**
+âœ… **Modern Color Scheme**
 - Primary Purple: #667eea
 - Secondary Purple: #764ba2
 - Light accents and clean backgrounds
 
-✅ **Professional Layout**
+âœ… **Professional Layout**
 - Cards for features
 - Timeline for processes
 - Grids for organization
 - Stat boxes for numbers
 - Highlight boxes for key points
 
-✅ **Visual Elements**
+âœ… **Visual Elements**
 - Emoji icons
 - Gradient backgrounds
 - Smooth animations
 - Progress bar
 - Diagram boxes
 
-✅ **Better Typography**
+âœ… **Better Typography**
 - Larger, readable fonts
 - Clear hierarchy
 - Proper spacing
@@ -131,7 +131,7 @@ What makes it special and where it goes
 
 ---
 
-## 🚀 Ready to Use
+## ðŸš€ Ready to Use
 
 ### Step 1: Open File
 ```
@@ -159,7 +159,7 @@ What makes it special and where it goes
 
 ---
 
-## 📸 About Screenshots
+## ðŸ“¸ About Screenshots
 
 **Slide 46** has a placeholder where you can add actual system screenshots.
 
@@ -175,7 +175,7 @@ What makes it special and where it goes
 
 ---
 
-## ⏱️ Timing Guide
+## â±ï¸ Timing Guide
 
 | Section | Slides | Time | Presenter |
 |---------|--------|------|-----------|
@@ -189,7 +189,7 @@ What makes it special and where it goes
 
 ---
 
-## 🎓 What Each Presenter Covers
+## ðŸŽ“ What Each Presenter Covers
 
 ### **Member 1: Architecture Overview (Slides 1-11)**
 "Big picture - what we built and why"
@@ -227,27 +227,27 @@ What makes it special and where it goes
 
 ---
 
-## ✨ Key Strengths of This Presentation
+## âœ¨ Key Strengths of This Presentation
 
-✅ **Professional Quality** - Looks like enterprise-level software presentation
+âœ… **Professional Quality** - Looks like enterprise-level software presentation
 
-✅ **Well-Paced** - 54 slides distributed across 60-75 minutes = ~1 minute per slide
+âœ… **Well-Paced** - 54 slides distributed across 60-75 minutes = ~1 minute per slide
 
-✅ **Minimal Code** - Focuses on concepts, not code listings
+âœ… **Minimal Code** - Focuses on concepts, not code listings
 
-✅ **Visual Rich** - Modern design, colors, layouts, animations
+âœ… **Visual Rich** - Modern design, colors, layouts, animations
 
-✅ **Screenshot Ready** - Placeholders for system screenshots
+âœ… **Screenshot Ready** - Placeholders for system screenshots
 
-✅ **Easy Navigation** - Clear structure, progress tracking
+âœ… **Easy Navigation** - Clear structure, progress tracking
 
-✅ **Team Friendly** - Perfect division among 5 presenters
+âœ… **Team Friendly** - Perfect division among 5 presenters
 
-✅ **Q&A Ready** - All materials provided for handling questions
+âœ… **Q&A Ready** - All materials provided for handling questions
 
 ---
 
-## 🎬 Example Flow
+## ðŸŽ¬ Example Flow
 
 ### How a presentation might go:
 
@@ -280,7 +280,7 @@ Q&A (15 min):
 
 ---
 
-## 📋 Pre-Presentation Checklist
+## ðŸ“‹ Pre-Presentation Checklist
 
 - [ ] All 5 team members have practiced their slides
 - [ ] Group has done full run-through
@@ -294,27 +294,27 @@ Q&A (15 min):
 
 ---
 
-## 🎉 You're All Set!
+## ðŸŽ‰ You're All Set!
 
 Your presentation is:
-- ✅ Professional and visually stunning
-- ✅ Well-organized with 54 slides
-- ✅ Perfectly timed for team delivery
-- ✅ Ready to show system screenshots
-- ✅ Includes all speaker notes and guides
-- ✅ Minimal code, maximum visuals
+- âœ… Professional and visually stunning
+- âœ… Well-organized with 54 slides
+- âœ… Perfectly timed for team delivery
+- âœ… Ready to show system screenshots
+- âœ… Includes all speaker notes and guides
+- âœ… Minimal code, maximum visuals
 
 ---
 
-## 📞 Quick Reference
+## ðŸ“ž Quick Reference
 
 ### Files You Have:
-1. **TEAM_PRESENTATION.html** ← Main file (open this in browser)
-2. **PRESENTER_NOTES.md** ← Detailed talking points
-3. **PRESENTER_QUICK_REFERENCE.md** ← Quick cheat sheets
-4. **PRESENTATION_GUIDE.md** ← How to use everything
-5. **ENHANCED_PRESENTATION_GUIDE.md** ← What's new guide
-6. **FINAL_PRESENTATION_STATUS.md** ← This file
+1. **TEAM_PRESENTATION.html** â† Main file (open this in browser)
+2. **PRESENTER_NOTES.md** â† Detailed talking points
+3. **PRESENTER_QUICK_REFERENCE.md** â† Quick cheat sheets
+4. **PRESENTATION_GUIDE.md** â† How to use everything
+5. **ENHANCED_PRESENTATION_GUIDE.md** â† What's new guide
+6. **FINAL_PRESENTATION_STATUS.md** â† This file
 
 ### To Start:
 ```
@@ -325,13 +325,28 @@ Your presentation is:
 
 ---
 
-## 💪 You've Got This!
+## ðŸ’ª You've Got This!
 
 Your team has a complete, professional presentation package. The content is solid, the design is modern, and the structure supports smooth delivery by 5 team members.
 
-**Go present with confidence! 🚀**
+**Go present with confidence! ðŸš€**
 
 ---
 
 **Last Updated: 2026-06-19**
-**Status: ✅ COMPLETE & READY TO PRESENT**
+**Status: âœ… COMPLETE & READY TO PRESENT**
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+

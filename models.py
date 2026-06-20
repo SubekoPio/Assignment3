@@ -96,11 +96,15 @@ class Teacher(Person):
     def __init__(self, person_id, name, email, department=""):
         super().__init__(person_id, name, email)
         self.department = department
+        # assigned_courses is kept for compatibility with older tests/docs.
+        self.assigned_courses = []
         # taught_units: course_id -> list of unit_ids
         self.taught_units = {}
 
     def assign_course(self, course_id):
         # legacy support: mark teacher as teaching a course (no specific unit)
+        if course_id not in self.assigned_courses:
+            self.assigned_courses.append(course_id)
         if course_id not in self.taught_units:
             self.taught_units[course_id] = []
 
@@ -111,6 +115,8 @@ class Teacher(Person):
             self.taught_units[course_id].append(unit_id)
 
     def remove_course(self, course_id):
+        if course_id in self.assigned_courses:
+            self.assigned_courses.remove(course_id)
         if course_id in self.taught_units:
             del self.taught_units[course_id]
 
@@ -123,12 +129,14 @@ class Teacher(Person):
     def to_dict(self):
         data = super().to_dict()
         data["department"] = self.department
+        data["assigned_courses"] = self.assigned_courses
         data["taught_units"] = self.taught_units
         return data
 
     @classmethod
     def from_dict(cls, data):
         teacher = cls(data["id"], data["name"], data["email"], data.get("department", ""))
+        teacher.assigned_courses = data.get("assigned_courses", [])
         teacher.taught_units = data.get("taught_units", {})
         return teacher
 
@@ -140,8 +148,20 @@ class Course:
         self.name = name
         self.credits = credits
         self.teacher_id = teacher_id
+        self.teacher_ids = [teacher_id] if teacher_id else []
         # units: list of dicts { 'unit_id', 'name', 'credits' }
         self.units = units or []
+
+    def add_teacher(self, teacher_id):
+        if teacher_id and teacher_id not in self.teacher_ids:
+            self.teacher_ids.append(teacher_id)
+
+    def remove_teacher(self, teacher_id):
+        if teacher_id in self.teacher_ids:
+            self.teacher_ids.remove(teacher_id)
+
+    def has_teacher(self, teacher_id):
+        return teacher_id in self.teacher_ids
 
     def add_unit(self, unit_id, name, credits):
         self.units.append({ 'unit_id': unit_id, 'name': name, 'credits': credits, 'teacher_id': None })
@@ -152,12 +172,15 @@ class Course:
             "name": self.name,
             "credits": self.credits,
             "teacher_id": self.teacher_id,
+            "teacher_ids": self.teacher_ids,
             "units": self.units
         }
 
     @classmethod
     def from_dict(cls, data):
-        return cls(data["course_id"], data["name"], data["credits"], data.get("teacher_id"), data.get("units", []))
+        course = cls(data["course_id"], data["name"], data["credits"], data.get("teacher_id"), data.get("units", []))
+        course.teacher_ids = data.get("teacher_ids", [course.teacher_id] if course.teacher_id else [])
+        return course
 
 
 class Unit:

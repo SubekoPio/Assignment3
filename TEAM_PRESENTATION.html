@@ -495,20 +495,20 @@
                             <h4>🎓 Student (Inherits Person)</h4>
                             <p><strong>Attributes:</strong><br>
                             • enrolled_courses<br>
-                            • grades_per_course</p>
+                            • units per course</p>
                         </div>
                         <div class="card">
                             <h4>👨‍🏫 Teacher (Inherits Person)</h4>
                             <p><strong>Attributes:</strong><br>
                             • department<br>
-                            • taught_courses</p>
+                            • assigned_courses + taught_units</p>
                         </div>
                         <div class="card">
                             <h4>📖 Course</h4>
                             <p><strong>Attributes:</strong><br>
                             • course_id<br>
                             • name, credits<br>
-                            • teacher_id</p>
+                            • teacher_id + teacher_ids + units</p>
                         </div>
                     </div>
                 `
@@ -540,9 +540,9 @@
                     </div>
                     <ul class="bullet-list">
                         <li><strong>students_data.csv</strong> - StudentID, Name, Email</li>
-                        <li><strong>courses_data.csv</strong> - CourseID, Name, Credits, TeacherID</li>
+                        <li><strong>courses_data.csv</strong> - CourseID, Name, Credits, TeacherID, TeacherIDs, Units</li>
                         <li><strong>teachers_data.csv</strong> - TeacherID, Name, Email, Department</li>
-                        <li><strong>enrollments_data.csv</strong> - StudentID, CourseID, Grade</li>
+                        <li><strong>enrollments_data.csv</strong> - StudentID, CourseID, UnitID, Grade</li>
                     </ul>
                     <p style="margin-top: 20px;"><strong>Advantages:</strong> Universal compatibility, easy to backup, human-readable, version control friendly</p>
                 `
@@ -613,7 +613,7 @@
                         </div>
                         <div class="timeline-item">
                             <h4>Create Relationships</h4>
-                            <p>Enroll students, assign teachers to courses</p>
+                            <p>Manage course units, enroll by unit, assign teachers to courses and units</p>
                         </div>
                         <div class="timeline-item">
                             <h4>Grade Management</h4>
@@ -621,7 +621,7 @@
                         </div>
                         <div class="timeline-item">
                             <h4>Generate Reports</h4>
-                            <p>Comprehensive student performance reports with GPA</p>
+                            <p>Comprehensive unit-level reports with GPA/CGPA and PDF export</p>
                         </div>
                         <div class="timeline-item">
                             <h4>Real-Time Analytics</h4>
@@ -813,9 +813,9 @@ S001,Alice Johnson,alice@edu.com
 S002,Bob Smith,bob@edu.com
 
 courses_data.csv:
-CourseID,Name,Credits,TeacherID
-CS101,Python Basics,3,T001
-CS102,Web Development,4,T002
+CourseID,Name,Credits,TeacherID,TeacherIDs,Units
+CS101,Python Basics,3,T001,"[\"T001\",\"T003\"]","[{\"unit_id\":\"U1\",\"name\":\"Basics\",\"credits\":2}]"
+CS102,Web Development,4,T002,"[\"T002\"]","[{\"unit_id\":\"U1\",\"name\":\"Frontend\",\"credits\":2}]"
 
 teachers_data.csv:
 TeacherID,Name,Email,Department
@@ -1277,6 +1277,7 @@ save_data():
                     <ul class="bullet-list">
                         <li>Input fields for Course ID, Name, Credits</li>
                         <li>Add units to courses (granular structure)</li>
+                        <li>Theme-aware Manage Units dialog with full CRUD actions</li>
                         <li>Display assigned teacher information</li>
                         <li>TreeView shows all courses with current status</li>
                         <li>Edit/Delete functionality</li>
@@ -1294,6 +1295,9 @@ save_data():
                             <strong>Assign Teachers:</strong> Link teachers to courses
                         </div>
                         <div class="highlight-box">
+                            <strong>Unit CRUD Dialog:</strong> Styled popup for add/update/delete
+                        </div>
+                        <div class="highlight-box">
                             <strong>View Structure:</strong> See complete course hierarchy
                         </div>
                     </div>
@@ -1306,7 +1310,7 @@ save_data():
                     <h3>Complete Teacher Administration</h3>
                     <ul class="bullet-list">
                         <li>Add teachers with ID, Name, Email, Department</li>
-                        <li>Assign teachers to courses via dropdown selection</li>
+                        <li>Assign teachers to courses and specific units via dropdown selection</li>
                         <li>View teaching workload (courses per teacher)</li>
                         <li>Display all teachers in organized table</li>
                         <li>Edit/Delete teacher records</li>
@@ -1317,7 +1321,8 @@ save_data():
                     <ul class="bullet-list">
                         <li>Select Teacher from dropdown</li>
                         <li>Select Course from dropdown</li>
-                        <li>Click "Assign" button</li>
+                        <li>Select Unit (optional) from dynamically populated list</li>
+                        <li>Click "Assign Course" or "Assign Unit"</li>
                         <li>See results in Teacher Workload display</li>
                     </ul>
                     
@@ -1401,7 +1406,7 @@ save_data():
                     </div>
                     
                     <h3>Technology: Matplotlib Integration</h3>
-                    <p>Embedded Matplotlib charts within Tkinter for professional visualization.</p>
+                    <p>Embedded Matplotlib charts within Tkinter with enlarged title/label/tick fonts for clearer readability.</p>
                 `
             },
             {
@@ -1438,9 +1443,10 @@ save_data():
                     <h3>Professional Appearance</h3>
                     <ul class="bullet-list">
                         <li><strong>Modern Theme:</strong> Clean, flat design with subtle gradients</li>
-                        <li><strong>Typography:</strong> Helvetica font for readability</li>
+                        <li><strong>Typography:</strong> Larger table and chart fonts for readability</li>
                         <li><strong>Color Coordination:</strong> Consistent palette across all tabs</li>
                         <li><strong>Spacing:</strong> Proper padding and margins for visual clarity</li>
+                        <li><strong>Theme Engine:</strong> Dark/light switch rebuilds tabs cleanly for smooth transitions</li>
                     </ul>
                     
                     <h3>Interactive Elements</h3>

@@ -1,4 +1,4 @@
-# EduManage Advanced System - Quick Start Guide
+﻿# EduManage Advanced System - Quick Start Guide
 
 ## Installation & Launch
 ```bash
@@ -37,16 +37,26 @@ python gui_main.py
 
 **CSV Output**: Updates `courses_data.csv`
 
-### Step 3: Assign Teachers to Courses
+### Step 3: Add Units to Courses
+1. Click the **Courses** tab
+2. Select a course in the table
+3. In the **Course Units** panel, add Unit ID, Unit Name, and Credits
+4. Click **Add**
+5. Repeat per course
+
+**CSV Output**: Updates `courses_data.csv` (`Units` column)
+
+### Step 4: Assign Teachers to Courses/Units
 1. Click the **Teachers** tab (scroll down to assignment section)
 2. Select a teacher from the **Teacher** dropdown
 3. Select a course from the **Course** dropdown
-4. Click **Assign**
-5. Verify assignment in the course list
+4. Optionally select a specific unit from the **Unit** dropdown
+5. Click **Assign Course** or **Assign Unit**
+6. Verify assignments in teachers/courses tables
 
-**CSV Output**: Updates `courses_data.csv` with teacher_id
+**CSV Output**: Updates `courses_data.csv` with `TeacherID`, `TeacherIDs`, and unit `teacher_id`
 
-### Step 4: Add Students
+### Step 5: Add Students
 1. Click the **Students** tab
 2. Enter:
    - Student ID (e.g., S001)
@@ -57,39 +67,40 @@ python gui_main.py
 
 **CSV Output**: Updates `students_data.csv`
 
-### Step 5: Enroll Students in Courses
+### Step 6: Enroll Students in Course Units
 1. Click **Enrollment & Grades** tab
-2. Select a student from the **Student ID** dropdown
-3. Select a course from the **Course ID** dropdown
-4. Click **Enroll Student**
-5. Success message confirms enrollment
+2. Select a student from the **Student** dropdown
+3. Select a course from the **Course** dropdown
+4. Pick one or more units from the units list
+5. Click **Enroll Selected Units**
+6. Success message confirms enrollment
 
 **CSV Output**: Updates `enrollments_data.csv`
 
-### Step 6: Assign Grades
+### Step 7: Assign Grades
 1. Click **Enrollment & Grades** tab
-2. Select the same student and course (from enrollments)
+2. Select an enrollment row (student-course-unit)
 3. Enter a grade (0-100) in the **Grade** field
 4. Click **Assign Grade**
 5. Success message confirms grade assignment
 
 **CSV Output**: Updates `enrollments_data.csv`
 
-### Step 7: View Student Reports
+### Step 8: View Student Reports
 1. Click **Reports** tab
 2. Select a student from the **Select Student** dropdown
 3. Click **Generate Report**
 4. View the report showing:
    - Student name and ID
-   - Enrolled courses
-   - Credits per course
-   - Grades earned
-   - **Assigned teacher for each course** ← NEW!
+   - Enrolled courses and units
+   - Credits per course and unit
+   - Unit grades and letters
+   - **Assigned teacher for each unit**
 
-### Step 8: View Analytics Dashboard
+### Step 9: View Analytics Dashboard
 1. Click **Analysis** tab
 2. Click **Refresh Charts** to generate visualizations
-3. View four chart types:
+3. View four chart types (with larger labels and improved readability):
    - **Top-Left**: Students per course (bar chart)
    - **Top-Right**: Grade distribution (bar chart)
    - **Bottom-Left**: Teacher workload (horizontal bar chart)
@@ -101,9 +112,9 @@ After following the tutorial, you'll have:
 
 ```
 students_data.csv          # Student records
-courses_data.csv           # Course details with teacher assignments
+courses_data.csv           # Course details with units and teacher assignments
 teachers_data.csv          # Teacher information
-enrollments_data.csv       # Student enrollments and grades
+enrollments_data.csv       # Student enrollments and grades at unit level
 ```
 
 ## Sample Data for Testing
@@ -129,33 +140,38 @@ enrollments_data.csv       # Student enrollments and grades
 | S002 | Bob Davis | bob@example.com |
 | S003 | Carol White | carol@example.com |
 
+### Add Units:
+- M101: U1 Limits (1), U2 Derivatives (2)
+- P201: U1 Kinematics (2), U2 Dynamics (2)
+- E102: U1 Poetry (1), U2 Prose (2)
+
 ### Assign Teachers:
-- T001 → M101
-- T002 → P201
-- T003 → E102
+- T001 â†’ M101 (course)
+- T002 â†’ P201-U1 (unit)
+- T003 â†’ E102-U2 (unit)
 
 ### Enroll Students and Assign Grades:
-- S001 in M101: 85
-- S001 in P201: 78
-- S002 in M101: 92
-- S002 in E102: 88
-- S003 in P201: 76
-- S003 in E102: 94
+- S001 in M101-U1: 85
+- S001 in P201-U1: 78
+- S002 in M101-U2: 92
+- S002 in E102-U1: 88
+- S003 in P201-U2: 76
+- S003 in E102-U2: 94
 
 ## Key Features to Try
 
 ### Feature 1: Teacher Tracking
-✓ See which teacher teaches each course in the **Courses** tab
-✓ View each teacher's workload in the **Teachers** tab
+âœ“ See which teacher teaches each course in the **Courses** tab
+âœ“ View each teacher's workload in the **Teachers** tab
 
 ### Feature 2: Comprehensive Reports
-✓ Generate student reports that include **teacher names**
-✓ See complete course details with instructor information
+âœ“ Generate student reports that include **teacher names**
+âœ“ See complete course details with instructor information
 
 ### Feature 3: Analytics
-✓ See enrollment trends across courses
-✓ Understand grade distribution in the system
-✓ Monitor teacher workload balance
+âœ“ See enrollment trends across courses
+âœ“ Understand grade distribution in the system
+âœ“ Monitor teacher workload balance
 
 ## Tips & Tricks
 
@@ -171,22 +187,23 @@ enrollments_data.csv       # Student enrollments and grades
 
 ### Modify Teacher Assignment
 1. Go to **Teachers** tab
-2. Select a different teacher and same course
-3. Click **Assign** - automatically replaces previous assignment
-4. Previous teacher is automatically removed from course
+2. Select a different teacher and same course/unit
+3. Click **Assign Course** or **Assign Unit**
+4. Workload updates instantly
 
 ### Data Persistence
-✓ All data saved automatically after each operation
-✓ Quit and restart application - all data is preserved
-✓ Delete CSV files to start fresh
+âœ“ All data saved automatically after each operation
+âœ“ Quit and restart application - all data is preserved
+âœ“ Delete CSV files to start fresh
 
 ## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
 | Teacher dropdown empty | Make sure you've added teachers first |
-| Can't enroll student | First add student, then add course, then enroll |
-| Grades not saving | Make sure student is enrolled in course first |
+| Unit dropdown empty | Add units to selected course first |
+| Can't enroll student | Add student, course, and at least one unit first |
+| Grades not saving | Select an enrollment row before assigning grade |
 | Charts not showing | Click "Refresh Charts" button |
 | CSV files not created | They auto-create on first save operation |
 
@@ -246,3 +263,18 @@ See also:
 - `README_ADVANCED.md` - Comprehensive feature documentation
 - `UPGRADE_SUMMARY.md` - Technical upgrade details
 - Code comments in Python files for implementation details
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+

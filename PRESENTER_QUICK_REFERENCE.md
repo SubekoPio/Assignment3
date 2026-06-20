@@ -1,18 +1,18 @@
-# EduManage Presentation - Quick Reference Guides
+﻿# EduManage Presentation - Quick Reference Guides
 
-## 📌 PART 1: Project Overview & Architecture - Quick Ref
+## ðŸ“Œ PART 1: Project Overview & Architecture - Quick Ref
 **Presenter: Team Member 1**
 
 ```
-⏱ TIME: 8-10 minutes
+â± TIME: 8-10 minutes
 
-📊 SLIDES TO SHOW:
+ðŸ“Š SLIDES TO SHOW:
 1. What is EduManage? (60 sec)
-   - Education management problem → Our solution
+   - Education management problem â†’ Our solution
    - 6 key features highlight
 
 2. System Architecture (2 min)
-   - 5-layer diagram (GUI → Logic → Models → Data)
+   - 5-layer diagram (GUI â†’ Logic â†’ Models â†’ Data)
    - Separation of concerns
 
 3. Core Data Models (2 min)
@@ -26,25 +26,25 @@
 5. Technology Stack (1 min)
    - Python 3.x, Tkinter, Matplotlib
 
-🎯 KEY POINTS TO EMPHASIZE:
-✓ "We've built a complete education management system"
-✓ "Clean separation between layers"
-✓ "Inherits from a strong OOP foundation"
-✓ "Using proven, reliable technologies"
+ðŸŽ¯ KEY POINTS TO EMPHASIZE:
+âœ“ "We've built a complete education management system"
+âœ“ "Clean separation between layers"
+âœ“ "Inherits from a strong OOP foundation"
+âœ“ "Using proven, reliable technologies"
 
-🔄 TRANSITION:
+ðŸ”„ TRANSITION:
 "Now let me pass it to [Team Member 2], who will show you the implementation details."
 ```
 
 ---
 
-## 📌 PART 2: Data Models & Implementation - Quick Ref
+## ðŸ“Œ PART 2: Data Models & Implementation - Quick Ref
 **Presenter: Team Member 2**
 
 ```
-⏱ TIME: 8-10 minutes
+â± TIME: 8-10 minutes
 
-📊 SLIDES TO SHOW:
+ðŸ“Š SLIDES TO SHOW:
 1. Person Base Class (2 min)
    - Private attributes (_person_id, _name, _email)
    - Property decorators for validation
@@ -74,25 +74,25 @@
 6. Entity Relationships (1 min)
    - Diagram showing connections
 
-🎯 KEY POINTS TO EMPHASIZE:
-✓ "Encapsulation protects data integrity"
-✓ "Inheritance reduces code duplication"
-✓ "CSV provides portability and simplicity"
-✓ "Relationships enable powerful queries"
+ðŸŽ¯ KEY POINTS TO EMPHASIZE:
+âœ“ "Encapsulation protects data integrity"
+âœ“ "Inheritance reduces code duplication"
+âœ“ "CSV provides portability and simplicity"
+âœ“ "Relationships enable powerful queries"
 
-🔄 TRANSITION:
+ðŸ”„ TRANSITION:
 "Now let me hand it to [Team Member 3], who will show how these models work together."
 ```
 
 ---
 
-## 📌 PART 3: System Logic & Core Operations - Quick Ref
+## ðŸ“Œ PART 3: System Logic & Core Operations - Quick Ref
 **Presenter: Team Member 3**
 
 ```
-⏱ TIME: 10-12 minutes
+â± TIME: 10-12 minutes
 
-📊 SLIDES TO SHOW:
+ðŸ“Š SLIDES TO SHOW:
 1. EducationSystem Overview (2 min)
    - Central controller concept
    - Dictionaries for students, courses, teachers
@@ -127,31 +127,31 @@
    - get_student_report() method
    - Report contents and uses
 
-🎯 KEY POINTS TO EMPHASIZE:
-✓ "Defensive programming catches errors early"
-✓ "Bidirectional relationships maintain consistency"
-✓ "Validation prevents invalid states"
-✓ "Separation of concerns: CSV vs Logic vs GUI"
+ðŸŽ¯ KEY POINTS TO EMPHASIZE:
+âœ“ "Defensive programming catches errors early"
+âœ“ "Bidirectional relationships maintain consistency"
+âœ“ "Validation prevents invalid states"
+âœ“ "Separation of concerns: CSV vs Logic vs GUI"
 
-💻 CODE TO HIGHLIGHT:
+ðŸ’» CODE TO HIGHLIGHT:
 - Duplicate checking if-statement
 - Email validation in Person class
 - Grade range validation (0 <= grade <= 100)
 - Bidirectional assignment pattern
 
-🔄 TRANSITION:
+ðŸ”„ TRANSITION:
 "Perfect! Now let me introduce [Team Member 4], who will show how users interact with all this."
 ```
 
 ---
 
-## 📌 PART 4: User Interface & GUI Features - Quick Ref
+## ðŸ“Œ PART 4: User Interface & GUI Features - Quick Ref
 **Presenter: Team Member 4**
 
 ```
-⏱ TIME: 10-12 minutes
+â± TIME: 10-12 minutes
 
-📊 SLIDES TO SHOW:
+ðŸ“Š SLIDES TO SHOW:
 1. Design Philosophy (2 min)
    - Modern, clean design
    - Color scheme explanation
@@ -212,36 +212,36 @@
    - Bar charts, horizontal bars
    - Text statistics panel
 
-🎯 KEY POINTS TO EMPHASIZE:
-✓ "Professional appearance attracts adoption"
-✓ "Intuitive layout = less training needed"
-✓ "Color coding helps visual navigation"
-✓ "Analytics empower decision makers"
+ðŸŽ¯ KEY POINTS TO EMPHASIZE:
+âœ“ "Professional appearance attracts adoption"
+âœ“ "Intuitive layout = less training needed"
+âœ“ "Color coding helps visual navigation"
+âœ“ "Analytics empower decision makers"
 
-💻 CODE TO HIGHLIGHT:
+ðŸ’» CODE TO HIGHLIGHT:
 - GUI initialization with colors
 - Tab creation and naming
 - Button event handlers
 - Matplotlib subplot creation
 
-📸 INTERACTIVE DEMO:
+ðŸ“¸ INTERACTIVE DEMO:
 - Show actual screenshots if possible
 - Demonstrate clicking between tabs
 - Show how charts update with data
 
-🔄 TRANSITION:
+ðŸ”„ TRANSITION:
 "Fantastic! We've now seen the complete system in action. Let me pass it to [Team Member 5] for the final part."
 ```
 
 ---
 
-## 📌 PART 5: Advanced Features & Conclusion - Quick Ref
+## ðŸ“Œ PART 5: Advanced Features & Conclusion - Quick Ref
 **Presenter: Team Member 5**
 
 ```
-⏱ TIME: 10-12 minutes
+â± TIME: 10-12 minutes
 
-📊 SLIDES TO SHOW:
+ðŸ“Š SLIDES TO SHOW:
 1. Advanced Features (3 min):
    
    Data Security (45 sec):
@@ -249,28 +249,28 @@
    - Grade constraints
    - Duplicate prevention
    - Error handling
-   → "Protects data integrity"
+   â†’ "Protects data integrity"
    
    Analytics Engine (45 sec):
    - Real-time metrics
    - Grade distribution
    - Teacher workload
    - Enrollment patterns
-   → "Enable data-driven decisions"
+   â†’ "Enable data-driven decisions"
    
    Persistent Storage (45 sec):
    - CSV format
    - Multi-file organization
    - Automatic saves
    - Session survival
-   → "Users don't lose work"
+   â†’ "Users don't lose work"
    
    Reporting System (45 sec):
    - Student reports
    - Teacher assignments
    - GPA calculations
    - Exportable format
-   → "Support academic operations"
+   â†’ "Support academic operations"
 
 2. Technical Achievements (2 min)
    - Go through 7 bullet points
@@ -280,10 +280,10 @@
 
 3. Real-World Use Cases (2 min)
    - Example scenarios:
-     • Universities (500+ students)
-     • Administrative automation
-     • Data analysis & planning
-     • Student self-service
+     â€¢ Universities (500+ students)
+     â€¢ Administrative automation
+     â€¢ Data analysis & planning
+     â€¢ Student self-service
    - Concrete impact metrics
 
 4. Future Roadmap (3 min):
@@ -292,14 +292,14 @@
    - SQLite migration
    - Better scalability
    - Query optimization
-   → "Handle 10,000+ students"
+   â†’ "Handle 10,000+ students"
    
    Phase 2: Web & API (1 min)
    - REST API
    - Web dashboard
    - Mobile compatibility
    - Remote access
-   → "Global accessibility"
+   â†’ "Global accessibility"
    
    Phase 3: Advanced (1 min)
    - Email notifications
@@ -307,14 +307,14 @@
    - PDF reports
    - ML predictions
    - Financial integration
-   → "Enterprise features"
+   â†’ "Enterprise features"
    
    Phase 4: Enterprise (15 sec)
    - Multi-institution
    - User authentication
    - Audit logging
    - Third-party integration
-   → "SaaS potential"
+   â†’ "SaaS potential"
 
 5. Project Metrics (1 min)
    - 1,500+ lines of code
@@ -331,13 +331,13 @@
    - Advanced concepts demonstrated
    - Real problems solved
 
-🎯 KEY POINTS TO EMPHASIZE:
-✓ "We built enterprise-quality software"
-✓ "Scalable and maintainable architecture"
-✓ "Clear vision for future enhancement"
-✓ "Demonstrates complete software development cycle"
+ðŸŽ¯ KEY POINTS TO EMPHASIZE:
+âœ“ "We built enterprise-quality software"
+âœ“ "Scalable and maintainable architecture"
+âœ“ "Clear vision for future enhancement"
+âœ“ "Demonstrates complete software development cycle"
 
-📈 STATISTICS TO HIGHLIGHT:
+ðŸ“ˆ STATISTICS TO HIGHLIGHT:
 - 1,500+ lines of code
 - 6 classes with inheritance
 - 6 functional GUI tabs
@@ -345,10 +345,10 @@
 - Professional color scheme
 - Matplotlib visualizations
 
-🎤 CLOSING STATEMENT:
+ðŸŽ¤ CLOSING STATEMENT:
 "This project represents complete software development from problem definition through architecture, implementation, testing, and deployment. Each component works seamlessly with the others to create a solution that's both powerful and user-friendly."
 
-❓ Q&A PREPARATION:
+â“ Q&A PREPARATION:
 Be ready to answer:
 - "Why CSV instead of database?" 
 - "Can it grow to 1000 students?"
@@ -359,7 +359,7 @@ Be ready to answer:
 
 ---
 
-## 🎯 Common Questions & Answer Guide
+## ðŸŽ¯ Common Questions & Answer Guide
 
 ```
 Q1: "Isn't this just a spreadsheet?"
@@ -411,49 +411,49 @@ A: "Database migration for scalability, REST API for
 
 ---
 
-## ⏱ Timing Guide
+## â± Timing Guide
 
 ```
 PART 1: Project Overview (8-10 min)
-├─ Opening (1 min)
-├─ Problem & Solution (1 min)
-├─ Architecture Overview (2 min)
-├─ Data Models (2 min)
-├─ OOP Principles (1.5 min)
-└─ Technology Stack (0.5 min)
+â”œâ”€ Opening (1 min)
+â”œâ”€ Problem & Solution (1 min)
+â”œâ”€ Architecture Overview (2 min)
+â”œâ”€ Data Models (2 min)
+â”œâ”€ OOP Principles (1.5 min)
+â””â”€ Technology Stack (0.5 min)
 
 PART 2: Data Models (8-10 min)
-├─ Person Class (2 min)
-├─ Student Class (2 min)
-├─ Teacher Class (2 min)
-├─ Course & Unit (1 min)
-├─ CSV Storage (1 min)
-└─ Relationships (1 min)
+â”œâ”€ Person Class (2 min)
+â”œâ”€ Student Class (2 min)
+â”œâ”€ Teacher Class (2 min)
+â”œâ”€ Course & Unit (1 min)
+â”œâ”€ CSV Storage (1 min)
+â””â”€ Relationships (1 min)
 
 PART 3: System Logic (10-12 min)
-├─ EducationSystem (2 min)
-├─ CRUD Operations (3 min)
-├─ Enrollment & Grading (2 min)
-├─ Teacher Assignment (2 min)
-├─ Validation (1 min)
-├─ Persistence (1.5 min)
-└─ Reporting (1 min)
+â”œâ”€ EducationSystem (2 min)
+â”œâ”€ CRUD Operations (3 min)
+â”œâ”€ Enrollment & Grading (2 min)
+â”œâ”€ Teacher Assignment (2 min)
+â”œâ”€ Validation (1 min)
+â”œâ”€ Persistence (1.5 min)
+â””â”€ Reporting (1 min)
 
 PART 4: User Interface (10-12 min)
-├─ Design Philosophy (2 min)
-├─ Architecture (1 min)
-├─ Tab Walkthrough (5 min)
-├─ GUI Implementation (2 min)
-└─ Analytics (1 min)
+â”œâ”€ Design Philosophy (2 min)
+â”œâ”€ Architecture (1 min)
+â”œâ”€ Tab Walkthrough (5 min)
+â”œâ”€ GUI Implementation (2 min)
+â””â”€ Analytics (1 min)
 
 PART 5: Features & Conclusion (10-12 min)
-├─ Advanced Features (3 min)
-├─ Technical Achievements (2 min)
-├─ Use Cases (2 min)
-├─ Future Roadmap (3 min)
-├─ Metrics (1 min)
-├─ Learning Points (1 min)
-└─ Conclusion (1 min)
+â”œâ”€ Advanced Features (3 min)
+â”œâ”€ Technical Achievements (2 min)
+â”œâ”€ Use Cases (2 min)
+â”œâ”€ Future Roadmap (3 min)
+â”œâ”€ Metrics (1 min)
+â”œâ”€ Learning Points (1 min)
+â””â”€ Conclusion (1 min)
 
 TOTAL: 46-54 minutes + Q&A (10-15 min)
 OVERALL: 60-70 minutes
@@ -461,33 +461,33 @@ OVERALL: 60-70 minutes
 
 ---
 
-## 🎤 Speaking Tips
+## ðŸŽ¤ Speaking Tips
 
 ```
 DO:
-✓ Speak clearly and confidently
-✓ Make eye contact with audience
-✓ Use hand gestures to emphasize points
-✓ Pause between major points
-✓ Let slides guide your narrative
-✓ Engage the audience with questions
-✓ Use real-world examples
-✓ Transition smoothly to next speaker
+âœ“ Speak clearly and confidently
+âœ“ Make eye contact with audience
+âœ“ Use hand gestures to emphasize points
+âœ“ Pause between major points
+âœ“ Let slides guide your narrative
+âœ“ Engage the audience with questions
+âœ“ Use real-world examples
+âœ“ Transition smoothly to next speaker
 
 DON'T:
-✗ Read slides word-for-word
-✗ Stand in front of slides
-✗ Speak too fast
-✗ Use technical jargon without explaining
-✗ Go off on tangents
-✗ Apologize for minor issues
-✗ Forget to cite your teammates
-✗ Ignore audience body language
+âœ— Read slides word-for-word
+âœ— Stand in front of slides
+âœ— Speak too fast
+âœ— Use technical jargon without explaining
+âœ— Go off on tangents
+âœ— Apologize for minor issues
+âœ— Forget to cite your teammates
+âœ— Ignore audience body language
 ```
 
 ---
 
-## 📝 Note-Taking During Others' Parts
+## ðŸ“ Note-Taking During Others' Parts
 
 ```
 MEMBER 1 - Architecture Overview:
@@ -518,7 +518,7 @@ MEMBER 5 - Features & Future:
 
 ---
 
-## 💡 Pro Tips for Presentation Success
+## ðŸ’¡ Pro Tips for Presentation Success
 
 ```
 1. PRACTICE WITH YOUR SLIDES
@@ -568,25 +568,40 @@ MEMBER 5 - Features & Future:
 
 ---
 
-## 🚀 Final Checklist Before Presentation
+## ðŸš€ Final Checklist Before Presentation
 
 ```
-□ All presenters have practiced their sections
-□ Presentation file (TEAM_PRESENTATION.html) is working
-□ All links and navigation buttons work correctly
-□ Team members know their transitions
-□ Someone is timing the presentation
-□ Q&A topics prepared
-□ Backup explanations ready
-□ All team members know other parts
-□ Professional appearance (dress code agreed)
-□ Demo data prepared (if showing live examples)
-□ Backup of presentation files available
-□ Projector/screen setup tested
-□ Audio working properly
-□ Everyone knows the meeting room location/time
+â–¡ All presenters have practiced their sections
+â–¡ Presentation file (TEAM_PRESENTATION.html) is working
+â–¡ All links and navigation buttons work correctly
+â–¡ Team members know their transitions
+â–¡ Someone is timing the presentation
+â–¡ Q&A topics prepared
+â–¡ Backup explanations ready
+â–¡ All team members know other parts
+â–¡ Professional appearance (dress code agreed)
+â–¡ Demo data prepared (if showing live examples)
+â–¡ Backup of presentation files available
+â–¡ Projector/screen setup tested
+â–¡ Audio working properly
+â–¡ Everyone knows the meeting room location/time
 ```
 
 ---
 
-**Remember: You've built something great! Present it with confidence and pride! 🎉**
+**Remember: You've built something great! Present it with confidence and pride! ðŸŽ‰**
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+

@@ -1,10 +1,10 @@
-# EduManage - Team Presentation Guide
+﻿# EduManage - Team Presentation Guide
 
-## 📋 Presenter Notes & Speaking Guide for 5 Team Members
+## ðŸ“‹ Presenter Notes & Speaking Guide for 5 Team Members
 
 ---
 
-## 🎯 PART 1: Project Overview & System Architecture
+## ðŸŽ¯ PART 1: Project Overview & System Architecture
 **Presenter: Team Member 1 (Architecture Lead)**
 **Duration: 8-10 minutes**
 
@@ -21,7 +21,7 @@
 #### 2. System Overview (3 minutes)
 - Walk through the 5-layer architecture diagram on screen
 - Explain how each layer builds on the previous one
-- Emphasize the separation of concerns: GUI ≠ Business Logic ≠ Data
+- Emphasize the separation of concerns: GUI â‰  Business Logic â‰  Data
 
 **Key Points to Mention:**
 - "Notice how the GUI is completely independent from the business logic"
@@ -47,7 +47,7 @@
 
 ---
 
-## 💾 PART 2: Data Models & Implementation
+## ðŸ’¾ PART 2: Data Models & Implementation
 **Presenter: Team Member 2 (Backend Developer)**
 **Duration: 8-10 minutes**
 
@@ -97,7 +97,7 @@
 
 #### 6. Entity Relationships (1 minute)
 - Show the relationship diagram
-- Explain the connections: Student→Course, Course→Unit, Teacher→Course
+- Explain the connections: Studentâ†’Course, Courseâ†’Unit, Teacherâ†’Course
 - Bidirectional relationships
 
 ### Technical Deep Dive Point:
@@ -108,7 +108,7 @@
 
 ---
 
-## ⚙️ PART 3: System Logic & Core Operations
+## âš™ï¸ PART 3: System Logic & Core Operations
 **Presenter: Team Member 3 (System Engineer)**
 **Duration: 10-12 minutes**
 
@@ -176,7 +176,7 @@
 
 ---
 
-## 🖥️ PART 4: User Interface & GUI Features
+## ðŸ–¥ï¸ PART 4: User Interface & GUI Features
 **Presenter: Team Member 4 (UI/UX Developer)**
 **Duration: 10-12 minutes**
 
@@ -270,7 +270,7 @@
 
 ---
 
-## 🚀 PART 5: Advanced Features, Future Roadmap & Conclusion
+## ðŸš€ PART 5: Advanced Features, Future Roadmap & Conclusion
 **Presenter: Team Member 5 (Project Manager)**
 **Duration: 10-12 minutes**
 
@@ -379,7 +379,7 @@
 
 ---
 
-## 📝 General Presenter Tips for All Team Members
+## ðŸ“ General Presenter Tips for All Team Members
 
 ### Before Presentation:
 1. **Practice with the slides**: Know where each button is, how the navigation works
@@ -395,10 +395,10 @@
 5. **Pause for questions**: Invite interaction
 
 ### Questions You Might Get:
-- "Can this handle X number of students?" → Talk about scalability plans
-- "Why not use a database?" → Explain CSV simplicity, future database plans
-- "Could this be a web app?" → Yes! That's in Phase 2
-- "Is this open source?" → Explain your sharing preferences
+- "Can this handle X number of students?" â†’ Talk about scalability plans
+- "Why not use a database?" â†’ Explain CSV simplicity, future database plans
+- "Could this be a web app?" â†’ Yes! That's in Phase 2
+- "Is this open source?" â†’ Explain your sharing preferences
 
 ### Handling Technical Questions:
 - Show the relevant code on screen
@@ -408,7 +408,7 @@
 
 ---
 
-## 🎨 Presentation Tips for Visual Enhancement
+## ðŸŽ¨ Presentation Tips for Visual Enhancement
 
 ### When Showing Code:
 - "This is from our models.py file..."
@@ -427,7 +427,7 @@
 
 ---
 
-## 🚀 Opening & Closing Sequences
+## ðŸš€ Opening & Closing Sequences
 
 ### Grand Opening (First Presenter):
 "Good [morning/afternoon] everyone! Welcome to our presentation of EduManage - an Advanced Education Management System that we've built from scratch. Over the next 45 minutes, our team of 5 will walk you through every aspect of this project: from the overall architecture to the user interface to advanced features and our vision for the future."
@@ -443,7 +443,7 @@
 
 ---
 
-## 📊 Key Statistics to Mention:
+## ðŸ“Š Key Statistics to Mention:
 - 1,500+ lines of well-documented Python code
 - 6 core classes with proper inheritance
 - 6 functional GUI tabs
@@ -453,7 +453,7 @@
 
 ---
 
-## 💡 Tips for Handling Difficult Questions:
+## ðŸ’¡ Tips for Handling Difficult Questions:
 
 **Q: "Isn't this just a glorified spreadsheet?"**
 A: "No, we've implemented real business logic, validation, reporting, and analytics. It's maintainable, scalable, and professional."
@@ -469,7 +469,7 @@ A: "Yes! With database optimization and caching, it could handle thousands of us
 
 ---
 
-## 🎬 Presentation Flow Summary:
+## ðŸŽ¬ Presentation Flow Summary:
 - **Part 1 (8-10 min)**: Overview & Architecture
 - **Part 2 (8-10 min)**: Data Models & Implementation  
 - **Part 3 (10-12 min)**: System Logic & Operations
@@ -481,4 +481,19 @@ A: "Yes! With database optimization and caching, it could handle thousands of us
 
 ---
 
-**Good Luck to All Presenters! 🎉**
+**Good Luck to All Presenters! ðŸŽ‰**
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+
