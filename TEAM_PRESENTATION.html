@@ -367,6 +367,142 @@
             min-width: 50px;
         }
 
+        .tree-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            padding: 20px 0;
+        }
+
+        .tree-node {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 8px;
+            min-width: 280px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+
+        .tree-connector {
+            width: 2px;
+            height: 20px;
+            background: #667eea;
+            margin: 0;
+        }
+
+        .tree-children {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            width: 100%;
+        }
+
+        .tree-child {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .tree-child-node {
+            background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 8px;
+            min-width: 180px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .tree-child-attributes {
+            background: #f9f9f9;
+            color: #333;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 13px;
+            min-width: 180px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .tree-child-attributes li {
+            margin: 4px 0;
+            padding-left: 15px;
+        }
+
+        .layer-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .layer-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+
+        .layer-box.alt {
+            background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%);
+            box-shadow: 0 6px 20px rgba(243, 156, 18, 0.3);
+        }
+
+        .layer-box .layer-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .layer-box .layer-description {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .layer-arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #667eea;
+            margin: 8px 0;
+        }
+
+        .entity-flow {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 20px;
+        }
+
+        .entity-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            min-width: 140px;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .entity-arrow {
+            font-size: 20px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
         @media (max-width: 768px) {
             .slide {
                 padding: 30px 20px;
@@ -453,30 +589,28 @@
                 title: "System Architecture Overview",
                 content: `
                     <p>EduManage is built on a clean, layered architecture with clear separation of concerns:</p>
-                    <div class="diagram-box">
-┌─────────────────────────────────────┐
-│   PRESENTATION LAYER                │
-│   Tkinter GUI with 6 Tabs & Charts  │
-└────────────────┬────────────────────┘
-                 │
-┌────────────────▼────────────────────┐
-│   BUSINESS LOGIC LAYER              │
-│   EducationSystem - Core Controller  │
-│   CRUD, Validation, Analytics       │
-└────────────────┬────────────────────┘
-                 │
-┌────────────────▼────────────────────┐
-│   DATA MODEL LAYER                  │
-│   Person, Student, Teacher, Course  │
-│   OOP with Inheritance              │
-└────────────────┬────────────────────┘
-                 │
-┌────────────────▼────────────────────┐
-│   PERSISTENCE LAYER                 │
-│   CSV File Storage (Data_Storage)    │
-└─────────────────────────────────────┘
+                    <div class="layer-stack">
+                        <div class="layer-box">
+                            <div class="layer-title">🖥️ PRESENTATION LAYER</div>
+                            <div class="layer-description">Tkinter GUI with 6 Tabs & Charts</div>
+                        </div>
+                        <div class="layer-arrow">⬇️</div>
+                        <div class="layer-box alt">
+                            <div class="layer-title">⚙️ BUSINESS LOGIC LAYER</div>
+                            <div class="layer-description">EducationSystem - Core Controller<br/>CRUD, Validation, Analytics</div>
+                        </div>
+                        <div class="layer-arrow">⬇️</div>
+                        <div class="layer-box">
+                            <div class="layer-title">📦 DATA MODEL LAYER</div>
+                            <div class="layer-description">Person, Student, Teacher, Course<br/>OOP with Inheritance</div>
+                        </div>
+                        <div class="layer-arrow">⬇️</div>
+                        <div class="layer-box alt">
+                            <div class="layer-title">💾 PERSISTENCE LAYER</div>
+                            <div class="layer-description">CSV File Storage (Data_Storage)</div>
+                        </div>
                     </div>
-                    <p><strong>Key Benefit:</strong> Each layer is independent and can be modified without affecting others.</p>
+                    <p style="margin-top: 20px; text-align: center;"><strong>Key Benefit:</strong> Each layer is independent and can be modified without affecting others.</p>
                 `
             },
             {
@@ -756,19 +890,36 @@
                 type: "content",
                 title: "Inheritance Hierarchy Visualization",
                 content: `
-                    <div class="diagram-box">
-                                     Person
-                                      │
-                            ┌─────────┴─────────┐
-                            │                   │
-                        Student            Teacher
-                            │                   │
-                    • enrolled_courses  • department
-                    • enroll()          • taught_units
-                    • assign_grade()    • assign_course()
+                    <div class="tree-diagram">
+                        <div class="tree-node">👤 Person (Base Class)<br/><small>person_id, name, email</small></div>
+                        <div class="tree-connector"></div>
+                        <div class="tree-children">
+                            <div class="tree-child">
+                                <div class="tree-child-node">🎓 Student</div>
+                                <div class="tree-child-attributes">
+                                    <strong>Unique Attributes:</strong>
+                                    <ul>
+                                        <li>enrolled_courses</li>
+                                        <li>enroll()</li>
+                                        <li>assign_grade()</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="tree-child">
+                                <div class="tree-child-node">👨‍🏫 Teacher</div>
+                                <div class="tree-child-attributes">
+                                    <strong>Unique Attributes:</strong>
+                                    <ul>
+                                        <li>department</li>
+                                        <li>taught_units</li>
+                                        <li>assign_course()</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <h3>Benefits of This Design</h3>
+                    <h3 style="margin-top: 30px;">Benefits of This Design</h3>
                     <ul class="bullet-list">
                         <li><strong>Code Reuse:</strong> Both inherit name, email, ID from Person</li>
                         <li><strong>Consistency:</strong> All people have email validation</li>
@@ -782,14 +933,18 @@
                 title: "Entity Relationships & Constraints",
                 content: `
                     <h3>Relationships Between Entities</h3>
-                    <div class="diagram-box">
-    Student ──────enrolls in──────► Course ◄──────assigns──────── Teacher
-      │                               │
-      │                               │
-      └──────receives grade for──────┘
+                    <div class="entity-flow">
+                        <div class="entity-box">🎓 Student</div>
+                        <div class="entity-arrow">enrolls in →</div>
+                        <div class="entity-box">📖 Course</div>
+                        <div class="entity-arrow">← assigns</div>
+                        <div class="entity-box">👨‍🏫 Teacher</div>
+                    </div>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <p style="font-size: 18px; color: #667eea; font-weight: bold;">⬍<br/>receives grade for</p>
                     </div>
                     
-                    <h3>Key Constraints</h3>
+                    <h3 style="margin-top: 20px;">Key Constraints</h3>
                     <ul class="bullet-list">
                         <li><strong>Unique IDs:</strong> No duplicate students, courses, or teachers</li>
                         <li><strong>Email Validation:</strong> Must contain '@' symbol</li>
@@ -851,11 +1006,11 @@ T002,Prof. John Brown,john@edu.com,Engineering
                     <div class="timeline">
                         <div class="timeline-item">
                             <h4>Step 1: Add Student</h4>
-                            <p>Create Student object → Store in system.students dictionary</p>
+                            <p>Enter name and email → Student ID is generated automatically → Store in system.students dictionary</p>
                         </div>
                         <div class="timeline-item">
                             <h4>Step 2: Add Course</h4>
-                            <p>Create Course object → Store in system.courses dictionary</p>
+                            <p>Enter name and credits → Course ID is generated automatically → Store in system.courses dictionary</p>
                         </div>
                         <div class="timeline-item">
                             <h4>Step 3: Enroll Student</h4>
@@ -1241,7 +1396,7 @@ save_data():
                 content: `
                     <h3>Functionality</h3>
                     <ul class="bullet-list">
-                        <li>Input form for Student ID, Name, Email</li>
+                        <li>Input form for auto-generated Student ID, Name, Email</li>
                         <li>"Add Student" button saves to system</li>
                         <li>TreeView displays all students in table format</li>
                         <li>Edit and Delete buttons for modifications</li>
@@ -1252,7 +1407,7 @@ save_data():
                     <div class="timeline">
                         <div class="timeline-item">
                             <h4>1. Enter Details</h4>
-                            <p>Type student ID, name, and email</p>
+                            <p>Enter name and email; the student ID is assigned automatically</p>
                         </div>
                         <div class="timeline-item">
                             <h4>2. Click Add Student</h4>
@@ -1275,7 +1430,7 @@ save_data():
                 content: `
                     <h3>Key Features</h3>
                     <ul class="bullet-list">
-                        <li>Input fields for Course ID, Name, Credits</li>
+                        <li>Input fields for auto-generated Course ID, Name, Credits</li>
                         <li>Add units to courses (granular structure)</li>
                         <li>Theme-aware Manage Units dialog with full CRUD actions</li>
                         <li>Display assigned teacher information</li>
@@ -1286,7 +1441,7 @@ save_data():
                     <h3>What You Can Do</h3>
                     <div class="grid-2">
                         <div class="highlight-box">
-                            <strong>Create Courses:</strong> Add new course offerings with credits
+                            <strong>Create Courses:</strong> Add new course offerings with auto-generated IDs
                         </div>
                         <div class="highlight-box">
                             <strong>Organize Units:</strong> Divide courses into manageable units
@@ -1358,24 +1513,52 @@ save_data():
                 type: "content",
                 title: "Reports Tab - Student Performance Reports",
                 content: `
-                    <h3>Comprehensive Report Generation</h3>
-                    <p>Select a student to view detailed academic report:</p>
+                    <h3>Professional Report Generation</h3>
+                    <p>Select a student to view detailed academic report with enhanced professional styling:</p>
                     
+                    <h4>Display Features</h4>
                     <ul class="bullet-list">
-                        <li><strong>Student Info:</strong> ID, Name, Email</li>
-                        <li><strong>Enrollments:</strong> All courses student is taking</li>
-                        <li><strong>Grades:</strong> Current grade in each course</li>
-                        <li><strong>Teachers:</strong> Who teaches each course</li>
-                        <li><strong>GPA:</strong> Calculated grade point average</li>
-                        <li><strong>Academic Status:</strong> Overall assessment</li>
+                        <li><strong>Structured Layout:</strong> Clean, professional report structure with aligned academic fields</li>
+                        <li><strong>Student Profile Panel:</strong> Name, ID, and generation timestamp in a dedicated section</li>
+                        <li><strong>Fast Preview Mode:</strong> In-app report area uses plain text for quick readability</li>
+                        <li><strong>Student Info Section:</strong> Name and ID with clear formatting</li>
+                        <li><strong>Course Details:</strong> Comprehensive unit-level information</li>
+                        <li><strong>Teachers:</strong> Who teaches each course and unit</li>
+                        <li><strong>GPA Display:</strong> Course GPA and Overall CGPA prominently shown</li>
+                        <li><strong>Timestamp:</strong> Report generation date and time for audit trail</li>
+                    </ul>
+                    
+                    <h4>PDF Export - Professional Styling</h4>
+                    <ul class="bullet-list">
+                        <li><strong>Institutional Header:</strong> Branded report title block for official documents</li>
+                        <li><strong>Optional Logo:</strong> Automatically displays institution logo when configured</li>
+                        <li><strong>ReportLab Engine:</strong> Robust styled-PDF generation replacing legacy export pipeline</li>
+                        <li><strong>Color-Coded Headers:</strong> Navy headers with white text</li>
+                        <li><strong>Bordered Tables:</strong> Professional cell borders for clarity</li>
+                        <li><strong>Alternating Row Colors:</strong> Light backgrounds for improved readability</li>
+                        <li><strong>Grade Badges:</strong> Grade + letter cells highlighted by performance bands</li>
+                        <li><strong>Institution Branding:</strong> System name displayed professionally</li>
+                        <li><strong>Highlighted CGPA:</strong> Orange background for emphasis</li>
+                        <li><strong>Signature Area:</strong> Prepared by, verified by, and registrar sign-off lines</li>
+                        <li><strong>Footer Chrome:</strong> Confidentiality note and automatic page numbering</li>
+                        <li><strong>Brand Palette:</strong> Centralized theme colors allow easy school branding updates</li>
+                        <li><strong>Print-Ready:</strong> Optimized layout for both screen and print</li>
+                    </ul>
+
+                    <h4>Why Preview and PDF Look Different</h4>
+                    <ul class="bullet-list">
+                        <li><strong>Preview:</strong> Rendered in a text widget for speed and easy scanning</li>
+                        <li><strong>PDF Export:</strong> Rendered with ReportLab layout engine for official styled output</li>
+                        <li><strong>Result:</strong> Same academic data source, but richer visual presentation in exported documents</li>
                     </ul>
                     
                     <h3>Use Cases</h3>
                     <ul class="bullet-list">
-                        <li>Print transcripts for students</li>
-                        <li>Faculty review performance</li>
-                        <li>Academic advising sessions</li>
-                        <li>Progress tracking</li>
+                        <li>Print professional transcripts for students</li>
+                        <li>Faculty review performance with detailed metrics</li>
+                        <li>Academic advising sessions with visual data</li>
+                        <li>Progress tracking across semesters</li>
+                        <li>Official records and documentation</li>
                     </ul>
                 `
             },
@@ -1414,26 +1597,32 @@ save_data():
                 title: "Analysis Dashboard - Visual Layout",
                 content: `
                     <h3>Dashboard Structure</h3>
-                    <div class="diagram-box">
-┌────────────────────────────────────────────────┐
-│           ANALYSIS DASHBOARD                   │
-├──────────────────┬──────────────────────────────┤
-│  CHART 1         │  CHART 2                     │
-│  Students per    │  Grade Distribution          │
-│  Course          │  (0-60, 60-70, 70-80, etc.) │
-│                  │                              │
-├──────────────────┼──────────────────────────────┤
-│  CHART 3         │  CHART 4                     │
-│  Teacher Load    │  Statistics Panel            │
-│  (Horizontal)    │  • Total Students: 45        │
-│                  │  • Total Courses: 12         │
-│                  │  • Total Teachers: 8         │
-│                  │  • Avg Grade: 78.5           │
-└──────────────────┴──────────────────────────────┘
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin: 20px 0;">
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                            <div style="font-weight: bold; font-size: 16px; margin-bottom: 10px;">📊 CHART 1</div>
+                            <div>Students per Course</div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #F39C12 0%, #E67E22 100%); color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);">
+                            <div style="font-weight: bold; font-size: 16px; margin-bottom: 10px;">📈 CHART 2</div>
+                            <div>Grade Distribution<br/><small>(0-60, 60-70, 70-80, ...)</small></div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);">
+                            <div style="font-weight: bold; font-size: 16px; margin-bottom: 10px;">📋 CHART 3</div>
+                            <div>Teacher Workload<br/><small>(Horizontal Bar Chart)</small></div>
+                        </div>
+                        <div style="background: linear-gradient(135deg, #27ae60 0%, #16a085 100%); color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);">
+                            <div style="font-weight: bold; font-size: 16px; margin-bottom: 10px;">📊 STATISTICS PANEL</div>
+                            <div style="font-size: 13px; line-height: 1.8;">
+                                <div>✓ Total Students</div>
+                                <div>✓ Total Courses</div>
+                                <div>✓ Total Teachers</div>
+                                <div>✓ Average Grade</div>
+                            </div>
+                        </div>
                     </div>
                     
-                    <h3>Real-Time Updates</h3>
-                    <p>Charts refresh whenever data changes, always showing current state.</p>
+                    <h3 style="margin-top: 20px;">Real-Time Updates</h3>
+                    <p>Charts refresh whenever data changes, always showing current state. Analysis can now include student and teacher snapshots when selected from dropdowns.</p>
                 `
             },
             {
@@ -1444,9 +1633,13 @@ save_data():
                     <ul class="bullet-list">
                         <li><strong>Modern Theme:</strong> Clean, flat design with subtle gradients</li>
                         <li><strong>Typography:</strong> Larger table and chart fonts for readability</li>
+                        <li><strong>UI Consistency:</strong> Unified action-button color system and softer card spacing across all tabs</li>
+                        <li><strong>Courses UX Fix:</strong> Course Units table now stays visible by default in the split layout</li>
+                        <li><strong>Enrollment Styling:</strong> Enrollment cards now follow the same style language as other tabs</li>
+                        <li><strong>Analysis Expansion:</strong> Student and teacher snapshots can be viewed from dropdown selections</li>
                         <li><strong>Color Coordination:</strong> Consistent palette across all tabs</li>
                         <li><strong>Spacing:</strong> Proper padding and margins for visual clarity</li>
-                        <li><strong>Theme Engine:</strong> Dark/light switch rebuilds tabs cleanly for smooth transitions</li>
+                        <li><strong>Theme Engine:</strong> Modern light-first palettes now provide a cleaner professional look with larger readable typography</li>
                     </ul>
                     
                     <h3>Interactive Elements</h3>
@@ -1577,10 +1770,18 @@ save_data():
                 content: `
                     <h3>Comprehensive Report Generation</h3>
                     <ul class="bullet-list">
-                        <li><strong>Student Reports:</strong> Complete academic history and GPA</li>
+                        <li><strong>Student Reports:</strong> Complete academic history and GPA with professional visual formatting</li>
                         <li><strong>Teacher Reports:</strong> Course assignments and student lists</li>
                         <li><strong>Course Reports:</strong> Enrollment numbers and grade distributions</li>
                         <li><strong>System Reports:</strong> Institution-wide analytics</li>
+                    </ul>
+
+                    <h3>2026 Report Export Redesign</h3>
+                    <ul class="bullet-list">
+                        <li><strong>New Export Engine:</strong> ReportLab-powered PDF generation for reliable styling and compatibility</li>
+                        <li><strong>Institutional Quality:</strong> Branded header, bordered tables, and highlighted summary sections</li>
+                        <li><strong>Interpretability:</strong> Grade/letter badge colors make performance patterns easy to scan</li>
+                        <li><strong>Official Formatting:</strong> Signature lines plus footer with page numbering for formal use</li>
                     </ul>
                     
                     <h3>Real-World Applications</h3>

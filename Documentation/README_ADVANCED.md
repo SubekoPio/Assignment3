@@ -13,12 +13,13 @@ EduManage is an advanced education management system built with Python and Tkint
   - `teachers_data.csv` - Teacher information and departments
   - `enrollments_data.csv` - Student-course enrollments and grades
 
-### 2. **Teacher Management**
+### 1. **Teacher Management**
 - Add, manage, and track teacher information
 - Assign teachers to courses and specific course units
 - Track teacher workload (number of units taught)
 - Department assignment for organizational purposes
 - View teacher details including assigned courses/units
+- Teacher, course, student, and unit IDs are generated automatically
 
 <img src="../images/teachers_tab.png" alt="Project Screenshot" width="500">
 
@@ -30,11 +31,11 @@ EduManage is an advanced education management system built with Python and Tkint
 - Automatic tracking of taught units per teacher
 - Display assigned teacher at both course and unit levels
 
-### 4. **Course Unit Management**
+### 3. **Course Unit Management**
 - Add, update, and delete units per course
 - Dedicated themed unit management dialog with full CRUD actions
 - Inline units panel on Courses tab with selected-course context
-- Unit IDs validated for uniqueness and consistency
+- Unit IDs are generated automatically and validated for uniqueness and consistency
 
 ### 5. **Enhanced Reporting**
 - Student reports now include assigned teacher information
@@ -53,19 +54,53 @@ The new Analysis tab provides:
   - System-wide average grade
 
 ### 7. **UI/Theming Improvements**
-- Theme switching now rebuilds tabs cleanly for consistent dark/light styling
+- Modern light-first interface with polished accent palettes for a cleaner professional look
 - Table header and row typography increased for readability
 - Analysis chart label, title, and tick fonts enlarged
 - Better spacing and compact header for improved data/table area
 
 ## 6. **Exporting Data**
 
-## ðŸ“„*Export Report to PDF**
-  Functionality: Allows users to convert a generated student report card into a standard PDF document.
+## 📄 Export Report to PDF
+  **Functionality**: Convert a generated student report card into a professional, publication-ready PDF document.
+  
+  **Professional PDF Features**:
+  - Institutional header block with branded report title
+  - Optional institution logo support (auto-detected when placed in images folder)
+  - Student information displayed with clear labeled fields
+  - Professional table layout with:
+    - Color-coded column headers (navy background)
+    - Alternating row colors for improved readability
+    - Bordered cells for clear data organization
+    - Course-level GPA display for each course
+    - Grade and letter badge coloring by performance bands
+  - Overall CGPA highlighted with secondary orange color
+  - Signature lines for Prepared By, Verified By, and Registrar Signature
+  - Fixed footer with page number and confidentiality note
+  - Generated timestamp for audit trail
+  - Proper spacing and typography for professional appearance
+  
+  **Technical Detail**: Uses the ReportLab library with professional styling including:
+  - Color scheme: Primary navy (#0F4C81), Secondary coral (#F28C6F)
+  - Centralized PDF palette configuration in code for easy school-brand customization
+  - Light backgrounds and dark text for readability
+  - Bordered table cells with alternating row fill colors
+  - Clear section separations with visual hierarchy
+  - Optimized layout for print and digital viewing with multi-page footer rendering
 
-  Technical Detail: Uses the fpdf library. The system forces the use of the Courier (monospaced) font to ensure that your tabular data, GPA, and credit columns remain perfectly aligned in the final document, preventing the formatting issues typically seen with variable-width fonts.
+  **Preview vs Export Note**:
+  - The in-app report area is a plain-text preview for speed and readability.
+  - Full visual styling (branding, colors, grade badges, signature/footer blocks) appears in the exported PDF.
+  - This separation is intentional because the GUI preview widget is text-only, while PDF export uses ReportLab layout primitives.
 
-## ðŸ“Š Export Course Summary to CSV
+  **Logo Setup (Optional)**:
+  - Add one of these files under `images/` to enable logo rendering in the PDF header:
+    - `institution_logo.png`
+    - `school_logo.png`
+    - `logo.png`
+  - If no logo file is found, the system falls back to the `EM` badge automatically.
+
+## 📊 Export Course Summary to CSV
   Functionality: Generates a structured CSV file containing the full course overview and unit breakdown for easy analysis in spreadsheet software.
 
   Workflow: This function is optimized for maintenance. It operates in write mode ('w'), meaning it automatically overwrites the previous summary file each time it is used. This ensures you always maintain a single, "source-of-truth" file, preventing your project directory from being cluttered with outdated report versions.
@@ -105,11 +140,11 @@ python gui_main.py
 ## User Guide
 
 ### Students Tab
-- **Add Student**: Enter student ID, name, and email to register new students
+- **Add Student**: Enter name and email to register new students; the student ID is generated automatically
 - **View All**: List of all registered students
 
 ### Courses Tab
-- **Add Course**: Enter course ID, name, and credit hours
+- **Add Course**: Enter name and credit hours; the course ID is generated automatically
 - **View Assignments**: See which teacher is assigned to each course
 - **Teacher Assignment**: Manage teacher assignments (via Teachers tab)
 
@@ -124,10 +159,27 @@ python gui_main.py
 
 ### Reports Tab
 - **Generate Report**: Select a student to view:
-  - Enrolled courses
-  - Credits for each course
-  - Assigned grades
-  - **Assigned teacher for each course** (NEW)
+  - Professional report display with borders and emoji icons
+  - Student name and ID with clear formatting
+  - Enrolled courses with GPA per course
+  - Credits for each course and unit
+  - Assigned grades at unit level
+  - **Assigned teacher for each course/unit** (NEW)
+  - Overall CGPA prominently displayed
+  - Report generation timestamp
+  
+- **Visual Enhancements**:
+  - Unicode box borders for clean, professional appearance
+  - Color-coded structure with visual hierarchy
+  - Emoji icons (📋, 📌, 🔢, 📚, 🎯) for better readability
+  - Organized table format with clear column headers
+  
+- **Export to PDF**: Generate publication-ready PDF with:
+  - Professional color scheme (purple/blue headers, orange highlights)
+  - Bordered table layout with alternating row colors
+  - Clear section divisions
+  - Institution branding
+  - Timestamp for audit purposes
 
 ### Analysis Tab 
 - **Refresh Charts**: Update all visualizations with current data
@@ -292,6 +344,17 @@ For issues or questions, refer to the code comments and docstrings in:
 ## 2026-06 UI Polish Update
 - Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
 - Improved table readability with larger TreeView typography and row heights.
-- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Replaced the previous dark-oriented styling with a modern light-first theme system and larger baseline UI fonts.
 - Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+- Added a unified button style system (primary/info/success/warning/danger/neutral) and softer card spacing for a more cohesive modern interface.
+- Fixed the Courses tab split layout so the Course Units table remains visible instead of collapsing below the fold.
+- Updated Enrollment tab surface styling to match the visual language used in the other tabs.
+- Extended Analysis with student and teacher snapshot views from dropdown selections while preserving full system analytics.
+
+## 2026-06 Report Export Redesign Update
+- Replaced the PDF export engine with ReportLab for robust styled PDF generation and improved compatibility.
+- Fixed Unicode/codec export failures by removing fragile character-path dependencies in the PDF pipeline.
+- Added an institutional header block, structured student info panel, bordered performance table, and highlighted CGPA section.
+- Added grade/letter badge coloring in exported PDFs to improve visual interpretation of performance.
+- Added signature lines and an official footer (confidentiality note + page number) for print-ready academic documents.
 

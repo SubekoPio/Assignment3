@@ -200,7 +200,7 @@
 #### 3. Tab-by-Tab Walkthrough (5 minutes)
 
 **Students Tab** (1 minute):
-- "Users enter student ID, name, and email"
+- "Users enter name and email, and the student ID is generated automatically"
 - TreeView shows all students in a table
 - Quick actions: Add, Edit, Delete
 - **Real-world use**: "Registrar can quickly add all students at the start of semester"

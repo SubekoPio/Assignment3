@@ -1,6 +1,7 @@
 import csv
 import os
 import json
+import re
 from models import Student, Course, Teacher, Unit
 
 class EducationSystem:
@@ -32,6 +33,31 @@ class EducationSystem:
         new_student = Student(student_id, name, email)
         self.students[student_id] = new_student
         return new_student
+
+    def _next_prefixed_id(self, existing_ids, prefix):
+        pattern = re.compile(rf"^{re.escape(prefix)}(\d+)$")
+        highest = 0
+        for item_id in existing_ids:
+            match = pattern.match(str(item_id))
+            if match:
+                highest = max(highest, int(match.group(1)))
+        return f"{prefix}{highest + 1}"
+
+    def next_student_id(self):
+        return self._next_prefixed_id(self.students.keys(), "S")
+
+    def next_teacher_id(self):
+        return self._next_prefixed_id(self.teachers.keys(), "T")
+
+    def next_course_id(self):
+        return self._next_prefixed_id(self.courses.keys(), "C")
+
+    def next_unit_id(self):
+        unit_ids = []
+        for course in self.courses.values():
+            for unit in course.units:
+                unit_ids.append(unit.get('unit_id'))
+        return self._next_prefixed_id(unit_ids, "U")
 
     def add_course(self, course_id, name, credits):
         if course_id in self.courses:

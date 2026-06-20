@@ -4,12 +4,12 @@ from tkinter import ttk, messagebox, filedialog
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 from system import EducationSystem
-from fpdf import FPDF
 import re
 import os
+from datetime import datetime
 
 # Set appearance and default theme
-ctk.set_appearance_mode("dark")  # Modes: "System" (default), "Dark", "Light"
+ctk.set_appearance_mode("light")
 ctk.set_default_color_theme("blue")  # Themes: "blue", "green", "dark-blue"
 
 class EduManageGUI:
@@ -22,23 +22,31 @@ class EduManageGUI:
         self.selected_course_id = None
         self.selected_teacher_id = None
         self.selected_enrollment = None
-        self.dark_mode = True  # Track current theme
+        self.dark_mode = False  # Track true light/dark mode
 
         # Define Colors for light and dark modes
         self.light_colors = {
-            "primary": "#2C3E50",
-            "secondary": "#3498DB",
-            "bg": "#ECF0F1",
-            "accent": "#E74C3C",
-            "text": "#2C3E50"
+            "primary": "#0F4C81",
+            "secondary": "#2AA7A1",
+            "bg": "#F4F7FB",
+            "accent": "#F28C6F",
+            "text": "#1F2937",
+            "panel": "#FFFFFF",
+            "input": "#EEF3F9",
+            "highlight": "#2563EB",
+            "muted": "#D8E2EE"
         }
-        
+
         self.dark_colors = {
-            "primary": "#1a1a2e",
-            "secondary": "#0f3460",
-            "bg": "#16213e",
-            "accent": "#e94560",
-            "text": "#eaeaea"
+            "primary": "#111827",
+            "secondary": "#1F2937",
+            "bg": "#0B1220",
+            "accent": "#06B6D4",
+            "text": "#E5E7EB",
+            "panel": "#111827",
+            "input": "#1F2937",
+            "highlight": "#3B82F6",
+            "muted": "#374151"
         }
 
         self.current_colors = self.dark_colors if self.dark_mode else self.light_colors
@@ -49,11 +57,10 @@ class EduManageGUI:
 
     def setup_styles(self):
         """Apply consistent TTK styles for treeviews/scrollbars matching the current theme."""
-        tv_bg  = "#1e2330" if self.dark_mode else "#ffffff"
-        tv_fg  = "#e8eaf6" if self.dark_mode else "#1a1a2e"
-        hdr_bg = "#0f3460" if self.dark_mode else "#2C3E50"
-        alt_bg = "#232b3e" if self.dark_mode else "#eef2f7"
-        sel_bg = "#3498DB"
+        tv_bg  = self.current_colors["panel"]
+        tv_fg  = self.current_colors["text"]
+        hdr_bg = self.current_colors["primary"]
+        sel_bg = self.current_colors["highlight"]
 
         style = ttk.Style()
         style.theme_use("clam")
@@ -63,8 +70,8 @@ class EduManageGUI:
                         background=tv_bg,
                         foreground=tv_fg,
                         fieldbackground=tv_bg,
-                        rowheight=34,
-                        font=("Segoe UI", 12),
+                        rowheight=38,
+                        font=("Segoe UI", 15),
                         borderwidth=0,
                         relief="flat")
         style.map("Treeview",
@@ -75,16 +82,16 @@ class EduManageGUI:
         style.configure("Treeview.Heading",
                         background=hdr_bg,
                         foreground="#ffffff",
-                        font=("Segoe UI", 12, "bold"),
+                        font=("Segoe UI", 15, "bold"),
                         relief="flat",
-                        padding=(10, 7))
+                        padding=(10, 9))
         style.map("Treeview.Heading",
                   background=[("active", sel_bg)],
                   relief=[("active", "flat")])
 
         # ── Scrollbars ─────────────────────────────────────────────────────────────
-        sb_bg = hdr_bg
-        sb_tr = tv_bg
+        sb_bg = self.current_colors["secondary"]
+        sb_tr = self.current_colors["muted"]
         for orientation in ("Vertical", "Horizontal"):
             style.configure(f"{orientation}.TScrollbar",
                             background=sb_bg, troughcolor=sb_tr,
@@ -96,8 +103,33 @@ class EduManageGUI:
         email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         return re.match(email_pattern, email) is not None
 
+    def _button_palette(self):
+        """Centralized button colors for a cohesive UI language."""
+        return {
+            "primary": ("#2563EB", "#1D4ED8"),
+            "info": ("#0EA5E9", "#0284C7"),
+            "accent": ("#7C3AED", "#6D28D9"),
+            "success": ("#10B981", "#059669"),
+            "warning": ("#F59E0B", "#D97706"),
+            "danger": ("#EF4444", "#DC2626"),
+            "neutral": ("#64748B", "#475569"),
+        }
+
+    def _btn(self, parent, text, command, kind="primary", **kwargs):
+        """Create styled buttons with shared defaults and palette-driven variants."""
+        fg, hover = self._button_palette().get(kind, self._button_palette()["primary"])
+        defaults = {
+            "fg_color": fg,
+            "hover_color": hover,
+            "corner_radius": 10,
+            "height": 34,
+            "font": ("Segoe UI", 14, "bold"),
+        }
+        defaults.update(kwargs)
+        return ctk.CTkButton(parent, text=text, command=command, **defaults)
+
     def toggle_theme(self):
-        """Toggle between light and dark modes, rebuilding the tab area for correct colors."""
+        """Toggle between light and dark modes and rebuild tab content."""
         self.dark_mode = not self.dark_mode
         ctk.set_appearance_mode("dark" if self.dark_mode else "light")
         self.current_colors = self.dark_colors if self.dark_mode else self.light_colors
@@ -122,24 +154,24 @@ class EduManageGUI:
 
         # Header — slim bar, fixed height
         self._header = ctk.CTkFrame(self._main_container,
-                                    fg_color=self.current_colors["primary"], height=46)
+                                    fg_color=self.current_colors["primary"], height=54)
         self._header.pack(fill="x", pady=(0, 4), padx=10)
         self._header.pack_propagate(False)
-        self._header.configure(corner_radius=8)
+        self._header.configure(corner_radius=12)
 
         ctk.CTkLabel(
             self._header,
             text="\t\t\t\t🎓 EduManage — Advanced Education Management System",
-            font=("Segoe UI", 17, "bold"),
+            font=("Segoe UI", 19, "bold"),
             text_color="white"
         ).pack(side="left", padx=16)
 
         self.theme_toggle_btn = ctk.CTkButton(
             self._header,
-            text="☀️ Light",
+            text="🌙 Dark",
             command=self.toggle_theme,
-            width=100, height=28,
-            fg_color="#FF9800", hover_color="#F57C00",
+            width=110, height=30,
+            fg_color="#F97316", hover_color="#EA580C",
             text_color="white", corner_radius=6,
             font=("Segoe UI", 12, "bold")
         )
@@ -152,12 +184,12 @@ class EduManageGUI:
         self.notebook = ctk.CTkTabview(
             self._main_container,
             segmented_button_fg_color=self.current_colors["secondary"],
-            segmented_button_selected_color="#3498DB",
-            segmented_button_selected_hover_color="#2980B9",
-            text_color="white",
-            text_color_disabled="#aaaaaa",
+            segmented_button_selected_color=self.current_colors["highlight"],
+            segmented_button_selected_hover_color=self.current_colors["primary"],
+            text_color=self.current_colors["text"],
+            text_color_disabled="#9CA3AF",
         )
-        self.notebook.pack(fill="both", expand=True, padx=10, pady=(0, 6))
+        self.notebook.pack(fill="both", expand=True, padx=12, pady=(2, 8))
 
         self.tab_students = self.notebook.add(" 👥 Students ")
         self.tab_courses  = self.notebook.add(" 📚 Courses ")
@@ -173,21 +205,28 @@ class EduManageGUI:
         self.setup_report_tab()
         self.setup_analysis_tab()
         self.update_comboboxes()
+        self._sync_auto_id_fields()
 
     def create_input_frame(self, parent, title):
         """Create a styled input frame."""
-        frame = ctk.CTkFrame(parent, fg_color=self.current_colors.get("secondary", "#3498DB"), corner_radius=10)
-        frame.pack(fill="x", padx=10, pady=(6, 4))
+        frame = ctk.CTkFrame(
+            parent,
+            fg_color=self.current_colors["panel"],
+            border_width=1,
+            border_color=self.current_colors["muted"],
+            corner_radius=14
+        )
+        frame.pack(fill="x", padx=10, pady=(8, 6))
 
         ctk.CTkLabel(
             frame,
             text=title,
-            font=("Segoe UI", 14, "bold"),
-            text_color="white"
-        ).pack(pady=(8, 0))
+            font=("Segoe UI", 15, "bold"),
+            text_color=self.current_colors["primary"]
+        ).pack(pady=(10, 2))
 
-        inner_frame = ctk.CTkFrame(frame, fg_color=self.current_colors["bg"], corner_radius=8)
-        inner_frame.pack(fill="x", padx=10, pady=(6, 10))
+        inner_frame = ctk.CTkFrame(frame, fg_color=self.current_colors["bg"], corner_radius=10)
+        inner_frame.pack(fill="x", padx=12, pady=(6, 12))
 
         return inner_frame
 
@@ -220,10 +259,10 @@ class EduManageGUI:
         btn_frame = ctk.CTkFrame(input_frame, fg_color=self.current_colors["bg"])
         btn_frame.pack(fill="x", padx=5, pady=10)
 
-        ctk.CTkButton(btn_frame, text="➕ Add Student", command=self.add_student, corner_radius=8, width=120).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="✏️ Update", command=self.update_student, fg_color="#F39C12", hover_color="#E67E22", corner_radius=8, width=100).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="🗑️ Delete", command=self.delete_student, fg_color="#E74C3C", hover_color="#C0392B", corner_radius=8, width=100).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="🔄 Clear", command=self.clear_student_form, fg_color="#7F8C8D", hover_color="#5D6D7B", corner_radius=8, width=100).pack(side="left", padx=5)
+        self._btn(btn_frame, "➕ Add Student", self.add_student, "primary", width=128).pack(side="left", padx=5)
+        self._btn(btn_frame, "✏️ Update", self.update_student, "warning", width=108).pack(side="left", padx=5)
+        self._btn(btn_frame, "🗑️ Delete", self.delete_student, "danger", width=108).pack(side="left", padx=5)
+        self._btn(btn_frame, "🔄 Clear", self.clear_student_form, "neutral", width=108).pack(side="left", padx=5)
 
         # Search frame
         search_frame = ctk.CTkFrame(self.tab_students, fg_color=self.current_colors["bg"])
@@ -280,10 +319,10 @@ class EduManageGUI:
         btn_frame = ctk.CTkFrame(input_frame, fg_color=self.current_colors["bg"])
         btn_frame.pack(fill="x", padx=5, pady=10)
 
-        ctk.CTkButton(btn_frame, text="➕ Add Course", command=self.add_course, corner_radius=8, width=120).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="✏️ Update", command=self.update_course, fg_color="#F39C12", hover_color="#E67E22", corner_radius=8, width=100).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="🗑️ Delete", command=self.delete_course, fg_color="#E74C3C", hover_color="#C0392B", corner_radius=8, width=100).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="📥 Export", command=self.export_summary, fg_color="#27AE60", hover_color="#229954", corner_radius=8, width=100).pack(side="left", padx=5)
+        self._btn(btn_frame, "➕ Add Course", self.add_course, "primary", width=128).pack(side="left", padx=5)
+        self._btn(btn_frame, "✏️ Update", self.update_course, "warning", width=108).pack(side="left", padx=5)
+        self._btn(btn_frame, "🗑️ Delete", self.delete_course, "danger", width=108).pack(side="left", padx=5)
+        self._btn(btn_frame, "📥 Save Course Summary", self.export_summary, "success", width=108).pack(side="left", padx=5)
 
         # Search frame
         search_frame = ctk.CTkFrame(self.tab_courses, fg_color=self.current_colors["bg"])
@@ -333,10 +372,9 @@ class EduManageGUI:
                                               font=("Segoe UI", 14, "bold"),
                                               text_color=self.current_colors["text"])
         self._lbl_units_title.pack(side="left")
-        ctk.CTkButton(title_row, text="⚙️ Manage Course-Units",
-                      command=self.open_manage_units_dialog,
-                      fg_color="#8E44AD", hover_color="#7D3C98",
-                      corner_radius=8, width=130, height=28).pack(side="right", padx=4)
+        self._btn(title_row, "⚙️ Manage Course-Units",
+              self.open_manage_units_dialog,
+              "accent", width=160, height=30).pack(side="right", padx=4)
 
         # Units treeview
         units_tree_frame = tk.Frame(units_outer, bg=self.current_colors["bg"])
@@ -378,23 +416,14 @@ class EduManageGUI:
         self.ent_unit_credits = ctk.CTkEntry(unit_form, placeholder_text="Cred", corner_radius=8, width=65)
         self.ent_unit_credits.grid(row=0, column=5, padx=4, pady=4)
 
-        ctk.CTkButton(unit_form, text="➕ Add",
-                      command=self.add_unit_to_course,
-                      corner_radius=8, width=80).grid(row=0, column=6, padx=4, pady=4)
-        ctk.CTkButton(unit_form, text="✏️ Update",
-                      command=self.update_unit_in_course,
-                      fg_color="#F39C12", hover_color="#E67E22",
-                      corner_radius=8, width=90).grid(row=0, column=7, padx=4, pady=4)
-        ctk.CTkButton(unit_form, text="🗑️ Delete",
-                      command=self.delete_unit_from_course,
-                      fg_color="#E74C3C", hover_color="#C0392B",
-                      corner_radius=8, width=90).grid(row=0, column=8, padx=4, pady=4)
-        ctk.CTkButton(unit_form, text="🔄 Clear",
-                      command=self._clear_unit_form,
-                      fg_color="#7F8C8D", hover_color="#5D6D7B",
-                      corner_radius=8, width=80).grid(row=0, column=9, padx=4, pady=4)
+        self._btn(unit_form, "➕ Add", self.add_unit_to_course, "primary", width=90).grid(row=0, column=6, padx=4, pady=4)
+        self._btn(unit_form, "✏️ Update", self.update_unit_in_course, "warning", width=100).grid(row=0, column=7, padx=4, pady=4)
+        self._btn(unit_form, "🗑️ Delete", self.delete_unit_from_course, "danger", width=100).grid(row=0, column=8, padx=4, pady=4)
+        self._btn(unit_form, "🔄 Clear", self._clear_unit_form, "neutral", width=90).grid(row=0, column=9, padx=4, pady=4)
 
-        courses_pane.add(units_outer, minsize=120)
+        courses_pane.add(units_outer, minsize=220)
+        # Keep both panes visible on initial render so the units table is not collapsed.
+        self.root.after(60, lambda: courses_pane.sash_place(0, 0, 260))
 
     def setup_teacher_tab(self):
         # Input Frame
@@ -425,10 +454,10 @@ class EduManageGUI:
         btn_frame = ctk.CTkFrame(input_frame, fg_color=self.current_colors["bg"])
         btn_frame.pack(fill="x", padx=5, pady=10)
 
-        ctk.CTkButton(btn_frame, text="➕ Add Teacher", command=self.add_teacher, corner_radius=8, width=120).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="✏️ Update", command=self.update_teacher, fg_color="#F39C12", hover_color="#E67E22", corner_radius=8, width=100).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="🗑️ Delete", command=self.delete_teacher, fg_color="#E74C3C", hover_color="#C0392B", corner_radius=8, width=100).pack(side="left", padx=5)
-        ctk.CTkButton(btn_frame, text="🔄 Clear", command=self.clear_teacher_form, fg_color="#7F8C8D", hover_color="#5D6D7B", corner_radius=8, width=100).pack(side="left", padx=5)
+        self._btn(btn_frame, "➕ Add Teacher", self.add_teacher, "primary", width=128).pack(side="left", padx=5)
+        self._btn(btn_frame, "✏️ Update", self.update_teacher, "warning", width=108).pack(side="left", padx=5)
+        self._btn(btn_frame, "🗑️ Delete", self.delete_teacher, "danger", width=108).pack(side="left", padx=5)
+        self._btn(btn_frame, "🔄 Clear", self.clear_teacher_form, "neutral", width=108).pack(side="left", padx=5)
 
         # Assignment Frame
         assign_frame = self.create_input_frame(self.tab_teachers, "Assign Teacher to Course/Unit")
@@ -454,8 +483,8 @@ class EduManageGUI:
         assign_btn = ctk.CTkFrame(assign_frame, fg_color=self.current_colors["bg"])
         assign_btn.pack(fill="x", padx=5, pady=10)
 
-        ctk.CTkButton(assign_btn, text="Assign Course", command=self.assign_course_only, fg_color="#2980B9", hover_color="#1F618D", corner_radius=8, width=120).pack(side="left", padx=5)
-        ctk.CTkButton(assign_btn, text="Assign Unit", command=self.assign_unit_only, fg_color="#27AE60", hover_color="#1E8449", corner_radius=8, width=120).pack(side="left", padx=5)
+        self._btn(assign_btn, "Assign Course", self.assign_course_only, "info", width=128).pack(side="left", padx=5)
+        self._btn(assign_btn, "Assign Unit", self.assign_unit_only, "success", width=128).pack(side="left", padx=5)
 
         # Search frame
         search_frame = ctk.CTkFrame(self.tab_teachers, fg_color=self.current_colors["bg"])
@@ -502,12 +531,18 @@ class EduManageGUI:
         top_outer = tk.Frame(enroll_pane, bg=self.current_colors["bg"])
 
         # Enroll row
-        ctrl_bg = self.current_colors["secondary"]
-        ctrl_card = ctk.CTkFrame(top_outer, fg_color=ctrl_bg, corner_radius=10)
+        ctrl_bg = self.current_colors["panel"]
+        ctrl_card = ctk.CTkFrame(
+            top_outer,
+            fg_color=ctrl_bg,
+            border_width=1,
+            border_color=self.current_colors["muted"],
+            corner_radius=12
+        )
         ctrl_card.pack(fill="x", padx=0, pady=(0, 6))
 
         ctk.CTkLabel(ctrl_card, text="Enroll Student & Assign Grade",
-                     font=("Segoe UI", 14, "bold"), text_color="white").pack(pady=(8, 0))
+                     font=("Segoe UI", 14, "bold"), text_color=self.current_colors["primary"]).pack(pady=(8, 0))
 
         ctrl_inner = ctk.CTkFrame(ctrl_card, fg_color=self.current_colors["bg"], corner_radius=8)
         ctrl_inner.pack(fill="x", padx=10, pady=8)
@@ -524,8 +559,8 @@ class EduManageGUI:
                                           command=self.on_cb_course_selected)
         self.cb_courses.grid(row=0, column=3, padx=5, pady=6, sticky="ew")
 
-        ctk.CTkButton(row1, text="📝 Enroll Course", command=self.enroll_student,
-                      corner_radius=8, width=130).grid(row=0, column=4, padx=8, pady=6)
+        self._btn(row1, "📝 Enroll Course", self.enroll_student,
+              "info", width=144).grid(row=0, column=4, padx=8, pady=6)
 
         row1.columnconfigure((1, 3), weight=1)
 
@@ -535,17 +570,23 @@ class EduManageGUI:
         ctk.CTkLabel(row2, text="Grade (0-100):", text_color=self.current_colors["text"]).pack(side="left", padx=5)
         self.ent_grade = ctk.CTkEntry(row2, placeholder_text="Enter grade", width=100, corner_radius=8)
         self.ent_grade.pack(side="left", padx=5)
-        ctk.CTkButton(row2, text="✔️ Assign Grade", command=self.assign_grade,
-                      fg_color="#27AE60", hover_color="#1E8449", corner_radius=8, width=130).pack(side="left", padx=5)
-        ctk.CTkButton(row2, text="🗑️ Remove Enrollment", command=self.delete_enrollment,
-                      fg_color="#E74C3C", hover_color="#C0392B", corner_radius=8, width=150).pack(side="left", padx=5)
+        self._btn(row2, "✔️ Assign Grade", self.assign_grade,
+              "success", width=144).pack(side="left", padx=5)
+        self._btn(row2, "🗑️ Remove Enrollment", self.delete_enrollment,
+              "danger", width=164).pack(side="left", padx=5)
 
         # Units listbox row
-        units_card = ctk.CTkFrame(top_outer, fg_color=ctrl_bg, corner_radius=10)
+        units_card = ctk.CTkFrame(
+            top_outer,
+            fg_color=ctrl_bg,
+            border_width=1,
+            border_color=self.current_colors["muted"],
+            corner_radius=12
+        )
         units_card.pack(fill="x", padx=0, pady=(0, 4))
 
         ctk.CTkLabel(units_card, text="Course Units  —  select units then click Enroll Units",
-                     font=("Segoe UI", 14, "bold"), text_color="white").pack(pady=(8, 0))
+                     font=("Segoe UI", 14, "bold"), text_color=self.current_colors["primary"]).pack(pady=(8, 0))
 
         units_inner = tk.Frame(units_card, bg=self.current_colors["bg"],
                                highlightthickness=1,
@@ -555,15 +596,15 @@ class EduManageGUI:
         self.lb_units = tk.Listbox(
             units_inner,
             selectmode=tk.MULTIPLE,
-            bg="#2b2b2b" if self.dark_mode else "#f5f5f5",
-            fg="white" if self.dark_mode else "#1a1a1a",
-            selectbackground="#3498DB",
+            bg=self.current_colors["panel"],
+            fg=self.current_colors["text"],
+            selectbackground=self.current_colors["highlight"],
             activestyle="none",
             highlightthickness=0,
             relief="flat",
             exportselection=False,
             height=5,
-            font=("Segoe UI", 10)
+            font=("Segoe UI", 13)
         )
         self.lb_units.pack(side="left", fill="both", expand=True, padx=(4, 0), pady=4)
 
@@ -571,21 +612,19 @@ class EduManageGUI:
         lb_scroll.pack(side="right", fill="y", padx=(0, 4), pady=4)
         self.lb_units.configure(yscrollcommand=lb_scroll.set)
 
-        units_btns = tk.Frame(units_card, bg=ctrl_bg)
+        units_btns = tk.Frame(units_card, bg=self.current_colors["panel"])
         units_btns.pack(fill="x", padx=10, pady=(0, 8))
-        ctk.CTkButton(units_btns, text="📝 Enroll Selected Units",
-                      command=self.enroll_selected_units,
-                      fg_color="#2980B9", hover_color="#1F618D", corner_radius=8, width=180).pack(side="left", padx=4)
-        ctk.CTkButton(units_btns, text="✔️ Grade Selected Unit",
-                      command=self.assign_grade_to_selected_unit,
-                      fg_color="#27AE60", hover_color="#1E8449", corner_radius=8, width=180).pack(side="left", padx=4)
+        self._btn(units_btns, "📝 Enroll Selected Units",
+              self.enroll_selected_units, "info", width=192).pack(side="left", padx=4)
+        self._btn(units_btns, "✔️ Grade Selected Unit",
+              self.assign_grade_to_selected_unit, "success", width=192).pack(side="left", padx=4)
 
         enroll_pane.add(top_outer, minsize=160)
 
         # ── Bottom pane: enrollments table ─────────────────────────────────────────
         bottom_outer = tk.Frame(enroll_pane, bg=self.current_colors["bg"])
 
-        tbl_title = tk.Frame(bottom_outer, bg=self.current_colors["secondary"])
+        tbl_title = tk.Frame(bottom_outer, bg=self.current_colors["primary"])
         tbl_title.pack(fill="x")
         ctk.CTkLabel(tbl_title, text="📋 Current Enrollments",
                      font=("Segoe UI", 14, "bold"), text_color="white").pack(pady=6, padx=10, anchor="w")
@@ -643,13 +682,22 @@ class EduManageGUI:
         self.cb_report_student = ctk.CTkComboBox(inner, corner_radius=8, state="readonly")
         self.cb_report_student.pack(side="left", padx=5, fill="x", expand=True)
 
-        ctk.CTkButton(inner, text="📄 Generate", command=self.generate_report, corner_radius=8, width=120).pack(side="left", padx=5)
-        ctk.CTkButton(inner, text="📥 Export PDF", command=self.export_report_pdf, fg_color="#8E44AD", hover_color="#7D3C98", corner_radius=8, width=130).pack(side="left", padx=5)
+        self._btn(inner, "📄 Generate", self.generate_report, "primary", width=130).pack(side="left", padx=5)
+        self._btn(inner, "📥 Export PDF", self.export_report_pdf, "accent", width=140).pack(side="left", padx=5)
+
+        ctk.CTkLabel(
+            report_frame,
+            text="Preview is plain text for speed and readability. Final branded styling is applied in exported PDF.",
+            font=("Segoe UI", 11),
+            text_color=self.current_colors["text"],
+            wraplength=980,
+            justify="left"
+        ).pack(fill="x", padx=8, pady=(2, 8))
 
         text_frame = ctk.CTkFrame(self.tab_reports, fg_color=self.current_colors["bg"])
         text_frame.pack(fill="both", expand=True, padx=10, pady=10)
 
-        self.txt_report = ctk.CTkTextbox(text_frame, corner_radius=10, font=("Courier", 11))
+        self.txt_report = ctk.CTkTextbox(text_frame, corner_radius=10, font=("Consolas", 13))
         self.txt_report.pack(fill="both", expand=True)
 
     def setup_analysis_tab(self):
@@ -661,7 +709,12 @@ class EduManageGUI:
         self.cb_analysis_student = ctk.CTkComboBox(btn_frame, corner_radius=8, state="readonly")
         self.cb_analysis_student.pack(side='left', padx=5)
 
-        ctk.CTkButton(btn_frame, text="📊 Refresh Charts", command=self.refresh_analysis, corner_radius=8, width=150).pack(side="left", padx=10)
+        ctk.CTkLabel(btn_frame, text="Teacher:", text_color=self.current_colors["text"]).pack(side='left', padx=8)
+        self.cb_analysis_teacher = ctk.CTkComboBox(btn_frame, corner_radius=8, state="readonly")
+        self.cb_analysis_teacher.pack(side='left', padx=5)
+
+        self._btn(btn_frame, "📊 Refresh Charts", self.refresh_analysis, "primary", width=164).pack(side="left", padx=10)
+        self._btn(btn_frame, "↺ Clear Selection", self.clear_analysis_selection, "neutral", width=164).pack(side="left", padx=4)
 
         self.canvas_frame = ctk.CTkFrame(self.tab_analysis, fg_color=self.current_colors["bg"])
         self.canvas_frame.pack(fill="both", expand=True, padx=10, pady=(0, 10))
@@ -673,53 +726,92 @@ class EduManageGUI:
 
         analytics = self.system.get_analytics()
 
-        fig = Figure(figsize=(14, 8), dpi=80, facecolor=self.current_colors["bg"])
+        fig = Figure(figsize=(14, 8), dpi=90, facecolor=self.current_colors["bg"])
         
         # Chart 1
         if analytics["students_per_course"]:
             ax1 = fig.add_subplot(2, 2, 1)
             courses = list(analytics["students_per_course"].keys())
             counts = list(analytics["students_per_course"].values())
-            ax1.bar(courses, counts, color="#3498DB", edgecolor="#2C3E50", linewidth=1.5)
+            ax1.bar(courses, counts, color="#3B82F6", edgecolor="#1D4ED8", linewidth=1.5)
             ax1.set_title("Students Enrolled per Course", fontsize=16, fontweight='bold', color=self.current_colors["text"])
             ax1.set_xlabel("Course", fontsize=14, color=self.current_colors["text"])
             ax1.set_ylabel("Count", fontsize=14, color=self.current_colors["text"])
             ax1.tick_params(axis='x', labelsize=14, rotation=45, colors=self.current_colors["text"])
             ax1.tick_params(axis='y', labelsize=14, colors=self.current_colors["text"])
-            ax1.set_facecolor("#2C3E50" if self.dark_mode else "white")
+            ax1.set_facecolor(self.current_colors["panel"])
 
         # Chart 2
         if analytics["grades_distribution"]:
             ax2 = fig.add_subplot(2, 2, 2)
             order = ['A', 'B+', 'B', 'C+', 'C', 'D+', 'D', 'F']
             dist = [analytics["grades_distribution"].get(k, 0) for k in order]
-            bars = ax2.bar(order, dist, color="#2ECC71", edgecolor="#27AE60", linewidth=1.5)
+            bars = ax2.bar(order, dist, color="#10B981", edgecolor="#059669", linewidth=1.5)
             ax2.set_title("Grade Distribution", fontsize=16, fontweight='bold', color=self.current_colors["text"])
             ax2.set_xlabel("Letter Grade", fontsize=14, color=self.current_colors["text"])
             ax2.set_ylabel("Count", fontsize=14, color=self.current_colors["text"])
             ax2.tick_params(axis='x', labelsize=14, rotation=45, colors=self.current_colors["text"])
             ax2.tick_params(axis='y', labelsize=14, colors=self.current_colors["text"])
-            ax2.set_facecolor("#2C3E50" if self.dark_mode else "white")
+            ax2.set_facecolor(self.current_colors["panel"])
 
         # Chart 3
         if analytics["teacher_workload"]:
             ax3 = fig.add_subplot(2, 2, 3)
             teachers = list(analytics["teacher_workload"].keys())
             workload = list(analytics["teacher_workload"].values())
-            ax3.barh(teachers, workload, color="#E74C3C", edgecolor="#C0392B", linewidth=1.5)
+            ax3.barh(teachers, workload, color="#F97316", edgecolor="#EA580C", linewidth=1.5)
             ax3.set_title("Teacher Workload", fontsize=16, fontweight='bold', color=self.current_colors["text"])
             ax3.set_xlabel("Number of Units", fontsize=14, color=self.current_colors["text"])
             ax3.tick_params(axis='x', labelsize=14, colors=self.current_colors["text"])
             ax3.tick_params(axis='y', labelsize=14, colors=self.current_colors["text"])
-            ax3.set_facecolor("#2C3E50" if self.dark_mode else "white")
+            ax3.set_facecolor(self.current_colors["panel"])
 
         # Chart 4
         ax4 = fig.add_subplot(2, 2, 4)
         ax4.axis('off')
         stats_text = f"SYSTEM STATISTICS\n\n✓ Total Students: {analytics['total_students']}\n✓ Total Courses: {analytics['total_courses']}\n✓ Total Teachers: {analytics['total_teachers']}\n✓ Avg Grade: {analytics['avg_grade']:.1f}%"
+
+        student_pick = (self.cb_analysis_student.get() or "").strip()
+        teacher_pick = (self.cb_analysis_teacher.get() or "").strip()
+
+        if student_pick:
+            sid = student_pick.split(" - ")[0]
+            student = self.system.students.get(sid)
+            if student:
+                enrolled = len(student.enrolled_courses)
+                grades = []
+                for data in student.enrolled_courses.values():
+                    for grade in data.get('units', {}).values():
+                        if grade is not None:
+                            grades.append(grade)
+                avg_grade = (sum(grades) / len(grades)) if grades else 0.0
+                stats_text += (
+                    f"\n\nSTUDENT SNAPSHOT\n"
+                    f"• {student.name} ({student.person_id})\n"
+                    f"• Enrolled Courses: {enrolled}\n"
+                    f"• Graded Units: {len(grades)}\n"
+                    f"• Current Avg: {avg_grade:.1f}%"
+                )
+
+        if teacher_pick:
+            tid = teacher_pick.split(" - ")[0]
+            teacher = self.system.teachers.get(tid)
+            if teacher:
+                taught_course_count = len(getattr(teacher, 'taught_units', {}) or {})
+                unit_count = 0
+                for units in (getattr(teacher, 'taught_units', {}) or {}).values():
+                    unit_count += len(units)
+                stats_text += (
+                    f"\n\nTEACHER SNAPSHOT\n"
+                    f"• {teacher.name} ({teacher.person_id})\n"
+                    f"• Department: {teacher.department}\n"
+                    f"• Courses Assigned: {taught_course_count}\n"
+                    f"• Units Assigned: {unit_count}"
+                )
+
         ax4.text(0.5, 0.5, stats_text, fontsize=14, ha='center', va='center',
                 family='monospace', color=self.current_colors["text"],
-                bbox=dict(boxstyle='round', facecolor='#3498DB', alpha=0.7, pad=1))
+            bbox=dict(boxstyle='round', facecolor=self.current_colors["highlight"], alpha=0.2, pad=1))
 
         fig.tight_layout()
 
@@ -730,12 +822,11 @@ class EduManageGUI:
     # ========== CRUD OPERATIONS ==========
 
     def add_student(self):
-        sid = self.ent_sid.get().strip()
         name = self.ent_sname.get().strip()
         email = self.ent_semail.get().strip()
         
-        if not sid or not name or not email:
-            messagebox.showwarning("Warning", "All fields are required")
+        if not name or not email:
+            messagebox.showwarning("Warning", "Name and email are required")
             return
         
         if not self.validate_email(email):
@@ -743,6 +834,7 @@ class EduManageGUI:
             return
             
         try:
+            sid = self.system.next_student_id()
             self.system.add_student(sid, name, email)
             self.system.save_data()
             self.refresh_student_list()
@@ -755,15 +847,15 @@ class EduManageGUI:
             messagebox.showerror("Error", str(e))
 
     def add_course(self):
-        cid = self.ent_cid.get().strip()
         name = self.ent_cname.get().strip()
         
-        if not cid or not name:
-            messagebox.showwarning("Warning", "Course ID and Name are required")
+        if not name:
+            messagebox.showwarning("Warning", "Course name is required")
             return
             
         try:
             credits = int(self.ent_ccredits.get())
+            cid = self.system.next_course_id()
             self.system.add_course(cid, name, credits)
             self.system.save_data()
             self.refresh_course_list()
@@ -776,13 +868,12 @@ class EduManageGUI:
             messagebox.showerror("Error", str(e))
 
     def add_teacher(self):
-        tid = self.ent_tid.get().strip()
         name = self.ent_tname.get().strip()
         email = self.ent_temail.get().strip()
         dept = self.ent_tdept.get().strip()
         
-        if not tid or not name or not email or not dept:
-            messagebox.showwarning("Warning", "All fields are required")
+        if not name or not email or not dept:
+            messagebox.showwarning("Warning", "Name, email, and department are required")
             return
         
         if not self.validate_email(email):
@@ -790,6 +881,7 @@ class EduManageGUI:
             return
             
         try:
+            tid = self.system.next_teacher_id()
             self.system.add_teacher(tid, name, email, dept)
             self.system.save_data()
             self.refresh_teacher_list()
@@ -818,15 +910,10 @@ class EduManageGUI:
             messagebox.showwarning("Warning", "Select a course first")
             return
         
-        uid = self.ent_unit_id.get().strip()
         uname = self.ent_unit_name.get().strip()
         
-        if not uid or not uname:
-            messagebox.showwarning("Warning", "Unit ID and Name are required")
-            return
-        
-        if self.is_unit_id_taken(self.selected_course_id, uid):
-            messagebox.showerror("Error", f"Unit ID '{uid}' already exists in this course!")
+        if not uname:
+            messagebox.showwarning("Warning", "Unit name is required")
             return
             
         try:
@@ -836,6 +923,7 @@ class EduManageGUI:
             return
             
         try:
+            uid = self.system.next_unit_id()
             self.system.add_course_unit(self.selected_course_id, uid, uname, ucredits)
             self.system.save_data()
             self.refresh_course_list()
@@ -1045,6 +1133,8 @@ class EduManageGUI:
         try:
             course_str = self.cb_assign_course.get()
             if not course_str:
+                self.cb_assign_unit.configure(values=[])
+                self.cb_assign_unit.set("")
                 return
             cid = course_str.split(' - ')[0]
             course = self.system.courses.get(cid)
@@ -1052,6 +1142,7 @@ class EduManageGUI:
             if course:
                 vals = [f"{str(u.get('unit_id'))} - {u.get('name')}" for u in course.units]
             self.cb_assign_unit.configure(values=vals)
+            self.cb_assign_unit.set("")
         except Exception:
             pass
 
@@ -1091,10 +1182,16 @@ class EduManageGUI:
             course_id = course_str.split(" - ")[0]
             unit_id = str(unit_str.split(" - ")[0])
 
+            course = self.system.courses.get(course_id)
+            if not course or unit_id not in {str(u.get('unit_id')) for u in course.units}:
+                messagebox.showwarning("Warning", "Please select a unit that belongs to the selected course.")
+                return
+
             self.system.assign_teacher_to_unit(teacher_id, course_id, unit_id)
             self.system.save_data()
             self.refresh_course_list()
             self.refresh_teacher_list()
+            self.on_assign_course_selected()
             messagebox.showinfo("Success", f"✓ Teacher {teacher_id} assigned to unit {unit_id} in {course_id}")
         except Exception as e:
             messagebox.showerror("Error", str(e))
@@ -1225,7 +1322,8 @@ class EduManageGUI:
             if getattr(t, 'taught_units', None):
                 parts = []
                 for cid, units in t.taught_units.items():
-                    parts.append(f"{cid}({len(units)})")
+                    unit_label = ", ".join(units)
+                    parts.append(f"{cid}({unit_label})")
                 courses_str = ", ".join(parts)
             else:
                 courses_str = "None"
@@ -1256,7 +1354,7 @@ class EduManageGUI:
                         ))
 
     def update_comboboxes(self):
-        s_list = [f"{s.name}" for s in self.system.students.values()]
+        s_list = [f"{s.person_id} - {s.name}" for s in self.system.students.values()]
         c_list = [f"{c.course_id} - {c.name}" for c in self.system.courses.values()]
         t_list = [f"{t.person_id} - {t.name}" for t in self.system.teachers.values()]
         
@@ -1266,6 +1364,7 @@ class EduManageGUI:
         self.cb_assign_teacher.configure(values=t_list)
         self.cb_assign_course.configure(values=c_list)
         self.cb_analysis_student.configure(values=s_list)
+        self.cb_analysis_teacher.configure(values=t_list)
 
         try:
             current = self.cb_courses.get()
@@ -1284,26 +1383,62 @@ class EduManageGUI:
         except Exception:
             pass
 
+        self._sync_auto_id_fields()
+
     # ========== HELPER FUNCTIONS ==========
 
     def _get_student_id_by_name(self, name):
         """Helper to get student ID by name."""
         for s in self.system.students.values():
-            if s.name == name:
+            if name in {s.name, f"{s.person_id} - {s.name}"}:
                 return s.person_id
         raise ValueError(f"Student '{name}' not found")
+
+    def clear_analysis_selection(self):
+        try:
+            self.cb_analysis_student.set("")
+            self.cb_analysis_teacher.set("")
+        except Exception:
+            pass
+        self.refresh_analysis()
+
+    def _sync_auto_id_fields(self):
+        """Populate the ID inputs with the next generated IDs so users do not type them manually."""
+        try:
+            self.ent_sid.delete(0, 'end')
+            self.ent_sid.insert(0, self.system.next_student_id())
+        except Exception:
+            pass
+        try:
+            self.ent_cid.delete(0, 'end')
+            self.ent_cid.insert(0, self.system.next_course_id())
+        except Exception:
+            pass
+        try:
+            self.ent_tid.delete(0, 'end')
+            self.ent_tid.insert(0, self.system.next_teacher_id())
+        except Exception:
+            pass
+        try:
+            self.ent_unit_id.delete(0, 'end')
+            if self.selected_course_id:
+                self.ent_unit_id.insert(0, self.system.next_unit_id())
+        except Exception:
+            pass
 
     def clear_student_form(self):
         self.ent_sid.delete(0, 'end')
         self.ent_sname.delete(0, 'end')
         self.ent_semail.delete(0, 'end')
         self.selected_student_id = None
+        self._sync_auto_id_fields()
 
     def clear_course_form(self):
         self.ent_cid.delete(0, 'end')
         self.ent_cname.delete(0, 'end')
         self.ent_ccredits.delete(0, 'end')
         self.selected_course_id = None
+        self._sync_auto_id_fields()
 
     def clear_teacher_form(self):
         self.ent_tid.delete(0, 'end')
@@ -1311,6 +1446,7 @@ class EduManageGUI:
         self.ent_temail.delete(0, 'end')
         self.ent_tdept.delete(0, 'end')
         self.selected_teacher_id = None
+        self._sync_auto_id_fields()
 
     def open_manage_units_dialog(self):
         cid = self.selected_course_id or self.ent_cid.get().strip()
@@ -1327,11 +1463,11 @@ class EduManageGUI:
         PRI     = self.current_colors["primary"]
         SEC     = self.current_colors["secondary"]
         TXT     = self.current_colors["text"]
-        TV_BG   = "#1e2330" if self.dark_mode else "#ffffff"
-        TV_FG   = "#e8eaf6" if self.dark_mode else "#1a1a2e"
-        HDR_BG  = "#0f3460" if self.dark_mode else "#2C3E50"
-        ENT_BG  = "#232b3e" if self.dark_mode else "#f5f7fa"
-        ENT_FG  = "#e8eaf6" if self.dark_mode else "#1a1a2e"
+        TV_BG   = self.current_colors["panel"]
+        TV_FG   = self.current_colors["text"]
+        HDR_BG  = self.current_colors["primary"]
+        ENT_BG  = self.current_colors["input"]
+        ENT_FG  = self.current_colors["text"]
         FONT    = ("Segoe UI", 14)
         FONT_B  = ("Segoe UI", 14, "bold")
         FONT_LG = ("Segoe UI", 14, "bold")
@@ -1390,7 +1526,7 @@ class EduManageGUI:
                          relief="flat", bd=4,
                          highlightthickness=1,
                          highlightbackground=SEC,
-                         highlightcolor="#3498DB")
+                         highlightcolor=self.current_colors["highlight"])
             return e
 
         _lbl(form, "Unit ID:").grid(row=0, column=0, padx=(8, 4), pady=6, sticky="w")
@@ -1508,52 +1644,85 @@ class EduManageGUI:
         btn_bar = tk.Frame(dlg, bg=BG)
         btn_bar.pack(fill="x", padx=12, pady=8)
 
-        def _btn(parent, text, cmd, fg_color="#3498DB", hover="#2980B9", side="left"):
-            b = ctk.CTkButton(parent, text=text, command=cmd,
-                              fg_color=fg_color, hover_color=hover,
-                              corner_radius=8, height=36, width=120,
-                              font=("Segoe UI", 12, "bold"))
+        def _dialog_btn(parent, text, cmd, kind="primary", side="left"):
+            b = self._btn(parent, text, cmd, kind, height=36, width=122)
             b.pack(side=side, padx=5)
             return b
 
-        _btn(btn_bar, "\u2795 Add",    add_unit,   "#1a6fa8",  "#155a8a")
-        _btn(btn_bar, "\u270f\ufe0f Update", update_unit, "#F39C12",  "#E67E22")
-        _btn(btn_bar, "\ud83d\uddd1\ufe0f Delete", delete_unit, "#E74C3C",  "#C0392B")
-        _btn(btn_bar, "\ud83d\udd04 Clear",  lambda: clear_form(unlock_id=True), "#7F8C8D", "#5D6D7B")
-        _btn(btn_bar, "\u2715 Close", dlg.destroy, "#4a5568",  "#374151", side="right")
+        _dialog_btn(btn_bar, "\u2795 Add", add_unit, "info")
+        _dialog_btn(btn_bar, "\u270f\ufe0f Update", update_unit, "warning")
+        _dialog_btn(btn_bar, "\ud83d\uddd1\ufe0f Delete", delete_unit, "danger")
+        _dialog_btn(btn_bar, "\ud83d\udd04 Clear", lambda: clear_form(unlock_id=True), "neutral")
+        _dialog_btn(btn_bar, "\u2715 Close", dlg.destroy, "neutral", side="right")
 
         tree.bind("<<TreeviewSelect>>", on_select)
         refresh_tree()
 
     def _format_report_text(self, report):
         lines = []
-        lines.append("REPORT CARD")
-        lines.append("=" * 110)
-        lines.append(f"Name: {report['student_name']}")
-        lines.append(f"ID: {report['student_id']}")
+        lines.append("=" * 86)
+        lines.append(" " * 29 + "ACADEMIC REPORT CARD (PREVIEW)")
+        lines.append("=" * 86)
         lines.append("")
-        lines.append(f"{'Course':<20} {'C.Cred':<7} {'Unit':<18} {'U.Cred':<7} {'Grade':<8} {'Letter':<8} {'Points':<8} {'Teacher':<16}")
-        lines.append("-" * 110)
+        lines.append(f"Student Name : {report['student_name']}")
+        lines.append(f"Student ID   : {report['student_id']}")
+        lines.append(f"Generated On : {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        lines.append("")
+        lines.append("Note: Export PDF for full branding, color badges, and signature/footer sections.")
+        lines.append("")
+        lines.append("-" * 86)
+        lines.append("COURSE DETAILS")
+        lines.append("-" * 86)
 
         for course in report['courses']:
-            lines.append(f"{course['course_name']} (GPA: {course['course_gpa']:.2f})")
-            for unit in course['units']:
+            lines.append(f"Course: {course['course_name']}   |   Course GPA: {course['course_gpa']:.2f}")
+            lines.append(f"{'#':<3} {'Unit Name':<24} {'Credit':<8} {'Grade':<8} {'Letter':<8} {'Points':<8} {'Instructor':<20}")
+            lines.append("-" * 86)
+            
+            for i, unit in enumerate(course['units'], 1):
                 grade = unit.get('grade') if unit.get('grade') is not None else 'N/A'
                 letter = unit.get('letter', 'N/A')
                 point = f"{unit.get('point'):.1f}" if isinstance(unit.get('point'), (int, float)) else 'N/A'
-                teacher = unit.get('teacher', 'Unassigned')
-                row = (
-                    f"{course['course_name'][:18]:<20} "
-                    f"{str(course.get('credits', 0)):<7} "
-                    f"{unit.get('unit_name', '')[:16]:<18} "
-                    f"{str(unit.get('credits', 'N/A')):<7} "
-                    f"{str(grade):<8} {letter:<8} {point:<8} {teacher[:16]:<16}"
+                teacher = unit.get('teacher', 'Unassigned')[:20]
+                unit_name = unit.get('unit_name', '')[:24]
+                credits = unit.get('credits', 'N/A')
+                lines.append(
+                    f"{i:<3} {unit_name:<24} {str(credits):<8} {str(grade):<8} {letter:<8} {point:<8} {teacher:<20}"
                 )
-                lines.append(row)
+            lines.append("-" * 86)
             lines.append("")
 
-        lines.append(f"OVERALL CGPA: {report['cgpa']:.2f}")
+        lines.append("=" * 86)
+        lines.append(f"OVERALL CUMULATIVE GPA (CGPA): {report['cgpa']:.2f}")
+        lines.append("=" * 86)
+        
         return "\n".join(lines)
+
+    def _report_pdf_palette(self):
+        """Centralized report PDF palette for quick branding updates."""
+        return {
+            "primary": "#0F4C81",
+            "secondary": "#F28C6F",
+            "light": "#EEF3F9",
+            "slate": "#334155",
+            "border": "#CBD5E1",
+            "grid": "#94A3B8",
+            "header_box": "#1E3A8A",
+            "cgpa_box": "#FB7185",
+        }
+
+    def _find_report_logo_path(self):
+        """Return first available institutional logo path, else None."""
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        candidates = [
+            os.path.join(base_dir, "images", "institution_logo.png"),
+            os.path.join(base_dir, "images", "school_logo.png"),
+            os.path.join(base_dir, "images", "logo.png"),
+        ]
+        for path in candidates:
+            if os.path.exists(path):
+                return path
+        return None
 
     def generate_report(self):
         try:
@@ -1571,9 +1740,25 @@ class EduManageGUI:
 
     def export_report_pdf(self):
         try:
-            report_content = self.txt_report.get("1.0", "end").strip()
-            if not report_content:
+            student_name = self.cb_report_student.get()
+            if not student_name:
                 messagebox.showwarning("Warning", "Please generate a report first")
+                return
+
+            sid = self._get_student_id_by_name(student_name)
+            report = self.system.get_student_report(sid)
+
+            try:
+                from reportlab.lib import colors
+                from reportlab.lib.pagesizes import A4
+                from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+                from reportlab.lib.units import mm
+                from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
+            except ImportError:
+                messagebox.showerror(
+                    "Missing Dependency",
+                    "ReportLab is required for styled PDF export.\n\nInstall with:\n  pip install reportlab"
+                )
                 return
 
             filepath = filedialog.asksaveasfilename(
@@ -1584,12 +1769,259 @@ class EduManageGUI:
             if not filepath:
                 return
 
-            pdf = FPDF()
-            pdf.add_page()
-            pdf.set_font("Courier", size=10)
-            for line in report_content.split('\n'):
-                pdf.cell(w=0, h=5, txt=line, ln=True)
-            pdf.output(filepath)
+            palette = self._report_pdf_palette()
+            primary = colors.HexColor(palette["primary"])
+            secondary = colors.HexColor(palette["secondary"])
+            light = colors.HexColor(palette["light"])
+            slate = colors.HexColor(palette["slate"])
+
+            def grade_badge_style(grade_value, letter_value):
+                """Return (background, text_color) for grade cells."""
+                if isinstance(grade_value, (int, float)):
+                    if grade_value >= 85:
+                        return colors.HexColor("#16A34A"), colors.white
+                    if grade_value >= 70:
+                        return colors.HexColor("#2563EB"), colors.white
+                    if grade_value >= 60:
+                        return colors.HexColor("#EA580C"), colors.white
+                    return colors.HexColor("#DC2626"), colors.white
+
+                letter = str(letter_value).upper()
+                if letter in {"A+", "A", "A-"}:
+                    return colors.HexColor("#16A34A"), colors.white
+                if letter in {"B+", "B", "B-"}:
+                    return colors.HexColor("#2563EB"), colors.white
+                if letter in {"C+", "C", "C-"}:
+                    return colors.HexColor("#EA580C"), colors.white
+                if letter in {"D", "E", "F"}:
+                    return colors.HexColor("#DC2626"), colors.white
+                return colors.HexColor("#E2E8F0"), slate
+
+            def draw_page_chrome(canvas, doc_obj):
+                """Draw page-level footer with document metadata and page number."""
+                canvas.saveState()
+                canvas.setStrokeColor(colors.HexColor(palette["border"]))
+                canvas.setLineWidth(0.8)
+                canvas.line(12 * mm, 10 * mm, A4[0] - 12 * mm, 10 * mm)
+                canvas.setFont("Helvetica", 8)
+                canvas.setFillColor(colors.HexColor("#64748B"))
+                canvas.drawString(12 * mm, 6.2 * mm, "EduManage Confidential Academic Report")
+                canvas.drawRightString(A4[0] - 12 * mm, 6.2 * mm, f"Page {doc_obj.page}")
+                canvas.restoreState()
+
+            doc = SimpleDocTemplate(
+                filepath,
+                pagesize=A4,
+                leftMargin=12 * mm,
+                rightMargin=12 * mm,
+                topMargin=12 * mm,
+                bottomMargin=12 * mm
+            )
+
+            styles = getSampleStyleSheet()
+            title_style = ParagraphStyle(
+                "TitleStyle",
+                parent=styles["Title"],
+                fontName="Helvetica-Bold",
+                fontSize=18,
+                alignment=1,
+                textColor=colors.white,
+                backColor=primary,
+                spaceAfter=8,
+                leading=22,
+            )
+            subtitle_style = ParagraphStyle(
+                "SubtitleStyle",
+                parent=styles["Normal"],
+                fontName="Helvetica",
+                fontSize=10,
+                alignment=1,
+                textColor=colors.HexColor("#334155"),
+                spaceAfter=8,
+            )
+            section_style = ParagraphStyle(
+                "SectionStyle",
+                parent=styles["Heading3"],
+                fontName="Helvetica-Bold",
+                fontSize=11,
+                textColor=primary,
+                spaceBefore=6,
+                spaceAfter=5,
+            )
+
+            logo_path = self._find_report_logo_path()
+            if logo_path:
+                header_left = Image(logo_path, width=16 * mm, height=16 * mm)
+            else:
+                header_left = "EM"
+
+            story = []
+            header_data = [[header_left, "ACADEMIC REPORT CARD\nEduManage Education Management System"]]
+            header_table = Table(header_data, colWidths=[20 * mm, 160 * mm])
+            header_table.setStyle(TableStyle([
+                ("BACKGROUND", (0, 0), (0, 0), primary),
+                ("TEXTCOLOR", (0, 0), (0, 0), colors.white),
+                ("FONTNAME", (0, 0), (0, 0), "Helvetica-Bold"),
+                ("FONTSIZE", (0, 0), (0, 0), 13),
+                ("ALIGN", (0, 0), (0, 0), "CENTER"),
+                ("VALIGN", (0, 0), (0, 0), "MIDDLE"),
+                ("BACKGROUND", (1, 0), (1, 0), primary),
+                ("TEXTCOLOR", (1, 0), (1, 0), colors.white),
+                ("FONTNAME", (1, 0), (1, 0), "Helvetica-Bold"),
+                ("FONTSIZE", (1, 0), (1, 0), 14),
+                ("VALIGN", (1, 0), (1, 0), "MIDDLE"),
+                ("LEFTPADDING", (1, 0), (1, 0), 10),
+                ("TOPPADDING", (0, 0), (-1, -1), 10),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+                ("BOX", (0, 0), (-1, -1), 0.8, colors.HexColor(palette["header_box"])),
+            ]))
+            story.append(header_table)
+            story.append(Spacer(1, 8))
+
+            story.append(Paragraph("Term: Current Session", subtitle_style))
+
+            info_data = [
+                ["Student Name", report["student_name"]],
+                ["Student ID", report["student_id"]],
+                ["Generated On", datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
+            ]
+            info_table = Table(info_data, colWidths=[36 * mm, 140 * mm])
+            info_table.setStyle(TableStyle([
+                ("BACKGROUND", (0, 0), (0, -1), light),
+                ("TEXTCOLOR", (0, 0), (0, -1), primary),
+                ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
+                ("FONTNAME", (1, 0), (1, -1), "Helvetica"),
+                ("FONTSIZE", (0, 0), (-1, -1), 10),
+                ("BOX", (0, 0), (-1, -1), 0.7, colors.HexColor(palette["grid"])),
+                ("INNERGRID", (0, 0), (-1, -1), 0.5, colors.HexColor(palette["border"])),
+                ("LEFTPADDING", (0, 0), (-1, -1), 6),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                ("TOPPADDING", (0, 0), (-1, -1), 5),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+            ]))
+            story.append(info_table)
+            story.append(Spacer(1, 8))
+            story.append(Paragraph("Course and Unit Performance", section_style))
+
+            table_rows = [["Course", "Unit", "Cr", "Grade", "Letter", "Points", "Teacher"]]
+            grade_badge_commands = []
+            current_row = 1
+            for course in report["courses"]:
+                first_row = True
+                for unit in course["units"]:
+                    grade = unit.get("grade") if unit.get("grade") is not None else "N/A"
+                    letter = unit.get("letter", "N/A")
+                    point = f"{unit.get('point'):.1f}" if isinstance(unit.get("point"), (int, float)) else "N/A"
+                    teacher = unit.get("teacher", "Unassigned")
+                    table_rows.append([
+                        course["course_name"] if first_row else "",
+                        str(unit.get("unit_name", "")),
+                        str(unit.get("credits", "N/A")),
+                        str(grade),
+                        str(letter),
+                        str(point),
+                        str(teacher),
+                    ])
+
+                    badge_bg, badge_fg = grade_badge_style(unit.get("grade"), letter)
+                    grade_badge_commands.extend([
+                        ("BACKGROUND", (3, current_row), (3, current_row), badge_bg),
+                        ("TEXTCOLOR", (3, current_row), (3, current_row), badge_fg),
+                        ("BACKGROUND", (4, current_row), (4, current_row), badge_bg),
+                        ("TEXTCOLOR", (4, current_row), (4, current_row), badge_fg),
+                        ("FONTNAME", (3, current_row), (4, current_row), "Helvetica-Bold"),
+                    ])
+
+                    first_row = False
+                    current_row += 1
+
+                table_rows.append([
+                    f"Course GPA: {course['course_gpa']:.2f}",
+                    "", "", "", "", "", ""
+                ])
+                current_row += 1
+
+            perf_table = Table(
+                table_rows,
+                colWidths=[34 * mm, 44 * mm, 12 * mm, 16 * mm, 16 * mm, 18 * mm, 40 * mm],
+                repeatRows=1,
+            )
+
+            base_style = [
+                ("BACKGROUND", (0, 0), (-1, 0), primary),
+                ("TEXTCOLOR", (0, 0), (-1, 0), colors.white),
+                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                ("ALIGN", (2, 1), (5, -1), "CENTER"),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("BOX", (0, 0), (-1, -1), 0.7, colors.HexColor(palette["grid"])),
+                ("INNERGRID", (0, 0), (-1, -1), 0.4, colors.HexColor(palette["border"])),
+                ("FONTSIZE", (0, 0), (-1, -1), 9),
+                ("LEFTPADDING", (0, 0), (-1, -1), 4),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+            ]
+
+            for i in range(1, len(table_rows)):
+                if str(table_rows[i][0]).startswith("Course GPA:"):
+                    base_style.extend([
+                        ("BACKGROUND", (0, i), (-1, i), colors.HexColor("#E2E8F0")),
+                        ("TEXTCOLOR", (0, i), (-1, i), slate),
+                        ("FONTNAME", (0, i), (0, i), "Helvetica-Bold"),
+                        ("SPAN", (0, i), (-1, i)),
+                        ("ALIGN", (0, i), (-1, i), "LEFT"),
+                    ])
+                elif i % 2 == 0:
+                    base_style.append(("BACKGROUND", (0, i), (-1, i), colors.HexColor("#F8FAFC")))
+
+            base_style.extend(grade_badge_commands)
+            perf_table.setStyle(TableStyle(base_style))
+            story.append(perf_table)
+            story.append(Spacer(1, 10))
+
+            cgpa_table = Table(
+                [[f"OVERALL CUMULATIVE GPA (CGPA): {report['cgpa']:.2f}"]],
+                colWidths=[180 * mm],
+            )
+            cgpa_table.setStyle(TableStyle([
+                ("BACKGROUND", (0, 0), (-1, -1), secondary),
+                ("TEXTCOLOR", (0, 0), (-1, -1), colors.white),
+                ("FONTNAME", (0, 0), (-1, -1), "Helvetica-Bold"),
+                ("FONTSIZE", (0, 0), (-1, -1), 12),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+                ("BOX", (0, 0), (-1, -1), 1.0, colors.HexColor(palette["cgpa_box"])),
+                ("TOPPADDING", (0, 0), (-1, -1), 8),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ]))
+            story.append(cgpa_table)
+            story.append(Spacer(1, 14))
+
+            signature_table = Table(
+                [["Prepared By", "Verified By", "Registrar Signature"],
+                 ["________________________", "________________________", "________________________"]],
+                colWidths=[60 * mm, 60 * mm, 60 * mm],
+            )
+            signature_table.setStyle(TableStyle([
+                ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
+                ("TEXTCOLOR", (0, 0), (-1, 0), primary),
+                ("ALIGN", (0, 0), (-1, -1), "CENTER"),
+                ("FONTSIZE", (0, 0), (-1, 0), 9),
+                ("FONTSIZE", (0, 1), (-1, 1), 11),
+                ("TOPPADDING", (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+            ]))
+            story.append(signature_table)
+
+            story.append(Spacer(1, 4))
+            footer_note = Paragraph(
+                "<para align='center'><font size='8' color='#64748B'>"
+                "This report is system-generated and intended for official academic use only."
+                "</font></para>"
+            )
+            story.append(footer_note)
+
+            doc.build(story, onFirstPage=draw_page_chrome, onLaterPages=draw_page_chrome)
             messagebox.showinfo("Success", "✓ Report exported successfully")
         except Exception as e:
             messagebox.showerror("Error", str(e))
@@ -1597,7 +2029,7 @@ class EduManageGUI:
     def export_summary(self):
         try:
             self.system.export_courses_summary("courses_summary_report.csv")
-            messagebox.showinfo("Success", "✓ Course summary exported successfully")
+            messagebox.showinfo("Success", "✓ Course summary saved successfully")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to export summary: {str(e)}")
 

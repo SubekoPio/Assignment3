@@ -121,7 +121,7 @@ What to show:
 What to show:
 - Course input form
 - Courses displayed in TreeView
-- Show course ID, name, credits
+- Show auto-generated course ID, name, credits
 ```
 
 #### 3. **Teachers Tab** (Slide 39)

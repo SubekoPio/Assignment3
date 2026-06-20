@@ -17,7 +17,6 @@ python gui_main.py
 ### Step 1: Add Teachers
 1. Click the **Teachers** tab
 2. Enter:
-   - Teacher ID (e.g., T001)
    - Name (e.g., Dr. Smith)
    - Email (e.g., smith@example.com)
    - Department (e.g., Mathematics)
@@ -29,7 +28,6 @@ python gui_main.py
 ### Step 2: Add Courses
 1. Click the **Courses** tab
 2. Enter:
-   - Course ID (e.g., M101)
    - Name (e.g., Calculus I)
    - Credits (e.g., 3)
 3. Click **Add Course**
@@ -40,7 +38,7 @@ python gui_main.py
 ### Step 3: Add Units to Courses
 1. Click the **Courses** tab
 2. Select a course in the table
-3. In the **Course Units** panel, add Unit ID, Unit Name, and Credits
+3. In the **Course Units** panel, add Unit Name and Credits
 4. Click **Add**
 5. Repeat per course
 
@@ -59,7 +57,6 @@ python gui_main.py
 ### Step 5: Add Students
 1. Click the **Students** tab
 2. Enter:
-   - Student ID (e.g., S001)
    - Name (e.g., John Doe)
    - Email (e.g., john@example.com)
 3. Click **Add Student**
@@ -275,6 +272,10 @@ See also:
 ## 2026-06 UI Polish Update
 - Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
 - Improved table readability with larger TreeView typography and row heights.
-- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Replaced the previous dark-oriented styling with a modern light-first theme system and larger baseline UI fonts.
 - Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+- Added consistent action-button variants and improved card spacing to make workflows visually clearer.
+- Fixed the Courses tab splitter defaults so Course Units are visible without manual resizing.
+- Updated Enrollment panel colors/cards to align with the same style as Students/Courses/Teachers tabs.
+- Added analysis dropdown support for both Student and Teacher snapshots while keeping the general dashboard charts.
 

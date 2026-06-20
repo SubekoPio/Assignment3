@@ -32,6 +32,9 @@
 ## 2026-06 UI Polish Update
 - Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
 - Improved table readability with larger TreeView typography and row heights.
-- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Replaced the previous dark-oriented styling with a modern light-first theme system and larger baseline UI fonts.
 - Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+- Fixed the Courses tab split-view initialization so Course Units are visible by default.
+- Restyled Enrollment cards/headings to align with the app-wide tab design.
+- Added teacher snapshot selector and combined student/teacher detail readouts in Analysis.
 

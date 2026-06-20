@@ -407,6 +407,9 @@ The system is ready for deployment and can be easily extended with additional fe
 ## 2026-06 UI Polish Update
 - Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
 - Improved table readability with larger TreeView typography and row heights.
-- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Replaced the previous dark-oriented styling with a modern light-first theme system and larger baseline UI fonts.
 - Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+- Fixed the Courses tab paned layout so the Course Units table is visible on first render.
+- Harmonized Enrollment tab card/title styling with the rest of the application theme.
+- Added student/teacher detail snapshots in Analysis via dedicated dropdown selectors.
 
