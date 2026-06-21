@@ -1,4 +1,4 @@
-# 🎉 EduManage Team Presentation - Complete Package Summary
+﻿# ðŸŽ‰ EduManage Team Presentation - Complete Package Summary
 
 ## What You Now Have
 
@@ -6,9 +6,9 @@ Your 5-member team has a **complete, professional, presentation-ready package** 
 
 ---
 
-## 📁 Files Created
+## ðŸ“ Files Created
 
-### 1. **TEAM_PRESENTATION.html** ⭐ MAIN PRESENTATION FILE
+### 1. **TEAM_PRESENTATION.html** â­ MAIN PRESENTATION FILE
 - **Format**: Interactive HTML presentation
 - **Size**: Full-screen, professional design
 - **Features**:
@@ -37,7 +37,7 @@ Your 5-member team has a **complete, professional, presentation-ready package** 
 
 ---
 
-### 2. **PRESENTER_NOTES.md** 📝 DETAILED SPEAKING GUIDE
+### 2. **PRESENTER_NOTES.md** ðŸ“ DETAILED SPEAKING GUIDE
 - **Format**: Comprehensive markdown document
 - **Length**: ~15 pages of detailed notes
 - **Content for each part**:
@@ -70,7 +70,7 @@ Your 5-member team has a **complete, professional, presentation-ready package** 
 
 ---
 
-### 3. **PRESENTER_QUICK_REFERENCE.md** 📌 CHEAT SHEETS
+### 3. **PRESENTER_QUICK_REFERENCE.md** ðŸ“Œ CHEAT SHEETS
 - **Format**: Quick-reference bullet points
 - **Length**: ~12 pages of practical guides
 - **Content**:
@@ -100,7 +100,7 @@ Your 5-member team has a **complete, professional, presentation-ready package** 
 
 ---
 
-### 4. **PRESENTATION_GUIDE.md** 🎯 IMPLEMENTATION GUIDE
+### 4. **PRESENTATION_GUIDE.md** ðŸŽ¯ IMPLEMENTATION GUIDE
 - **Format**: Complete presentation guide
 - **Length**: ~10 pages of practical implementation
 - **Content**:
@@ -125,7 +125,7 @@ Your 5-member team has a **complete, professional, presentation-ready package** 
 
 ---
 
-## 📊 Key Content Areas Covered
+## ðŸ“Š Key Content Areas Covered
 
 ### Part 1: Project Overview & Architecture (Member 1)
 ```
@@ -205,7 +205,7 @@ Emphasis: What makes it special, where it's going, enterprise potential
 
 ---
 
-## 🎨 Visual Design Elements
+## ðŸŽ¨ Visual Design Elements
 
 ### HTML Presentation Features:
 - **Professional color scheme**: 
@@ -239,7 +239,7 @@ Emphasis: What makes it special, where it's going, enterprise potential
 
 ---
 
-## 📈 Content Statistics
+## ðŸ“ˆ Content Statistics
 
 ### Presentation Volume:
 - **Total slides**: 5 major parts
@@ -265,7 +265,7 @@ Emphasis: What makes it special, where it's going, enterprise potential
 
 ---
 
-## ✅ Pre-Presentation Checklist Included
+## âœ… Pre-Presentation Checklist Included
 
 ### 48 Hours Before:
 - [ ] All team members reviewed presenter notes
@@ -289,7 +289,7 @@ Emphasis: What makes it special, where it's going, enterprise potential
 
 ---
 
-## 🎤 Speaker Support Tools
+## ðŸŽ¤ Speaker Support Tools
 
 ### For Each Presenter:
 1. **Opening statements** (word-for-word ready)
@@ -310,7 +310,7 @@ Emphasis: What makes it special, where it's going, enterprise potential
 
 ---
 
-## 🎯 How to Use This Package
+## ðŸŽ¯ How to Use This Package
 
 ### Step 1: Individual Preparation (Days 1-3)
 ```
@@ -356,22 +356,22 @@ Pre-presentation (15 min early):
 
 ---
 
-## 🌟 What Makes This Package Complete
+## ðŸŒŸ What Makes This Package Complete
 
-✅ **Presentation Software**: Beautiful, professional HTML interface  
-✅ **Speaker Notes**: Detailed, word-by-word guidance for each presenter  
-✅ **Quick References**: Cheat sheets for easy on-stage reference  
-✅ **Implementation Guide**: Step-by-step instructions for using materials  
-✅ **Transition Scripts**: Smooth handoffs between presenters  
-✅ **Q&A Preparation**: Anticipated questions with pre-written answers  
-✅ **Timing Guidelines**: Exact duration for each section  
-✅ **Design Elements**: Professional color scheme and visual hierarchy  
-✅ **Content Depth**: Code snippets, diagrams, real-world examples  
-✅ **Team Support**: Tools for coordinating 5-person presentation  
+âœ… **Presentation Software**: Beautiful, professional HTML interface  
+âœ… **Speaker Notes**: Detailed, word-by-word guidance for each presenter  
+âœ… **Quick References**: Cheat sheets for easy on-stage reference  
+âœ… **Implementation Guide**: Step-by-step instructions for using materials  
+âœ… **Transition Scripts**: Smooth handoffs between presenters  
+âœ… **Q&A Preparation**: Anticipated questions with pre-written answers  
+âœ… **Timing Guidelines**: Exact duration for each section  
+âœ… **Design Elements**: Professional color scheme and visual hierarchy  
+âœ… **Content Depth**: Code snippets, diagrams, real-world examples  
+âœ… **Team Support**: Tools for coordinating 5-person presentation  
 
 ---
 
-## 📱 Technical Requirements
+## ðŸ“± Technical Requirements
 
 ### To Open TEAM_PRESENTATION.html:
 - Any modern web browser (Chrome, Firefox, Safari, Edge)
@@ -386,7 +386,7 @@ Pre-presentation (15 min early):
 
 ---
 
-## 🎬 Quick Start Guide
+## ðŸŽ¬ Quick Start Guide
 
 ```
 READY TO PRESENT?
@@ -400,39 +400,39 @@ READY TO PRESENT?
 7. Next presenter stands
 8. Repeat for all 5 parts
 9. Open Q&A for 10-15 minutes
-10. Celebrate your success! 🎉
+10. Celebrate your success! ðŸŽ‰
 ```
 
 ---
 
-## 🏆 Success Indicators
+## ðŸ† Success Indicators
 
 After your presentation, you should hear:
-- ✓ "That was really professional!"
-- ✓ "I understood the entire system from start to finish"
-- ✓ "Great teamwork and transitions!"
-- ✓ "Impressive amount of work!"
-- ✓ "Can this really be used for a real school?"
-- ✓ "Good balance of technical depth and clarity"
+- âœ“ "That was really professional!"
+- âœ“ "I understood the entire system from start to finish"
+- âœ“ "Great teamwork and transitions!"
+- âœ“ "Impressive amount of work!"
+- âœ“ "Can this really be used for a real school?"
+- âœ“ "Good balance of technical depth and clarity"
 
 ---
 
-## 📞 File Locations
+## ðŸ“ž File Locations
 
 All files are in: `c:\Assignment3\`
 
 ```
 c:\Assignment3\
-├── TEAM_PRESENTATION.html          ⭐ MAIN PRESENTATION (Open this first!)
-├── PRESENTER_NOTES.md              📝 Detailed speaking notes (15 pages)
-├── PRESENTER_QUICK_REFERENCE.md    📌 Quick cheat sheets (12 pages)
-├── PRESENTATION_GUIDE.md           🎯 Implementation guide (10 pages)
-└── PRESENTATION_SUMMARY.md         📄 This file!
+â”œâ”€â”€ TEAM_PRESENTATION.html          â­ MAIN PRESENTATION (Open this first!)
+â”œâ”€â”€ PRESENTER_NOTES.md              ðŸ“ Detailed speaking notes (15 pages)
+â”œâ”€â”€ PRESENTER_QUICK_REFERENCE.md    ðŸ“Œ Quick cheat sheets (12 pages)
+â”œâ”€â”€ PRESENTATION_GUIDE.md           ðŸŽ¯ Implementation guide (10 pages)
+â””â”€â”€ PRESENTATION_SUMMARY.md         ðŸ“„ This file!
 ```
 
 ---
 
-## 🚀 Final Thoughts
+## ðŸš€ Final Thoughts
 
 You have everything needed for a professional, engaging, comprehensive presentation:
 
@@ -446,7 +446,7 @@ You have everything needed for a professional, engaging, comprehensive presentat
 
 ---
 
-## 💡 Pro Tips
+## ðŸ’¡ Pro Tips
 
 1. **Practice makes perfect**: Each presenter should practice their section 5+ times
 2. **Team rehearsal is crucial**: Do at least one full run-through as a group
@@ -458,38 +458,53 @@ You have everything needed for a professional, engaging, comprehensive presentat
 
 ---
 
-## 📊 Presentation Statistics
+## ðŸ“Š Presentation Statistics
 
 ```
 PRESENTATION OVERVIEW:
-├─ Total Parts: 5
-├─ Team Members: 5 (one per part)
-├─ Total Duration: 56-70 minutes
-│  ├─ Presentation: 46-54 minutes
-│  └─ Q&A: 10-15 minutes
-├─ Average per presenter: 9-12 minutes
-├─ Files provided: 4 documents
-├─ Code examples: 20+
-├─ Diagrams: 10+
-└─ Features covered: 30+
+â”œâ”€ Total Parts: 5
+â”œâ”€ Team Members: 5 (one per part)
+â”œâ”€ Total Duration: 56-70 minutes
+â”‚  â”œâ”€ Presentation: 46-54 minutes
+â”‚  â””â”€ Q&A: 10-15 minutes
+â”œâ”€ Average per presenter: 9-12 minutes
+â”œâ”€ Files provided: 4 documents
+â”œâ”€ Code examples: 20+
+â”œâ”€ Diagrams: 10+
+â””â”€ Features covered: 30+
 
 PROJECT STATISTICS HIGHLIGHTED:
-├─ Lines of code: 1,500+
-├─ Classes: 6
-├─ GUI tabs: 6
-├─ Data files: 4
-└─ Visualizations: 4-subplot dashboard
+â”œâ”€ Lines of code: 1,500+
+â”œâ”€ Classes: 6
+â”œâ”€ GUI tabs: 6
+â”œâ”€ Data files: 4
+â””â”€ Visualizations: 4-subplot dashboard
 
 QUALITY METRICS:
-├─ Professional design: ✅
-├─ Complete coverage: ✅
-├─ Team-ready: ✅
-├─ Q&A prepared: ✅
-└─ Ready to present: ✅
+â”œâ”€ Professional design: âœ…
+â”œâ”€ Complete coverage: âœ…
+â”œâ”€ Team-ready: âœ…
+â”œâ”€ Q&A prepared: âœ…
+â””â”€ Ready to present: âœ…
 ```
 
 ---
 
-**You're all set! Break a leg! 🎉**
+**You're all set! Break a leg! ðŸŽ‰**
 
 *For questions about any part, refer to the appropriate guide document. Everything you need is right here.*
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+

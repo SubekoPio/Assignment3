@@ -1,15 +1,15 @@
-# 🎊 PRESENTATION TRANSFORMATION COMPLETE
+﻿# ðŸŽŠ PRESENTATION TRANSFORMATION COMPLETE
 
-## What You Asked For ✅
+## What You Asked For âœ…
 
 You wanted:
-- ✅ More slides (10+ per part instead of 5)
-- ✅ Remove unnecessary code (keep only essential)
-- ✅ Add system photos/screenshots placeholders
-- ✅ Improve visuals significantly
-- ✅ Make it a "big presentation"
+- âœ… More slides (10+ per part instead of 5)
+- âœ… Remove unnecessary code (keep only essential)
+- âœ… Add system photos/screenshots placeholders
+- âœ… Improve visuals significantly
+- âœ… Make it a "big presentation"
 
-## What You Got 🎁
+## What You Got ðŸŽ
 
 ### 1. **54 Slides** (vs. 5 before)
 ```
@@ -109,7 +109,7 @@ AFTER (54 slides = 1 minute per slide):
 
 ---
 
-## 📊 Slide Breakdown
+## ðŸ“Š Slide Breakdown
 
 ### **PART 1: Architecture (11 slides)**
 1. Title Slide
@@ -163,7 +163,7 @@ AFTER (54 slides = 1 minute per slide):
 43. Analysis Dashboard (ASCII diagram)
 44. Visual Design Elements
 45. User Experience Features
-46. **Screenshots & Live Demo** ← PLACEHOLDER for actual screenshots
+46. **Screenshots & Live Demo** â† PLACEHOLDER for actual screenshots
 
 ### **PART 5: Advanced Features (10 slides)**
 47. Title Slide
@@ -181,7 +181,7 @@ AFTER (54 slides = 1 minute per slide):
 
 ---
 
-## 🎨 Visual Comparison
+## ðŸŽ¨ Visual Comparison
 
 ### BEFORE (Old Presentation)
 ```
@@ -209,7 +209,7 @@ Slide 8: Mini-code with context
 
 ---
 
-## 🎯 Perfect for 5-Member Team
+## ðŸŽ¯ Perfect for 5-Member Team
 
 ```
 Member 1: Slides 1-11   (10-12 minutes)
@@ -234,7 +234,7 @@ Each member has almost exactly the same number of slides = fair distribution
 
 ---
 
-## 📁 Complete File Set
+## ðŸ“ Complete File Set
 
 You have 6 files in c:\Assignment3\:
 
@@ -275,7 +275,7 @@ You have 6 files in c:\Assignment3\:
 
 ---
 
-## 🚀 How to Use It
+## ðŸš€ How to Use It
 
 ### Step 1: Open Presentation
 ```
@@ -286,7 +286,7 @@ You have 6 files in c:\Assignment3\:
 
 ### Step 2: Navigate
 ```
-Click "Previous" ← → "Next"
+Click "Previous" â† â†’ "Next"
 OR
 Press Left/Right arrow keys
 Progress bar shows: Slide X / 54
@@ -318,7 +318,7 @@ Progress bar shows: Slide X / 54
 
 ---
 
-## ✨ Key Improvements Summary
+## âœ¨ Key Improvements Summary
 
 | Aspect | Old | New | Better? |
 |--------|-----|-----|---------|
@@ -335,27 +335,27 @@ Progress bar shows: Slide X / 54
 
 ---
 
-## 🎊 What Makes It "Big Presentation"
+## ðŸŽŠ What Makes It "Big Presentation"
 
-✅ **Volume**: 54 slides (vs. 5) = 10x larger
+âœ… **Volume**: 54 slides (vs. 5) = 10x larger
 
-✅ **Depth**: Each topic gets 2-3 dedicated slides
+âœ… **Depth**: Each topic gets 2-3 dedicated slides
 
-✅ **Visual Appeal**: Modern design with colors, gradients, icons
+âœ… **Visual Appeal**: Modern design with colors, gradients, icons
 
-✅ **Duration**: 60-75 minutes of content (vs. 10-15 before)
+âœ… **Duration**: 60-75 minutes of content (vs. 10-15 before)
 
-✅ **Professional Quality**: Looks like enterprise presentation
+âœ… **Professional Quality**: Looks like enterprise presentation
 
-✅ **Screenshot Ready**: Placeholders for 6 system screenshots
+âœ… **Screenshot Ready**: Placeholders for 6 system screenshots
 
-✅ **Team Friendly**: Perfect distribution for 5 people
+âœ… **Team Friendly**: Perfect distribution for 5 people
 
-✅ **Interactive**: Progress bar, navigation, smooth transitions
+âœ… **Interactive**: Progress bar, navigation, smooth transitions
 
 ---
 
-## 📊 Statistics
+## ðŸ“Š Statistics
 
 ```
 Slides:              54
@@ -373,7 +373,7 @@ Screenshots:         6 placeholders ready
 
 ---
 
-## 🎬 Final Checklist
+## ðŸŽ¬ Final Checklist
 
 Before presenting:
 - [ ] Open TEAM_PRESENTATION.html
@@ -389,21 +389,36 @@ Before presenting:
 
 ---
 
-## 🏆 You're All Set!
+## ðŸ† You're All Set!
 
 Your team now has a **professional, comprehensive, visually stunning 54-slide presentation** that:
 
-✅ Is 10x larger than before (54 vs 5 slides)
-✅ Has minimal code (only essential)
-✅ Includes screenshot placeholders (6 ready to add)
-✅ Has dramatically improved visuals
-✅ Is perfectly paced (1 min per slide)
-✅ Is fair for 5 team members
-✅ Is easy to present
-✅ Looks professional and polished
+âœ… Is 10x larger than before (54 vs 5 slides)
+âœ… Has minimal code (only essential)
+âœ… Includes screenshot placeholders (6 ready to add)
+âœ… Has dramatically improved visuals
+âœ… Is perfectly paced (1 min per slide)
+âœ… Is fair for 5 team members
+âœ… Is easy to present
+âœ… Looks professional and polished
 
 ---
 
-**Open c:\Assignment3\TEAM_PRESENTATION.html and start presenting! 🎉**
+**Open c:\Assignment3\TEAM_PRESENTATION.html and start presenting! ðŸŽ‰**
 
 Your EduManage presentation is ready to impress!
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+

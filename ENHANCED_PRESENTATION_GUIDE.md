@@ -1,4 +1,4 @@
-# 🎉 ENHANCED PRESENTATION - What's New
+﻿# ðŸŽ‰ ENHANCED PRESENTATION - What's New
 
 ## Major Improvements Made
 
@@ -10,27 +10,27 @@
    - **Part 5**: 10 slides (was combined into ~1)
 
 ### 2. **Code Dramatically Reduced**
-   - ✅ Removed lengthy code blocks
-   - ✅ Kept only essential mini-code examples where necessary
-   - ✅ More focus on concepts and visuals instead of implementation details
-   - ✅ Code referred to "See project files" approach
+   - âœ… Removed lengthy code blocks
+   - âœ… Kept only essential mini-code examples where necessary
+   - âœ… More focus on concepts and visuals instead of implementation details
+   - âœ… Code referred to "See project files" approach
 
 ### 3. **Visual Improvements**
-   - ✅ Better color scheme and gradients
-   - ✅ Professional design elements (cards, stat boxes, timeline layouts)
-   - ✅ Improved typography and spacing
-   - ✅ Better use of white space
-   - ✅ Icon-based visual hierarchy
-   - ✅ Animated transitions between slides
+   - âœ… Better color scheme and gradients
+   - âœ… Professional design elements (cards, stat boxes, timeline layouts)
+   - âœ… Improved typography and spacing
+   - âœ… Better use of white space
+   - âœ… Icon-based visual hierarchy
+   - âœ… Animated transitions between slides
 
 ### 4. **Added Image Placeholders**
-   - ✅ **Slide 32** (Reports Tab) has placeholder for system screenshots
-   - ✅ Clear instructions on what screenshots to add
-   - ✅ Professional placeholder design
+   - âœ… **Slide 32** (Reports Tab) has placeholder for system screenshots
+   - âœ… Clear instructions on what screenshots to add
+   - âœ… Professional placeholder design
 
 ---
 
-## 📊 New Slide Breakdown
+## ðŸ“Š New Slide Breakdown
 
 ### PART 1: Project Overview & Architecture (11 slides)
 1. Title slide
@@ -102,7 +102,7 @@
 
 ---
 
-## 📸 How to Add System Screenshots
+## ðŸ“¸ How to Add System Screenshots
 
 ### Screenshots Needed:
 
@@ -121,7 +121,7 @@ What to show:
 What to show:
 - Course input form
 - Courses displayed in TreeView
-- Show course ID, name, credits
+- Show auto-generated course ID, name, credits
 ```
 
 #### 3. **Teachers Tab** (Slide 39)
@@ -193,7 +193,7 @@ screenshot.save('screenshot_students.png')
 
 ---
 
-## 🖼️ How to Embed Screenshots in HTML
+## ðŸ–¼ï¸ How to Embed Screenshots in HTML
 
 Once you have your screenshots (6 PNG files), edit the HTML to add them.
 
@@ -201,7 +201,7 @@ Once you have your screenshots (6 PNG files), edit the HTML to add them.
 ```html
 <div class="image-placeholder">
     <div class="icon-text" style="justify-content: center; color: #667eea;">
-        <span class="icon">📸</span>
+        <span class="icon">ðŸ“¸</span>
     </div>
     <p><strong>SYSTEM SCREENSHOTS</strong></p>
     ...
@@ -233,50 +233,50 @@ Once you have your screenshots (6 PNG files), edit the HTML to add them.
 ### File Organization:
 ```
 c:\Assignment3\
-├── TEAM_PRESENTATION.html
-├── screenshots/           (create this folder)
-│   ├── screenshot_students.png
-│   ├── screenshot_courses.png
-│   ├── screenshot_teachers.png
-│   ├── screenshot_enrollment.png
-│   ├── screenshot_reports.png
-│   └── screenshot_analysis.png
+â”œâ”€â”€ TEAM_PRESENTATION.html
+â”œâ”€â”€ screenshots/           (create this folder)
+â”‚   â”œâ”€â”€ screenshot_students.png
+â”‚   â”œâ”€â”€ screenshot_courses.png
+â”‚   â”œâ”€â”€ screenshot_teachers.png
+â”‚   â”œâ”€â”€ screenshot_enrollment.png
+â”‚   â”œâ”€â”€ screenshot_reports.png
+â”‚   â””â”€â”€ screenshot_analysis.png
 ```
 
 ---
 
-## 🎨 Visual Improvements Made
+## ðŸŽ¨ Visual Improvements Made
 
 ### Color & Design
-- ✅ Modern gradient backgrounds
-- ✅ Professional color scheme (purple #667eea → #764ba2)
-- ✅ Better contrast and readability
-- ✅ Consistent spacing and padding
-- ✅ Smooth animations between slides
+- âœ… Modern gradient backgrounds
+- âœ… Professional color scheme (purple #667eea â†’ #764ba2)
+- âœ… Better contrast and readability
+- âœ… Consistent spacing and padding
+- âœ… Smooth animations between slides
 
 ### Layout Improvements
-- ✅ Cards for feature presentation
-- ✅ Timeline layouts for processes
-- ✅ Grid layouts for organization (2-column, 3-column)
-- ✅ Stat boxes for key numbers
-- ✅ Highlight boxes for important points
-- ✅ Diagram boxes for ASCII art
+- âœ… Cards for feature presentation
+- âœ… Timeline layouts for processes
+- âœ… Grid layouts for organization (2-column, 3-column)
+- âœ… Stat boxes for key numbers
+- âœ… Highlight boxes for important points
+- âœ… Diagram boxes for ASCII art
 
 ### Typography
-- ✅ Larger, more readable fonts
-- ✅ Clear hierarchy (h1 → h4)
-- ✅ Bold key terms
-- ✅ Better line-height for readability
+- âœ… Larger, more readable fonts
+- âœ… Clear hierarchy (h1 â†’ h4)
+- âœ… Bold key terms
+- âœ… Better line-height for readability
 
 ### Icons & Visual Elements
-- ✅ Emoji icons for quick visual identification
-- ✅ Progress bar showing overall presentation progress
-- ✅ Slide counter with part indicator
-- ✅ Visual badges for part numbers
+- âœ… Emoji icons for quick visual identification
+- âœ… Progress bar showing overall presentation progress
+- âœ… Slide counter with part indicator
+- âœ… Visual badges for part numbers
 
 ---
 
-## 📊 Key Statistics Highlighted
+## ðŸ“Š Key Statistics Highlighted
 
 **Part 1: Architecture Overview**
 - 1,500+ lines of code
@@ -293,7 +293,7 @@ c:\Assignment3\
 
 ---
 
-## 🎯 How to Use This Enhanced Version
+## ðŸŽ¯ How to Use This Enhanced Version
 
 ### Opening the Presentation
 ```
@@ -319,7 +319,7 @@ c:\Assignment3\
 
 ---
 
-## 📝 What Changed From Old Version
+## ðŸ“ What Changed From Old Version
 
 | Aspect | Old | New | Improvement |
 |--------|-----|-----|-------------|
@@ -333,7 +333,7 @@ c:\Assignment3\
 
 ---
 
-## 🚀 Next Steps
+## ðŸš€ Next Steps
 
 ### 1. **Capture Screenshots**
    - Run your EduManage GUI
@@ -365,7 +365,7 @@ c:\Assignment3\
 
 ---
 
-## 💡 Presentation Tips
+## ðŸ’¡ Presentation Tips
 
 ### For 54-Slide Format
 - Don't rush (1 minute per slide on average)
@@ -388,22 +388,22 @@ c:\Assignment3\
 
 ---
 
-## ✅ Quality Checklist
+## âœ… Quality Checklist
 
-- ✅ 54 well-organized slides
-- ✅ Minimal code (only essential examples)
-- ✅ Professional visual design
-- ✅ Multiple layout types (cards, timelines, grids)
-- ✅ Clear section breaks between parts
-- ✅ Ready for screenshot integration
-- ✅ Progress tracking
-- ✅ Keyboard and mouse navigation
-- ✅ Responsive design
-- ✅ Print-friendly (can print to PDF)
+- âœ… 54 well-organized slides
+- âœ… Minimal code (only essential examples)
+- âœ… Professional visual design
+- âœ… Multiple layout types (cards, timelines, grids)
+- âœ… Clear section breaks between parts
+- âœ… Ready for screenshot integration
+- âœ… Progress tracking
+- âœ… Keyboard and mouse navigation
+- âœ… Responsive design
+- âœ… Print-friendly (can print to PDF)
 
 ---
 
-## 📞 File Details
+## ðŸ“ž File Details
 
 **File Size**: ~180KB (HTML only, increases with screenshots)
 **Slides**: 54
@@ -415,7 +415,7 @@ c:\Assignment3\
 
 ---
 
-## 🎬 Quick Start
+## ðŸŽ¬ Quick Start
 
 ```
 1. Open c:\Assignment3\TEAM_PRESENTATION.html in browser
@@ -427,4 +427,19 @@ c:\Assignment3\
 
 ---
 
-**Your enhanced presentation is ready! More slides, better visuals, less code, more visual appeal. Perfect for a comprehensive team presentation! 🎉**
+**Your enhanced presentation is ready! More slides, better visuals, less code, more visual appeal. Perfect for a comprehensive team presentation! ðŸŽ‰**
+
+## 2026-06 Maintenance Update
+- Added complete course unit management workflow in the main GUI (add, edit, delete via manage-units dialog).
+- Fixed enrollment logic to use explicit unit selection so students can only enroll into selected units.
+- Improved teacher-course-unit consistency with persisted multi-teacher tracking (teacher_ids) and cleaned unlink logic on delete.
+- Fixed report tab generation/export by using the correct report API and stable PDF export from rendered report text.
+- Updated CSV storage model: courses_data.csv now includes TeacherIDs; enrollments_data.csv stores unit-level rows (StudentID, CourseID, UnitID, Grade).
+- Validation status: automated tests pass (8/8).
+
+## 2026-06 UI Polish Update
+- Increased analysis chart text sizes (titles, axis labels, ticks, and stats panel) for readability.
+- Improved table readability with larger TreeView typography and row heights.
+- Enhanced dark/light theme switching to rebuild tab content cleanly for smoother visual transitions.
+- Upgraded course unit management dialog to a fully themed interface with styled CRUD controls and larger fonts.
+
