@@ -501,6 +501,35 @@ class EducationSystem:
                     for unit_id, grade in data.get('units', {}).items():
                         writer.writerow([student_id, course_id, unit_id, grade if grade is not None else ''])
 
+    def create_backup_zip(self):
+        """
+        Creates a zip file containing students_file, courses_file, teachers_file, and enrollments_file.
+        Saves it in a 'Backups' folder next to the CSV files.
+        Returns the absolute path of the created backup file.
+        """
+        import zipfile
+        from datetime import datetime
+        
+        # Get directory of current CSV files
+        csv_dir = os.path.dirname(self.students_file)
+        backup_dir = os.path.join(csv_dir, "Backups")
+        
+        # Ensure backup folder exists
+        os.makedirs(backup_dir, exist_ok=True)
+        
+        # Generate timestamped filename
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        backup_filename = f"edumanage_backup_{timestamp}.zip"
+        backup_path = os.path.join(backup_dir, backup_filename)
+        
+        # Create ZIP archive
+        with zipfile.ZipFile(backup_path, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+            for file_path in [self.students_file, self.courses_file, self.teachers_file, self.enrollments_file]:
+                if os.path.exists(file_path):
+                    zip_file.write(file_path, os.path.basename(file_path))
+                    
+        return backup_path
+
     def load_data(self):
         """Load all data from CSV files."""
         # Load students

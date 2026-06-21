@@ -177,6 +177,17 @@ class EduManageGUI:
         )
         self.theme_toggle_btn.pack(side="right", padx=12)
 
+        self.backup_btn = ctk.CTkButton(
+            self._header,
+            text="💾 Backup",
+            command=self.create_backup_archive,
+            width=100, height=30,
+            fg_color="#10B981", hover_color="#059669",
+            text_color="white", corner_radius=6,
+            font=("Segoe UI", 12, "bold")
+        )
+        self.backup_btn.pack(side="right", padx=6)
+
         self._build_tabs_area()
 
     def _build_tabs_area(self):
@@ -2032,6 +2043,17 @@ class EduManageGUI:
             messagebox.showinfo("Success", "✓ Course summary saved successfully")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to export summary: {str(e)}")
+
+    def create_backup_archive(self):
+        try:
+            backup_path = self.system.create_backup_zip()
+            filename = os.path.basename(backup_path)
+            messagebox.showinfo(
+                "Backup Successful",
+                f"✓ Database backed up successfully!\n\nArchive name:\n{filename}\n\nSaved under Data_Storage(CSV)/Backups/"
+            )
+        except Exception as e:
+            messagebox.showerror("Backup Error", f"Failed to create backup: {str(e)}")
 
 
     # ========== COURSE UNITS PANEL METHODS ==========
