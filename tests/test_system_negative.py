@@ -10,6 +10,14 @@ if str(ROOT) not in sys.path:
 from system import EducationSystem
 
 
+TEST_SCOPE = {
+    "Core service": "EducationSystem in system.py",
+    "Validation rules": "Existence checks, uniqueness, precondition checks",
+    "Error handling": "Expected ValueError paths for invalid operations",
+    "Domain operations": "Student/Course/Teacher/Unit API guardrails",
+}
+
+
 def make_system(tmp_path):
     return EducationSystem(
         students_file=str(tmp_path / "students.csv"),
@@ -126,3 +134,12 @@ def test_update_missing_course_unit_raises(tmp_path):
     sys_obj.add_course("C1", "Programming", 3)
     with pytest.raises(ValueError, match="Unit U404 not found"):
         sys_obj.update_course_unit("C1", "U404", name="Nope", credits=1)
+
+
+if __name__ == "__main__":
+    print("\n=== test_system_negative.py: Detailed Run ===")
+    print("Models/components under test:")
+    for name, desc in TEST_SCOPE.items():
+        print(f"- {name}: {desc}")
+    print("\nRunning tests in verbose mode...\n")
+    raise SystemExit(pytest.main([__file__, "-v", "-rA"]))

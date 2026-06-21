@@ -11,6 +11,15 @@ if str(ROOT) not in sys.path:
 from system import EducationSystem
 
 
+TEST_SCOPE = {
+    "Core service": "EducationSystem in system.py",
+    "Domain models": "Student, Teacher, Course, Unit in models.py",
+    "Persistence": "CSV load/save reconstruction",
+    "Business rules": "Enrollment, grading, assignment, cleanup cascades",
+    "Computed outputs": "Report GPA/CGPA and analytics metrics",
+}
+
+
 def make_system(tmp_path):
     return EducationSystem(
         students_file=str(tmp_path / "students.csv"),
@@ -264,4 +273,9 @@ def test_delete_course_cleans_student_and_teacher_links(tmp_path):
 
 
 if __name__ == "__main__":
-    raise SystemExit(pytest.main([__file__, "-q"]))
+    print("\n=== test_system.py: Detailed Run ===")
+    print("Models/components under test:")
+    for name, desc in TEST_SCOPE.items():
+        print(f"- {name}: {desc}")
+    print("\nRunning tests in verbose mode...\n")
+    raise SystemExit(pytest.main([__file__, "-v", "-rA"]))
