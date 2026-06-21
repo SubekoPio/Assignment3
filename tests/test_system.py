@@ -272,6 +272,29 @@ def test_delete_course_cleans_student_and_teacher_links(tmp_path):
     assert "C1" not in sys_obj.teachers["T1"].assigned_courses
 
 
+def test_create_backup_zip(tmp_path):
+    sys_obj = make_system(tmp_path)
+    seed_basic_data(sys_obj)
+    
+    # Save files to temp directory first
+    sys_obj.save_data()
+    
+    backup_path = sys_obj.create_backup_zip()
+    
+    # Assert backup file is created
+    assert Path(backup_path).exists()
+    assert backup_path.endswith(".zip")
+    
+    # Assert zip is valid and contains the files
+    import zipfile
+    with zipfile.ZipFile(backup_path, 'r') as zf:
+        namelist = zf.namelist()
+        assert "students.csv" in namelist
+        assert "courses.csv" in namelist
+        assert "teachers.csv" in namelist
+        assert "enrollments.csv" in namelist
+
+
 if __name__ == "__main__":
     print("\n=== test_system.py: Detailed Run ===")
     print("Models/components under test:")
