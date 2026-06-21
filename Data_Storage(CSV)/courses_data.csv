@@ -1,5 +1,5 @@
 CourseID,Name,Credits,TeacherID,TeacherIDs,Units
-1,BIT,150,1,"[""1""]","[{""unit_id"": ""1"", ""name"": ""ICT"", ""credits"": 10.0, ""teacher_id"": ""5""}]"
+1,BIT,150,T2,"[""1"", ""T2""]","[{""unit_id"": ""1"", ""name"": ""Computer repair"", ""credits"": 10.0, ""teacher_id"": ""T2""}, {""unit_id"": ""7"", ""name"": ""ICT"", ""credits"": 10.0, ""teacher_id"": null}]"
 2,BCS,200,1,"[""2"", ""1""]","[{""unit_id"": ""1"", ""name"": ""Physics1"", ""credits"": 10.0, ""teacher_id"": ""4""}, {""unit_id"": ""3"", ""name"": ""math1"", ""credits"": 10.0, ""teacher_id"": ""1""}, {""unit_id"": ""4"", ""name"": ""English"", ""credits"": 10.0, ""teacher_id"": null}]"
 3,Software Eng,250,1,"[""1""]",[]
 4,Accounting&Finance,150,,[],"[{""unit_id"": ""1"", ""name"": ""algebra"", ""credits"": 10.0, ""teacher_id"": null}, {""unit_id"": ""6"", ""name"": ""Accounts"", ""credits"": 10.0, ""teacher_id"": null}]"
