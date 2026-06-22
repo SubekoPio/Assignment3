@@ -8,3 +8,4 @@ CourseID,Name,Credits,TeacherID,TeacherIDs,Units
 7,Public Health,200,T1,"[""6"", ""T1""]","[{""unit_id"": ""1"", ""name"": ""Epidimiology"", ""credits"": 10.0, ""teacher_id"": ""2""}, {""unit_id"": ""2"", ""name"": ""Familyt Planning"", ""credits"": 10.0, ""teacher_id"": ""T1""}, {""unit_id"": ""5"", ""name"": ""Phamarcology"", ""credits"": 10.0, ""teacher_id"": null}]"
 8,Procurement&Logistics,150,,[],[]
 C1,analytics,200,T3,"[""T3""]","[{""unit_id"": ""10"", ""name"": ""Linear"", ""credits"": 10.0, ""teacher_id"": ""T3""}]"
+C2,Visual Effects&Animation,300,T2,"[""T2""]","[{""unit_id"": ""11"", ""name"": ""Simulation"", ""credits"": 10.0, ""teacher_id"": ""T2""}, {""unit_id"": ""12"", ""name"": ""Modelling"", ""credits"": 10.0, ""teacher_id"": null}]"
