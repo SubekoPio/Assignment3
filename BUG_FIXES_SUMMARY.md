@@ -78,19 +78,19 @@ if str(u.get('unit_id')) == str(unit_id):  # Always string comparison
 
 ### Email Validation Pattern
 The regex pattern validates:
-- âœ“ Standard emails: `user@example.com`
-- âœ“ Emails with dots: `user.name@example.com`
-- âœ“ Emails with numbers: `user123@example.co.uk`
-- âœ“ Emails with hyphens: `user-name@example.com`
-- âœ“ Emails with underscores: `user_name@example.com`
-- âœ“ Emails with plus: `user+tag@example.com`
+- Standard emails: `user@example.com`
+- Emails with dots: `user.name@example.com`
+- Emails with numbers: `user123@example.co.uk`
+- Emails with hyphens: `user-name@example.com`
+- Emails with underscores: `user_name@example.com`
+- Emails with plus: `user+tag@example.com`
 
 Rejects:
-- âœ— Missing @ symbol: `userexample.com`
-- âœ— Multiple @ symbols: `user@@example.com`
-- âœ— No domain: `user@`
-- âœ— No TLD: `user@example`
-- âœ— No username: `@example.com`
+- Missing @ symbol: `userexample.com`
+- Multiple @ symbols: `user@@example.com`
+- No domain: `user@`
+- No TLD: `user@example`
+- No username: `@example.com`
 
 ---
 
