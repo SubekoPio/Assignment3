@@ -161,7 +161,7 @@ class EduManageGUI:
 
         ctk.CTkLabel(
             self._header,
-            text="\t\t\t\t🎓 EduManage — Advanced Education Management System",
+            text="\t\t\t🎓 EduManage — Advanced Education Management System",
             font=("Segoe UI", 19, "bold"),
             text_color="white"
         ).pack(side="left", padx=16)
@@ -187,6 +187,17 @@ class EduManageGUI:
             font=("Segoe UI", 12, "bold")
         )
         self.backup_btn.pack(side="right", padx=6)
+
+        self.refresh_data_btn = ctk.CTkButton(
+            self._header,
+            text="🔄 Refresh Data",
+            command=self.reload_system_data,
+            width=140, height=30,
+            fg_color="#0EA5E9", hover_color="#0284C7",
+            text_color="white", corner_radius=6,
+            font=("Segoe UI", 12, "bold")
+        )
+        self.refresh_data_btn.pack(side="right", padx=6)
 
         self._build_tabs_area()
 
@@ -2054,6 +2065,56 @@ class EduManageGUI:
             )
         except Exception as e:
             messagebox.showerror("Backup Error", f"Failed to create backup: {str(e)}")
+
+    def reload_system_data(self):
+        """Reload persisted CSV data and repaint UI state without restarting the app."""
+        if not messagebox.askyesno(
+            "Refresh Data",
+            "Reload all saved data from disk?\n\n"
+            "Any unsaved in-memory changes will be lost."
+        ):
+            return
+
+        try:
+            # Reset in-memory stores first so stale records are not retained.
+            self.system.students = {}
+            self.system.courses = {}
+            self.system.teachers = {}
+            self.system.enrollments = []
+            self.system.load_data()
+
+            # Reset selections and transient UI state.
+            self.selected_student_id = None
+            self.selected_course_id = None
+            self.selected_teacher_id = None
+            self.selected_enrollment = None
+
+            # Refresh all table/list views and selectors.
+            self.refresh_student_list()
+            self.refresh_course_list()
+            self.refresh_teacher_list()
+            self.refresh_enrollment_list()
+            self.update_comboboxes()
+            self.refresh_course_units_panel()
+
+            try:
+                self.lb_units.delete(0, tk.END)
+            except Exception:
+                pass
+
+            try:
+                self.txt_report.delete("1.0", "end")
+            except Exception:
+                pass
+
+            self.clear_student_form()
+            self.clear_course_form()
+            self.clear_teacher_form()
+            self.clear_analysis_selection()
+
+            messagebox.showinfo("Refresh Complete", "✓ Saved data reloaded successfully.")
+        except Exception as e:
+            messagebox.showerror("Refresh Error", f"Failed to reload data: {str(e)}")
 
 
     # ========== COURSE UNITS PANEL METHODS ==========
